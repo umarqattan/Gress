@@ -32,9 +32,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func login(sender: UIButton) {
         
         UIView.animateWithDuration(0.3, animations: {
-            self.loginButton.hidden = false
+            self.loginButton.hidden = true
         })
         activityIndicator.startAnimating()
+        
         PFUser.logInWithUsernameInBackground(userNameField.text, password: passwordField.text) { user, downloadError in
             if let error = downloadError {
                 dispatch_async(dispatch_get_main_queue()) {
@@ -42,7 +43,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     UIView.animateWithDuration(0.3, animations: {
                         self.loginButton.hidden = false
                     })
-                    self.showAlertView(false, title: "Error", message: error.localizedDescription)
+                    self.showAlertView(false, buttonTitle: "Error", message: error.localizedDescription, completionHandler: nil)
                 }
             } else {
                 dispatch_async(dispatch_get_main_queue()) {
@@ -50,7 +51,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     UIView.animateWithDuration(0.3, animations: {
                         self.loginButton.hidden = false
                     })
-                    self.showAlertView(true, title: "Success!", message: "Logged in successfully!")
+                    self.showAlertView(true, buttonTitle: "Success", message: "Logged in successfully!") { UIAlertAction in
+                        // self.presentViewController
+                        println("hIoijk")
+                    }
                 }
             }
         }
@@ -89,6 +93,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         MARK: AlertController method when user tries to log in
     **/
     
+    /**
     func showAlertView(success: Bool, title: String?, message: String?) {
         var alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         var alertAction = UIAlertAction()
@@ -104,6 +109,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             animated: true,
             completion: nil)
     }
-    
+    **/
 }
 

@@ -49,44 +49,27 @@ class SignUpViewController : UIViewController, UITextFieldDelegate {
         
         user.signUpInBackgroundWithBlock { success, downloadError in
             if let error = downloadError {
-                println("Could not sign up due to \(error.localizedDescription)")
                 dispatch_async(dispatch_get_main_queue()) {
                     self.activityIndicator.stopAnimating()
                     UIView.animateWithDuration(0.3, animations: {
                         self.signUpButton.hidden = false
                     })
-                    self.showAlertView(success, title: "Error", message: error.localizedFailureReason)
+                    self.showAlertView(success, buttonTitle: "Dismiss", message: error.localizedDescription, completionHandler: nil)
                 }
             } else {
-                println("Hooray, you are now apart of Parse!")
                 dispatch_async(dispatch_get_main_queue()) {
                     self.activityIndicator.stopAnimating()
                     UIView.animateWithDuration(0.3, animations: {
                         self.signUpButton.hidden = false
                     })
-                    self.showAlertView(success, title: "Success", message: "Hooray, you are now apart of Parse!")
+                    self.showAlertView(success, buttonTitle: "Go To Login!", message: "Hooray, you are now apart of Gress!") { UIAlertAction in
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
                 }
             }
         }
     }
 
-
-    func showAlertView(success: Bool, title: String?, message: String?) {
-        var alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        var alertAction = UIAlertAction()
-        if success {
-            alertAction = UIAlertAction(title: "Go to Login", style: UIAlertActionStyle.Cancel) { UIAlertAction in
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }
-        } else {
-            alertAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Cancel, handler : nil)
-        }
-        alertController.addAction(alertAction)
-        presentViewController(alertController,
-            animated: true,
-            completion: nil)
-    }
-    
     func configureButtons() {
         signUpButton.enabled = false
     }
