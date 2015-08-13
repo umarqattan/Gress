@@ -12,20 +12,24 @@
 	<dict>
 		<key>3377A14AABFB8BF84B72EA683354A7C77EB9323C</key>
 		<string>https://github.com/umarqattan/MemeMe.git</string>
+		<key>583319C2D8823D128711E3D7F9E5472B80CBE0B9</key>
+		<string>github.com:umarqattan/Gress.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Gress/Gress.xcodeproj</string>
+	<string>Gress.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>3377A14AABFB8BF84B72EA683354A7C77EB9323C</key>
 		<string>../../..</string>
+		<key>583319C2D8823D128711E3D7F9E5472B80CBE0B9</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/umarqattan/MemeMe.git</string>
+	<string>github.com:umarqattan/Gress.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>3377A14AABFB8BF84B72EA683354A7C77EB9323C</string>
+	<string>583319C2D8823D128711E3D7F9E5472B80CBE0B9</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -34,7 +38,15 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>3377A14AABFB8BF84B72EA683354A7C77EB9323C</string>
 			<key>IDESourceControlWCCName</key>
-			<string>iOS%20Apps</string>
+			<string></string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>583319C2D8823D128711E3D7F9E5472B80CBE0B9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Gress</string>
 		</dict>
 	</array>
 </dict>
