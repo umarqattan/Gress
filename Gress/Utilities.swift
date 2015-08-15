@@ -29,5 +29,65 @@ extension UIViewController {
             animated: true,
             completion: nil)
     }
+    
+    /**
+        MARK: methods to deal with a keyboard showing and hiding
+    **/
+    
+    func subscribeToKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWillShow(notification : NSNotification, gestureRecognizer: UIGestureRecognizer?, activeTextField: UITextField, scrollView: UIScrollView, aView: UIView) {
+        
+        let contentInsets = UIEdgeInsetsMake(0.0, 0.0, getKeyboardHeight(notification), 0.0)
+        scrollView.contentInset = contentInsets
+        
+        var aRect = aView.frame
+        if CGRectContainsPoint(aRect, activeTextField.frame.origin) {
+            scrollView.scrollRectToVisible(activeTextField.frame, animated: true)
+        }
+        if gestureRecognizer == nil {
+            var aGestureRecognizer:UIGestureRecognizer? = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard:"))
+            view.addGestureRecognizer(aGestureRecognizer!)
+        }
+    }
+    
+    func keyboardWillHide(notification : NSNotification, gestureRecognizer: UIGestureRecognizer?, activeTextField: UITextField, scrollView: UIScrollView, aView: UIView) {
+        
+        if gestureRecognizer != nil {
+            var aGestureRecognizer: UIGestureRecognizer? = gestureRecognizer
+            view.removeGestureRecognizer(aGestureRecognizer!)
+            aGestureRecognizer = nil
+        }
+        
+        let contentInsets = UIEdgeInsetsZero
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+        scrollView.contentOffset = CGPointMake(0.0, 0.0)
+        scrollView.scrollRectToVisible(scrollView.frame, animated: true)
+        
+    }
+    
+    func getKeyboardHeight(notification : NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.CGRectValue().height
+    }
+    
+    func dismissKeyboard(gestureRecognizer : UIGestureRecognizer, activeTextField: UITextField?) {
+        if (activeTextField != nil) {
+            activeTextField!.resignFirstResponder()
+        } else {
+            return
+        }
+    }
 
+    
 }

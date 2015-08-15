@@ -16,6 +16,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    var keyboardDismissTapGesture: UIGestureRecognizer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +60,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
+    
+    
     
     /**
         MARK: UITextFieldDelegate Methods

@@ -14,7 +14,7 @@ let FINISHED = true
 let NOT_FINISHED = false
 
 
-class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate {
     
     
     
@@ -27,15 +27,14 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
     @IBOutlet weak var userInputView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    var activeTextField:UITextField!
+    var activeTextField:UITextField?
     var keyboardDismissTapGesture: UIGestureRecognizer!
-    
+    var height:CGFloat!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setTextFieldDelegates()
-        subscribeToKeyboardNotifications()
+        setDelegates()
         configureNewProfileProgressBar(false)
         navigationController?.navigationItem.rightBarButtonItem?.enabled = false
         
@@ -44,7 +43,7 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        
+        subscribeToKeyboardNotifications()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -53,10 +52,14 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         unsubscribeFromKeyboardNotifications()
     }
     
+    func scrollViewShouldScrollToTop(scrollView: UIScrollView) -> Bool {
+        return true
+    }
+    
     func configureNewProfileProgressBar(finished: Bool) {
         if finished {
             UIView.animateWithDuration(1.5, animations: {
-                self.newProfileProgressBar.progress = 0.333
+                self.newProfileProgressBar.progress = 0.28
             })
         } else {
             UIView.animateWithDuration(1.5, animations: {
@@ -128,26 +131,16 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         LINK:     https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/KeyboardManagement/KeyboardManagement.html
     **/
     
-    func subscribeToKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-    }
     
-    func unsubscribeFromKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-    }
     
     func keyboardWillShow(notification : NSNotification) {
         
-        let keyboardInfo = notification.userInfo
-        let keyboardSize = keyboardInfo![UIKeyboardFrameBeginUserInfoKey]!.CGRectValue().size
-        let contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0)
+        let contentInsets = UIEdgeInsetsMake(0.0, 0.0, getKeyboardHeight(notification), 0.0)
         scrollView.contentInset = contentInsets
         
         var aRect = userInputView.frame
-        if CGRectContainsPoint(aRect, activeTextField.frame.origin) {
-            scrollView.scrollRectToVisible(activeTextField.frame, animated: true)
+        if CGRectContainsPoint(aRect, activeTextField!.frame.origin) {
+            scrollView.scrollRectToVisible(activeTextField!.frame, animated: true)
         }
         if keyboardDismissTapGesture == nil {
             keyboardDismissTapGesture = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard:"))
@@ -161,26 +154,24 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
             view.removeGestureRecognizer(keyboardDismissTapGesture!)
             keyboardDismissTapGesture = nil
         }
-    
+
         let contentInsets = UIEdgeInsetsZero
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
-    }
-    
-    func getKeyboardHeight(notification : NSNotification) -> CGFloat {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.CGRectValue().height
+        scrollView.contentOffset = CGPointMake(0.0, 0.0)
+        scrollView.scrollRectToVisible(scrollView.frame, animated: true)
+        
     }
     
     func dismissKeyboard(gestureRecognizer : UIGestureRecognizer) {
         if (activeTextField != nil) {
-            activeTextField.resignFirstResponder()
+            activeTextField!.resignFirstResponder()
         } else {
             return
         }
     }
-    
+     
+
     /**
         MARK: When a user cancels making a new profile,
               delete their account and dismiss the view-
@@ -194,16 +185,17 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         MARK: TextFieldDelegate methods
     **/
     
-    func setTextFieldDelegates() {
+    func setDelegates() {
         firstNameField.delegate = self
         lastNameField.delegate = self
         emailAddressField.delegate = self
+        scrollView.delegate = self
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
         activeTextField = textField
-        configureNewProfileProgressBar(NOT_FINISHED)
         
+        configureNewProfileProgressBar(NOT_FINISHED)
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
