@@ -206,7 +206,7 @@
             </objects>
             <point key="canvasLocation" x="1147.5" y="503"/>
         </scene>
-        <!--New Gress Profile-->
+        <!--Personal-->
         <scene sceneID="kGr-oB-QH6">
             <objects>
                 <viewController id="fqS-hn-tN5" customClass="NewGressProfileViewController" customModule="Gress" customModuleProvider="target" sceneMemberID="viewController">
@@ -218,7 +218,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vpy-AT-TUo">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="vpy-AT-TUo">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="54c-az-AKm">
@@ -296,11 +296,61 @@
                                             <rect key="frame" x="59" y="101" width="250" height="2"/>
                                         </variation>
                                     </progressView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYK-bR-ySs">
+                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="38" y="101" width="67" height="21"/>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Body" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdg-dj-E2M">
+                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="113" y="101" width="41" height="21"/>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZ0-HY-BDh">
+                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="162" y="101" width="56" height="21"/>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Goals" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAF-Sk-gv4">
+                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="226" y="101" width="45" height="21"/>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finished" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HL9-Kr-gLM">
+                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="279" y="101" width="65" height="21"/>
+                                        </variation>
+                                    </label>
                                 </subviews>
                                 <variation key="default">
                                     <mask key="subviews">
                                         <exclude reference="54c-az-AKm"/>
                                         <exclude reference="HRF-Fq-R7Q"/>
+                                        <exclude reference="hYK-bR-ySs"/>
+                                        <exclude reference="qdg-dj-E2M"/>
+                                        <exclude reference="HZ0-HY-BDh"/>
+                                        <exclude reference="aAF-Sk-gv4"/>
+                                        <exclude reference="HL9-Kr-gLM"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact" fixedFrame="YES">
@@ -308,6 +358,11 @@
                                     <mask key="subviews">
                                         <include reference="54c-az-AKm"/>
                                         <include reference="HRF-Fq-R7Q"/>
+                                        <include reference="hYK-bR-ySs"/>
+                                        <include reference="qdg-dj-E2M"/>
+                                        <include reference="HZ0-HY-BDh"/>
+                                        <include reference="aAF-Sk-gv4"/>
+                                        <include reference="HL9-Kr-gLM"/>
                                     </mask>
                                 </variation>
                             </scrollView>
@@ -324,14 +379,18 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="New Gress Profile" id="yZ3-Zc-Nuh">
+                    <navigationItem key="navigationItem" title="Personal" id="yZ3-Zc-Nuh">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="R1a-kF-RQ7">
                             <color key="tintColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="cancelNewProfile:" destination="fqS-hn-tN5" id="zlc-ya-BOj"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="Right-32" id="tY2-y4-cAb"/>
+                        <barButtonItem key="rightBarButtonItem" image="Right-32" id="tY2-y4-cAb">
+                            <connections>
+                                <segue destination="snx-jD-Lp7" kind="show" id="rB7-73-bdO"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="editProfilePictureButton" destination="78e-Pb-kuz" id="uXX-n8-REX"/>
@@ -578,6 +637,262 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T3I-G2-VCu" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="321" y="1081"/>
+        </scene>
+        <!--New Gress Profile-->
+        <scene sceneID="zUu-uc-hpB">
+            <objects>
+                <viewController id="snx-jD-Lp7" customClass="NewGressProfileBodyViewController" customModule="Gress" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="guf-sg-ekn"/>
+                        <viewControllerLayoutGuide type="bottom" id="Jgh-Sm-r4r"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="j4p-wq-MPy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="DsM-hk-muc">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zjd-aL-djd">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                        <subviews>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="r8a-FC-HPP">
+                                                <rect key="frame" x="-61" y="-14" width="123" height="29"/>
+                                                <segments>
+                                                    <segment title="Male"/>
+                                                    <segment title="Female"/>
+                                                </segments>
+                                                <color key="tintColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="104" y="8" width="123" height="29"/>
+                                                </variation>
+                                            </segmentedControl>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sex" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CtZ-cJ-k34">
+                                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="66" y="11" width="30" height="21"/>
+                                                </variation>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Age" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ici-WX-ZPM">
+                                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="66" y="55" width="31" height="21"/>
+                                                </variation>
+                                            </label>
+                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kOd-AT-omh" userLabel="Age Picker View">
+                                                <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
+                                                <color key="tintColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <accessibility key="accessibilityConfiguration" label="agePickerView">
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="0.0" y="-15" width="330" height="162"/>
+                                                </variation>
+                                            </pickerView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBV-C4-1T8">
+                                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="56" y="110" width="51" height="21"/>
+                                                </variation>
+                                            </label>
+                                            <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oZV-4C-N21" userLabel="Height Picker View">
+                                                <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
+                                                <color key="tintColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <accessibility key="accessibilityConfiguration" label="heightPickerView"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="0.0" y="40" width="330" height="162"/>
+                                                </variation>
+                                            </pickerView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="818-A0-cyx">
+                                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="55" y="181" width="53" height="21"/>
+                                                </variation>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acl-Ql-hrp">
+                                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="65" y="257" width="32" height="21"/>
+                                                </variation>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="IP9-Xv-tFH">
+                                                <rect key="frame" x="-61" y="-14" width="123" height="29"/>
+                                                <segments>
+                                                    <segment title="SI"/>
+                                                    <segment title="Metric"/>
+                                                </segments>
+                                                <color key="tintColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="104" y="254" width="123" height="29"/>
+                                                </variation>
+                                            </segmentedControl>
+                                            <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uCl-tQ-azV" userLabel="Weight Picker View">
+                                                <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
+                                                <color key="tintColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <accessibility key="accessibilityConfiguration" label="weightPickerView"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="0.0" y="111" width="330" height="162"/>
+                                                </variation>
+                                            </pickerView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.23565995070000001" green="0.89427425989999998" blue="1" alpha="0.37" colorSpace="calibratedRGB"/>
+                                        <variation key="default">
+                                            <mask key="subviews">
+                                                <exclude reference="r8a-FC-HPP"/>
+                                                <exclude reference="CtZ-cJ-k34"/>
+                                                <exclude reference="Ici-WX-ZPM"/>
+                                                <exclude reference="kOd-AT-omh"/>
+                                                <exclude reference="QBV-C4-1T8"/>
+                                                <exclude reference="oZV-4C-N21"/>
+                                                <exclude reference="818-A0-cyx"/>
+                                                <exclude reference="acl-Ql-hrp"/>
+                                                <exclude reference="IP9-Xv-tFH"/>
+                                                <exclude reference="uCl-tQ-azV"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="19" y="179" width="330" height="349"/>
+                                            <mask key="subviews">
+                                                <include reference="r8a-FC-HPP"/>
+                                                <include reference="CtZ-cJ-k34"/>
+                                                <include reference="Ici-WX-ZPM"/>
+                                                <include reference="kOd-AT-omh"/>
+                                                <include reference="QBV-C4-1T8"/>
+                                                <include reference="oZV-4C-N21"/>
+                                                <include reference="818-A0-cyx"/>
+                                                <include reference="acl-Ql-hrp"/>
+                                                <include reference="IP9-Xv-tFH"/>
+                                                <include reference="uCl-tQ-azV"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="uv4-WP-oA9">
+                                        <rect key="frame" x="0.0" y="-2" width="150" height="2"/>
+                                        <color key="progressTintColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="59" y="101" width="250" height="2"/>
+                                        </variation>
+                                    </progressView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XDs-eA-IWU">
+                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="38" y="101" width="67" height="21"/>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Body" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XPY-55-r7n">
+                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="113" y="101" width="41" height="21"/>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M4A-kL-Ccc">
+                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="162" y="101" width="56" height="21"/>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Goals" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCB-6q-ouD">
+                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="226" y="101" width="45" height="21"/>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finished" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UzS-kb-fIe">
+                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="279" y="101" width="65" height="21"/>
+                                        </variation>
+                                    </label>
+                                </subviews>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="zjd-aL-djd"/>
+                                        <exclude reference="uv4-WP-oA9"/>
+                                        <exclude reference="XDs-eA-IWU"/>
+                                        <exclude reference="XPY-55-r7n"/>
+                                        <exclude reference="M4A-kL-Ccc"/>
+                                        <exclude reference="BCB-6q-ouD"/>
+                                        <exclude reference="UzS-kb-fIe"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
+                                    <mask key="subviews">
+                                        <include reference="zjd-aL-djd"/>
+                                        <include reference="uv4-WP-oA9"/>
+                                        <include reference="XDs-eA-IWU"/>
+                                        <include reference="XPY-55-r7n"/>
+                                        <include reference="M4A-kL-Ccc"/>
+                                        <include reference="BCB-6q-ouD"/>
+                                        <include reference="UzS-kb-fIe"/>
+                                    </mask>
+                                </variation>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.38823529410000002" green="0.72549019609999998" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="DsM-hk-muc"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="DsM-hk-muc"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Gress Profile" id="Hgs-w7-LWn">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="6pO-KJ-W5M">
+                            <color key="tintColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="cancelNewProfile:" destination="snx-jD-Lp7" id="LUk-kB-ypH"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="Right-32" id="wTx-zC-1CD"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="agePickerView" destination="kOd-AT-omh" id="t9V-pC-HOL"/>
+                        <outlet property="heightPickerView" destination="oZV-4C-N21" id="WW1-kq-rER"/>
+                        <outlet property="newProfileProgressBar" destination="uv4-WP-oA9" id="wC6-VD-aV5"/>
+                        <outlet property="scrollView" destination="DsM-hk-muc" id="eFr-60-1YP"/>
+                        <outlet property="sexSegmentedControl" destination="r8a-FC-HPP" id="cKs-RY-6eD"/>
+                        <outlet property="unitSegmentedControl" destination="IP9-Xv-tFH" id="RdL-x1-Og4"/>
+                        <outlet property="weightPickerView" destination="uCl-tQ-azV" id="XIb-j2-T88"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cx6-fd-iov" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2680.5" y="503"/>
         </scene>
     </scenes>
     <resources>
