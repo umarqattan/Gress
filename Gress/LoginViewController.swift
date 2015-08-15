@@ -60,7 +60,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-
     /**
         MARK: UITextFieldDelegate Methods
     **/
@@ -89,26 +88,5 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    /**
-        MARK: AlertController method when user tries to log in
-    **/
-    
-    /**
-    func showAlertView(success: Bool, title: String?, message: String?) {
-        var alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        var alertAction = UIAlertAction()
-        if success {
-            alertAction = UIAlertAction(title: "Go to Gress", style: UIAlertActionStyle.Cancel) { UIAlertAction in
-                // add a segue here
-            }
-        } else {
-            alertAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Cancel, handler : nil)
-        }
-        alertController.addAction(alertAction)
-        presentViewController(alertController,
-            animated: true,
-            completion: nil)
-    }
-    **/
 }
 

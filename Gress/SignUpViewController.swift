@@ -26,7 +26,6 @@ class SignUpViewController : UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         setTextFieldDelegates()
         configureValidImageViews()
         configureButtons()
@@ -62,14 +61,17 @@ class SignUpViewController : UIViewController, UITextFieldDelegate {
                     UIView.animateWithDuration(0.3, animations: {
                         self.signUpButton.hidden = false
                     })
-                    self.showAlertView(success, buttonTitle: "Go To Login!", message: "Hooray, you are now apart of Gress!") { UIAlertAction in
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                    self.showAlertView(success, buttonTitle: "Get Started!", message: "Hooray, you are now apart of Gress!") { UIAlertAction in
+                        
+                        let newProfileNavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileNavigationController") as! UINavigationController
+                        self.presentViewController(newProfileNavigationController, animated: true, completion: nil)
+                        
                     }
                 }
             }
         }
     }
-
+    
     func configureButtons() {
         signUpButton.enabled = false
     }
@@ -106,7 +108,6 @@ class SignUpViewController : UIViewController, UITextFieldDelegate {
             })
         }
     }
-    
     
     func textFieldDidEndEditing(textField: UITextField) {
         

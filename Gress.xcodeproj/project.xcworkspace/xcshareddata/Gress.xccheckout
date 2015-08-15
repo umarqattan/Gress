@@ -7,7 +7,7 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>6FEC371E-1C51-4E21-8CAF-C4DE4F3CB351</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Gress</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>3377A14AABFB8BF84B72EA683354A7C77EB9323C</key>
@@ -16,7 +16,7 @@
 		<string>github.com:umarqattan/Gress.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Gress.xcodeproj</string>
+	<string>Gress.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>3377A14AABFB8BF84B72EA683354A7C77EB9323C</key>

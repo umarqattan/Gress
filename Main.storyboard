@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M5O-pf-6Ku">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -189,6 +189,164 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="321" y="387"/>
+        </scene>
+        <!--NewGressProfileNavigationController-->
+        <scene sceneID="hJj-2K-wNd">
+            <objects>
+                <navigationController storyboardIdentifier="NewGressProfileNavigationController" title="NewGressProfileNavigationController" id="M5O-pf-6Ku" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wqp-0L-Exo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="fqS-hn-tN5" kind="relationship" relationship="rootViewController" id="AK7-eG-WTv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hcV-Lf-GWh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1147.5" y="503"/>
+        </scene>
+        <!--New Gress Profile-->
+        <scene sceneID="kGr-oB-QH6">
+            <objects>
+                <viewController id="fqS-hn-tN5" customClass="NewGressProfileViewController" customModule="Gress" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="p6S-C5-t1b"/>
+                        <viewControllerLayoutGuide type="bottom" id="4nX-nz-y0c"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7KJ-B5-3Wd">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vpy-AT-TUo">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="54c-az-AKm">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tfa-If-60B">
+                                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="8" y="113" width="270" height="35"/>
+                                                </variation>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i9a-GV-I9H">
+                                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="8" y="156" width="270" height="35"/>
+                                                </variation>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rcc-pe-5go">
+                                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="8" y="199" width="270" height="35"/>
+                                                </variation>
+                                            </textField>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profile Male-100" translatesAutoresizingMaskIntoConstraints="NO" id="Gmz-hm-BXn">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="127" y="8" width="80" height="80"/>
+                                                </variation>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="78e-Pb-kuz">
+                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                                <state key="normal" title="Edit">
+                                                    <color key="titleColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" red="0.3899825247" green="0.72543174340000005" blue="0.93657483549999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="127" y="83" width="80" height="30"/>
+                                                </variation>
+                                                <connections>
+                                                    <action selector="editProfilePicture:" destination="fqS-hn-tN5" eventType="touchUpInside" id="gSX-sr-Q3J"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.23565995070000001" green="0.89427425989999998" blue="1" alpha="0.37" colorSpace="calibratedRGB"/>
+                                        <variation key="default">
+                                            <mask key="subviews">
+                                                <exclude reference="tfa-If-60B"/>
+                                                <exclude reference="i9a-GV-I9H"/>
+                                                <exclude reference="rcc-pe-5go"/>
+                                                <exclude reference="Gmz-hm-BXn"/>
+                                                <exclude reference="78e-Pb-kuz"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="19" y="179" width="330" height="242"/>
+                                            <mask key="subviews">
+                                                <include reference="tfa-If-60B"/>
+                                                <include reference="i9a-GV-I9H"/>
+                                                <include reference="rcc-pe-5go"/>
+                                                <include reference="Gmz-hm-BXn"/>
+                                                <include reference="78e-Pb-kuz"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="HRF-Fq-R7Q">
+                                        <rect key="frame" x="0.0" y="-2" width="150" height="2"/>
+                                        <color key="progressTintColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="59" y="101" width="250" height="2"/>
+                                        </variation>
+                                    </progressView>
+                                </subviews>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="54c-az-AKm"/>
+                                        <exclude reference="HRF-Fq-R7Q"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
+                                    <mask key="subviews">
+                                        <include reference="54c-az-AKm"/>
+                                        <include reference="HRF-Fq-R7Q"/>
+                                    </mask>
+                                </variation>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.38823529410000002" green="0.72549019609999998" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="vpy-AT-TUo"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="vpy-AT-TUo"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Gress Profile" id="yZ3-Zc-Nuh">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="R1a-kF-RQ7">
+                            <color key="tintColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="cancelNewProfile:" destination="fqS-hn-tN5" id="zlc-ya-BOj"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="Right-32" id="tY2-y4-cAb"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="editProfilePictureButton" destination="78e-Pb-kuz" id="uXX-n8-REX"/>
+                        <outlet property="emailAddressField" destination="rcc-pe-5go" id="lHO-i8-4OH"/>
+                        <outlet property="firstNameField" destination="tfa-If-60B" id="kB7-wV-KjW"/>
+                        <outlet property="lastNameField" destination="i9a-GV-I9H" id="SgI-ub-AFv"/>
+                        <outlet property="newProfilePictureImageView" destination="Gmz-hm-BXn" id="0cy-2K-eqQ"/>
+                        <outlet property="newProfileProgressBar" destination="HRF-Fq-R7Q" id="Hcs-OU-46a"/>
+                        <outlet property="scrollView" destination="vpy-AT-TUo" id="TWg-00-6ne"/>
+                        <outlet property="userInputView" destination="54c-az-AKm" id="aaV-RA-aq4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3lo-jm-YyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1903.5" y="503"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="Rfg-oP-x4v">
@@ -424,5 +582,7 @@
     </scenes>
     <resources>
         <image name="Ok Filled-32" width="32" height="32"/>
+        <image name="Profile Male-100" width="100" height="100"/>
+        <image name="Right-32" width="32" height="32"/>
     </resources>
 </document>
