@@ -53,16 +53,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         self.loginButton.hidden = false
                     })
                     self.showAlertView(true, buttonTitle: "Success", message: "Logged in successfully!") { UIAlertAction in
-                        // self.presentViewController
-                        println("hIoijk")
                     }
                 }
             }
         }
     }
-    
-    
-    
     
     /**
         MARK: UITextFieldDelegate Methods
