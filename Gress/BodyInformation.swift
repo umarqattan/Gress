@@ -19,11 +19,43 @@ let INCHES_TO_CENTIMETERS = 2.54 as Float
 let FEET_TO_INCHES = 12 as Float
 let POUNDS_TO_KILOGRAMS = 0.45 as Float
 let KILOGRAMS_TO_POUNDS = 2.2 as Float
-
-
+let SI = 0
+let METRIC = 1
 
 class BodyInformation {
     
+    struct PickerView {
+        
+        struct Age {
+            static let numberOfComponents = 1
+            static let numberOfRowsInComponent = BodyInformation().age.count
+            static let age = BodyInformation().age
+        }
+        
+        struct Height {
+            struct Metric {
+                static let numberOfComponents = BodyInformation().heightMetric.count
+                static let heightMetric = BodyInformation().heightMetric
+            }
+            
+            struct SI {
+                static let numberOfComponents = BodyInformation().heightSI.count
+                static let heightSI = BodyInformation().heightSI
+            }
+        }
+        
+        struct Weight {
+            struct Metric {
+                static let numberOfComponents = BodyInformation().weightMetric.count
+                static let weightMetric = BodyInformation().weightMetric
+            }
+            
+            struct SI {
+                static let numberOfComponents = BodyInformation().weightSI.count
+                static let weightSI = BodyInformation().weightSI
+            }
+        }
+    }
     
     lazy var age:[Int] = {
         var array:[Int] = []
@@ -35,20 +67,22 @@ class BodyInformation {
     
     lazy var heightSI:[[String]] = {
         var feet:[String] = []
+        var unitFeet:[String] = ["ft"]
         var inches:[String] = []
+        var unitInches:[String] = ["in"]
         for (var i = 4; i < 8; i++) {
-            feet.append("\(i) ft")
+            feet.append("\(i)")
         }
         for (var i = 0; i < 12; i++) {
-            inches.append("\(i) in")
+            inches.append("\(i)")
         }
         
-        return [feet, inches]
+        return [feet,unitFeet, inches, unitInches]
     }()
     
     lazy var heightMetric:[[String]] = {
         var centimeters:[String] = []
-        var cm = ["cm"]
+        var cm:[String] = ["cm"]
         for (var i = 122; i < 241; i++) {
             centimeters.append("\(i)")
         }
@@ -82,18 +116,24 @@ class BodyInformation {
         return [wholeKilograms, decimalKilograms, kg]
     }()
     
+    /**
+        TODO:
+        FIX:  Modify current MetricToSI and MetricToSI
+              methods in BodyInformation.swift
+    **/
+    
     func metricToSIHeight(centimeters: String) -> [String] {
         var centimetersToInches:Float = (centimeters as NSString).floatValue * CENTIMETERS_TO_INCHES
-        var ft:Int = Int(centimetersToInches/12)
-        var inches:Int = Int(centimetersToInches%12)
+        var ft = Int(floor((centimetersToInches/12.0)))
+        var inches = Int(round(centimetersToInches%12.0))
         
         return ["\(ft)", "\(inches)"]
     }
     
-    func SIToMetricHeight(inches: String, feet: String) -> [String] {
+    func SIToMetricHeight(feet: String, inches: String) -> [String] {
         var centimetersFromInches:Float = (inches as NSString).floatValue * INCHES_TO_CENTIMETERS
-        var centimetersFromFeet:Float =  (feet as NSString).floatValue * FEET_TO_INCHES
-        var centimeters = Int(centimetersFromFeet + centimetersFromInches)
+        var centimetersFromFeet:Float =  (feet as NSString).floatValue * FEET_TO_INCHES * INCHES_TO_CENTIMETERS
+        var centimeters = Int(round((centimetersFromFeet + centimetersFromInches)))
         return ["\(centimeters)"]
     }
     
