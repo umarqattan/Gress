@@ -685,16 +685,15 @@
                                                     <rect key="frame" x="66" y="55" width="31" height="21"/>
                                                 </variation>
                                             </label>
-                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kOd-AT-omh" userLabel="Age Picker View">
-                                                <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
-                                                <color key="tintColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
-                                                <accessibility key="accessibilityConfiguration" label="agePickerView">
-                                                    <bool key="isElement" value="YES"/>
-                                                </accessibility>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="22" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n1U-nB-gNE" userLabel="Age Text Field">
+                                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
                                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                                    <rect key="frame" x="0.0" y="-15" width="330" height="162"/>
+                                                    <rect key="frame" x="117" y="51" width="97" height="30"/>
                                                 </variation>
-                                            </pickerView>
+                                            </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBV-C4-1T8">
                                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
@@ -704,14 +703,15 @@
                                                     <rect key="frame" x="56" y="110" width="51" height="21"/>
                                                 </variation>
                                             </label>
-                                            <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oZV-4C-N21" userLabel="Height Picker View">
-                                                <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
-                                                <color key="tintColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
-                                                <accessibility key="accessibilityConfiguration" label="heightPickerView"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="183 cm" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oQC-G5-ATt" userLabel="Height Text Field">
+                                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
                                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                                    <rect key="frame" x="0.0" y="40" width="330" height="162"/>
+                                                    <rect key="frame" x="117" y="106" width="97" height="30"/>
                                                 </variation>
-                                            </pickerView>
+                                            </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="818-A0-cyx">
                                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
@@ -721,6 +721,15 @@
                                                     <rect key="frame" x="55" y="181" width="53" height="21"/>
                                                 </variation>
                                             </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="68.3 kg" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qDB-T2-Zti" userLabel="Weight Text Field">
+                                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <rect key="frame" x="117" y="177" width="97" height="30"/>
+                                                </variation>
+                                            </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acl-Ql-hrp">
                                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
@@ -740,15 +749,10 @@
                                                 <variation key="widthClass=compact" fixedFrame="YES">
                                                     <rect key="frame" x="104" y="254" width="123" height="29"/>
                                                 </variation>
+                                                <connections>
+                                                    <action selector="unitSegmentedControlChanged:" destination="snx-jD-Lp7" eventType="valueChanged" id="7vn-22-8EV"/>
+                                                </connections>
                                             </segmentedControl>
-                                            <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uCl-tQ-azV" userLabel="Weight Picker View">
-                                                <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
-                                                <color key="tintColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
-                                                <accessibility key="accessibilityConfiguration" label="weightPickerView"/>
-                                                <variation key="widthClass=compact" fixedFrame="YES">
-                                                    <rect key="frame" x="0.0" y="111" width="330" height="162"/>
-                                                </variation>
-                                            </pickerView>
                                         </subviews>
                                         <color key="backgroundColor" red="0.23565995070000001" green="0.89427425989999998" blue="1" alpha="0.37" colorSpace="calibratedRGB"/>
                                         <variation key="default">
@@ -756,13 +760,13 @@
                                                 <exclude reference="r8a-FC-HPP"/>
                                                 <exclude reference="CtZ-cJ-k34"/>
                                                 <exclude reference="Ici-WX-ZPM"/>
-                                                <exclude reference="kOd-AT-omh"/>
+                                                <exclude reference="n1U-nB-gNE"/>
                                                 <exclude reference="QBV-C4-1T8"/>
-                                                <exclude reference="oZV-4C-N21"/>
+                                                <exclude reference="oQC-G5-ATt"/>
                                                 <exclude reference="818-A0-cyx"/>
+                                                <exclude reference="qDB-T2-Zti"/>
                                                 <exclude reference="acl-Ql-hrp"/>
                                                 <exclude reference="IP9-Xv-tFH"/>
-                                                <exclude reference="uCl-tQ-azV"/>
                                             </mask>
                                         </variation>
                                         <variation key="widthClass=compact" fixedFrame="YES">
@@ -771,13 +775,13 @@
                                                 <include reference="r8a-FC-HPP"/>
                                                 <include reference="CtZ-cJ-k34"/>
                                                 <include reference="Ici-WX-ZPM"/>
-                                                <include reference="kOd-AT-omh"/>
+                                                <include reference="n1U-nB-gNE"/>
                                                 <include reference="QBV-C4-1T8"/>
-                                                <include reference="oZV-4C-N21"/>
+                                                <include reference="oQC-G5-ATt"/>
                                                 <include reference="818-A0-cyx"/>
+                                                <include reference="qDB-T2-Zti"/>
                                                 <include reference="acl-Ql-hrp"/>
                                                 <include reference="IP9-Xv-tFH"/>
-                                                <include reference="uCl-tQ-azV"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -881,13 +885,13 @@
                         <barButtonItem key="rightBarButtonItem" image="Right-32" id="wTx-zC-1CD"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="agePickerView" destination="kOd-AT-omh" id="t9V-pC-HOL"/>
-                        <outlet property="heightPickerView" destination="oZV-4C-N21" id="WW1-kq-rER"/>
+                        <outlet property="ageField" destination="n1U-nB-gNE" id="hSA-9p-rot"/>
+                        <outlet property="heightField" destination="oQC-G5-ATt" id="jVZ-Ll-Wmf"/>
                         <outlet property="newProfileProgressBar" destination="uv4-WP-oA9" id="wC6-VD-aV5"/>
                         <outlet property="scrollView" destination="DsM-hk-muc" id="eFr-60-1YP"/>
                         <outlet property="sexSegmentedControl" destination="r8a-FC-HPP" id="cKs-RY-6eD"/>
                         <outlet property="unitSegmentedControl" destination="IP9-Xv-tFH" id="RdL-x1-Og4"/>
-                        <outlet property="weightPickerView" destination="uCl-tQ-azV" id="XIb-j2-T88"/>
+                        <outlet property="weightField" destination="qDB-T2-Zti" id="eCq-wW-Yo8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cx6-fd-iov" userLabel="First Responder" sceneMemberID="firstResponder"/>
