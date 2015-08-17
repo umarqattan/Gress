@@ -14,11 +14,11 @@ import Foundation
           and vice versa
 **/
 
-let CENTIMETERS_TO_INCHES = 0.39 as Float
+let CENTIMETERS_TO_INCHES = 0.393701 as Float
 let INCHES_TO_CENTIMETERS = 2.54 as Float
 let FEET_TO_INCHES = 12 as Float
-let POUNDS_TO_KILOGRAMS = 0.45 as Float
-let KILOGRAMS_TO_POUNDS = 2.2 as Float
+let POUNDS_TO_KILOGRAMS = 0.453592 as Float
+let KILOGRAMS_TO_POUNDS = 2.20462 as Float
 let SI = 0
 let METRIC = 1
 
@@ -125,16 +125,17 @@ class BodyInformation {
     func metricToSIHeight(centimeters: String) -> [String] {
         var centimetersToInches:Float = (centimeters as NSString).floatValue * CENTIMETERS_TO_INCHES
         var ft = Int(floor((centimetersToInches/12.0)))
-        var inches = Int(round(centimetersToInches%12.0))
+        var inches = Int(floor(centimetersToInches%12.0))
         
-        return ["\(ft)", "\(inches)"]
+        
+        return ["\(ft)", "\(inches)", "\(centimetersToInches/12.0-(centimetersToInches%12.0)/12)", "\(centimetersToInches%12.0)"]
     }
     
     func SIToMetricHeight(feet: String, inches: String) -> [String] {
         var centimetersFromInches:Float = (inches as NSString).floatValue * INCHES_TO_CENTIMETERS
         var centimetersFromFeet:Float =  (feet as NSString).floatValue * FEET_TO_INCHES * INCHES_TO_CENTIMETERS
         var centimeters = Int(round((centimetersFromFeet + centimetersFromInches)))
-        return ["\(centimeters)"]
+        return ["\(centimeters)", "\(centimetersFromFeet+centimetersFromInches)"]
     }
     
     func metricToSIWeight(kilograms : String) -> [String] {
@@ -151,6 +152,63 @@ class BodyInformation {
         var decimalKilograms = kilograms % 1
     
         return ["\(wholeKilograms)", ".\(decimalKilograms)"]
+    }
+    
+    func getCentimetersFromText(text : String) -> String {
+        var startIndex = text.startIndex
+        var endIndex = advance(startIndex, 3)
+        var range = Range<String.Index>(start: startIndex, end: endIndex)
+        return text.substringWithRange(range)
+    }
+    
+    func getFeetFromText(text : String) -> String {
+        var startIndex = text.startIndex
+        var endIndex = advance(startIndex, 1)
+        var range = Range<String.Index>(start: startIndex, end: endIndex)
+
+        return text.substringWithRange(range)
+    }
+    
+    func getInchesFromText(text : String) -> String {
+        var startIndex = advance(text.startIndex, 6)
+        var endIndex = startIndex
+        var length = text.length
+        
+        if length == 10 { // if there is there is one digit in inches
+            endIndex = advance(text.startIndex, 8)
+        }
+        if length == 11 { // if there is there are two digits in inches
+            endIndex = advance(text.startIndex, 9)
+        }
+        var range = Range<String.Index>(start: startIndex, end: endIndex)
+        
+        return text.substringWithRange(range)
+    }
+    
+    func formatHeightMetricString(centimeters : String) -> String {
+        var rawCentimeters = (centimeters as NSString).floatValue
+        var centimeters = Int(roundf(rawCentimeters))
+        
+        return "\(centimeters) cm"
+    }
+    
+    func formatHeightSIString(feet: String, inches: String) -> String {
+        var feetRawValue = (feet as NSString).floatValue
+        var inchesRawValue = (inches as NSString).floatValue
+        
+        var feet = Int(floor(feetRawValue))
+        
+        
+        var inches = Int(round(inchesRawValue))
+        println()
+        /**
+        if inches == 12 {
+            inches = 0
+            feet++
+        }
+**/
+        
+        return "\(feet) ft, \(inches) in"
     }
     
     

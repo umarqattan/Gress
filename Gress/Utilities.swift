@@ -9,6 +9,18 @@
 import Foundation
 import UIKit
 
+
+
+extension String {
+    
+    var length : Int {
+        return count(self)
+
+    }
+    
+    
+}
+
 extension UIViewController {
     
     /**

@@ -69,46 +69,57 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
               ToSI methods in BodyInformation.swift
     **/
     
+    
+    
+    var tmpDictionary:[String : AnyObject] = [:]
     @IBAction func unitSegmentedControlChanged(sender: UISegmentedControl) {
         
         if heightField.text.isEmpty {
             return
         } else {
+            
+            var SIArray = tmpDictionary["SI"] as! [String]
+            
+            
+            var rawFeet = SIArray[0]
+            var rawInches = SIArray[1]
+            
+            var rawMetricHeight = BodyInformation().SIToMetricHeight(rawFeet, inches: rawInches)
+            var centimeters = rawMetricHeight[1]
+            tmpDictionary["METRIC"] = [centimeters]
+            
+            var metricArray = tmpDictionary["METRIC"] as! [String]
+            var rawSIHeight = BodyInformation().metricToSIHeight(centimeters)
+            var feet = rawSIHeight[2]
+            var inches = rawSIHeight[3]
+            tmpDictionary["SI"] = [feet, inches]
+            
+            
             switch sender.selectedSegmentIndex {
-            case 0 :
-                var centimeters = heightField.text.substringWithRange(Range<String.Index>(start: heightField.text.startIndex, end: advance(heightField.text.startIndex, 3)))
-                    println("centimeters = \(centimeters)")
-                var newText = BodyInformation().metricToSIHeight(centimeters)
+                case SI :
+                    
+                    println("switched from METRIC TO SI")
+                    println("rawFeet = \(rawFeet) and rawInches = \(rawInches) from rawCentimeters = \(centimeters)")
+                    heightField.text = BodyInformation().formatHeightSIString(feet, inches: rawInches)
                 
-                heightField.text = "\(newText[0]) ft, \(newText[1]) in"
-                println("newText = \(heightField.text)")
-            case 1 :
-                var feet = heightField.text.substringWithRange(Range<String.Index>(start: heightField.text.startIndex, end: advance(heightField.text.startIndex, 1)))
-                var inches = heightField.text.substringWithRange(Range<String.Index>(start: advance(heightField.text.startIndex, 6), end: advance(heightField.text.startIndex, 9)))
-                println("feet = \(feet) and inches = \(inches)")
+                case METRIC:
+                    
+                    println("switched from SI TO METRIC")
+                    println("rawCentimeters = \(centimeters) from rawFeet = \(rawFeet) and rawInches = \(rawInches)")
+                    heightField.text = BodyInformation().formatHeightMetricString(centimeters)
                 
-                var newText = BodyInformation().SIToMetricHeight(feet, inches: inches)
-                heightField.text = "\(newText[0]) cm"
-                println("newText = \(heightField.text)")
-            default : return
+                default : return
             }
 
         }
 
     }
+
+    
     /**
         MARK: UIPickerView delegate methods
     **/
-    
-    /**
-        TODO: Make sure to hide pickerViews until they the user 
-              taps the designated area. Also, fix some of the 
-              components/rows problems. Create a UIAlertView that
-              contains a sheet so that a user can change their inputs
-              without the UIPickerView obstructing their view.
-    **/
-    
-    
+
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         switch activeTextField! {
             case ageField :
@@ -251,10 +262,38 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     }
     
     
-    
     func textFieldDidEndEditing(textField: UITextField) {
         activeTextField = nil
         pickerView = UIPickerView()
+        
+        if textField == heightField {
+            
+            
+            
+            switch unitSegmentedControl.selectedSegmentIndex {
+                case SI :
+                    if tmpDictionary.isEmpty {
+                    var feet = BodyInformation().getFeetFromText(heightField.text)
+                    var inches = BodyInformation().getInchesFromText(heightField.text)
+                    var rawMetricHeight = BodyInformation().SIToMetricHeight(feet, inches: inches)
+                    var centimeters = rawMetricHeight[1]
+                        println("centimeters in TEXTFIELD = \(centimeters)")
+                    tmpDictionary["METRIC"] = [centimeters]
+                }
+                case METRIC:
+                    if tmpDictionary.isEmpty{
+                    var centimeters = BodyInformation().getCentimetersFromText(heightField.text)
+                    var rawSIHeight = BodyInformation().metricToSIHeight(centimeters)
+                    var feet = rawSIHeight[2]
+                    var inches = rawSIHeight[3]
+                        println("centimeters in TEXTFIELD = \(centimeters)")
+                    tmpDictionary["SI"] = [feet, inches]
+                }
+                default : return
+            }
+        }
+        
+        
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -283,7 +322,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     
     func getHeightFromPickerView(feet : String, inches : String) {
         if activeTextField! == heightField {
-            heightField.text = feet + "ft, " + inches + " in"
+            heightField.text = feet + " ft, " + inches + " in"
         }
     }
     
