@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 /**
     MARK: methods that convert from SI to Metric
@@ -24,97 +24,99 @@ let METRIC = 1
 
 class BodyInformation {
     
-    struct PickerView {
+    var age: String!
+    
+    var heightMetric:String!
+    var heightSI:String!
+    var weightMetric:String!
+    var weightSI:String!
+    
+    
+    var rawCentimeters:String!
+    var rawFeet:String!
+    var rawInches:String!
+    
+    var rawPounds:String!
+    
+    var wholePounds:String!
+    var decimalPounds:String!
+    
+    var rawKilograms:String!
+    var wholeKilograms:String!
+    var decimalKilograms:String!
+    
+    
+    init(age: String?, height:String?, weight: String?, unit:Int) {
         
-        struct Age {
-            static let numberOfComponents = 1
-            static let numberOfRowsInComponent = BodyInformation().age.count
-            static let age = BodyInformation().age
+        if let anAge = age {
+            self.age = anAge
         }
         
-        struct Height {
-            struct Metric {
-                static let numberOfComponents = BodyInformation().heightMetric.count
-                static let heightMetric = BodyInformation().heightMetric
+        if let aHeight = height {
+        
+            switch unit {
+            case SI:
+                println("initializing from SI units")
+                var feet = getFeetFromText(aHeight)
+                var inches = getInchesFromText(aHeight)
+                var metricHeightArray = SIToMetricHeight(feet, inches: inches)
+                rawCentimeters = metricHeightArray[1]
+                rawFeet = feet
+                rawInches = inches
+                heightSI = formatHeightSIString(rawFeet, inches: rawInches)
+                heightMetric = formatHeightMetricString(rawCentimeters)
+                
+                
+            case METRIC:
+                
+                println("initializing from Metric Units")
+                var centimeters = getCentimetersFromText(aHeight)
+                var SIHeightArray = metricToSIHeight(centimeters)
+                rawFeet = SIHeightArray[2]
+                rawInches = SIHeightArray[3]
+                rawCentimeters = centimeters
+                heightMetric = formatHeightMetricString(centimeters)
+                heightSI = formatHeightSIString(rawFeet, inches: rawInches)
+                
+            default : return
             }
+        }
+        
+        if let aWeight = weight {
             
-            struct SI {
-                static let numberOfComponents = BodyInformation().heightSI.count
-                static let heightSI = BodyInformation().heightSI
+            switch unit {
+            case SI:
+                println("initializing from SI units")
+                
+                wholePounds = getWholePoundsFromText(aWeight)
+                decimalPounds = getDecimalPoundsFromText(aWeight)
+                weightSI = formatWeightSIString(wholePounds, decimalPounds: decimalPounds)
+                var kilogramsArray = SIToMetricWeight(wholePounds, decimalPounds: decimalPounds)
+                wholeKilograms = kilogramsArray[0]
+                decimalKilograms = kilogramsArray[1]
+                weightMetric = formatWeightMetricString(wholeKilograms, decimalKilograms: decimalKilograms)
+                
+            
+            case METRIC:
+                
+                println("initializing from Metric Units")
+                wholeKilograms = getWholeKilogramsFromText(aWeight)
+                decimalKilograms = getDecimalKilogramsFromText(aWeight)
+                weightMetric = formatWeightMetricString(wholeKilograms, decimalKilograms: decimalKilograms)
+                var poundsArray = metricToSIWeight(wholeKilograms, decimalKilograms: decimalKilograms)
+                wholePounds = poundsArray[0]
+                decimalPounds = poundsArray[1]
+                weightSI = formatWeightSIString(wholePounds, decimalPounds: decimalPounds)
+                
+            default : return
             }
+
+            
+            
         }
         
-        struct Weight {
-            struct Metric {
-                static let numberOfComponents = BodyInformation().weightMetric.count
-                static let weightMetric = BodyInformation().weightMetric
-            }
-            
-            struct SI {
-                static let numberOfComponents = BodyInformation().weightSI.count
-                static let weightSI = BodyInformation().weightSI
-            }
-        }
     }
     
-    lazy var age:[Int] = {
-        var array:[Int] = []
-        for (var i = 18; i<150; i++) {
-            array.append(i)
-        }
-        return array
-        }()
-    
-    lazy var heightSI:[[String]] = {
-        var feet:[String] = []
-        var unitFeet:[String] = ["ft"]
-        var inches:[String] = []
-        var unitInches:[String] = ["in"]
-        for (var i = 4; i < 8; i++) {
-            feet.append("\(i)")
-        }
-        for (var i = 0; i < 12; i++) {
-            inches.append("\(i)")
-        }
-        
-        return [feet,unitFeet, inches, unitInches]
-    }()
-    
-    lazy var heightMetric:[[String]] = {
-        var centimeters:[String] = []
-        var cm:[String] = ["cm"]
-        for (var i = 122; i < 241; i++) {
-            centimeters.append("\(i)")
-        }
-        return [centimeters, cm]
-    }()
-    
-    lazy var weightSI:[[String]] = {
-        var wholePounds:[String] = []
-        var decimalPounds:[String] = []
-        var lbs = ["lbs"]
-        for (var i = 60; i < 998; i++) {
-            wholePounds.append("\(i)")
-        }
-        for (var i = 0; i < 10; i++) {
-            decimalPounds.append(".\(i)")
-        }
-        return [wholePounds, decimalPounds, lbs]
-    }()
-    
-    lazy var weightMetric:[[String]] = {
-        var wholeKilograms:[String] = []
-        var decimalKilograms:[String] = []
-        var kg = ["kg"]
-        
-        for (var i = 27; i < 453; i++) {
-            wholeKilograms.append("\(i)")
-        }
-        for (var i = 0; i < 10; i++) {
-            decimalKilograms.append(".\(i)")
-        }
-        return [wholeKilograms, decimalKilograms, kg]
-    }()
     
     /**
         TODO:
@@ -138,8 +140,8 @@ class BodyInformation {
         return ["\(centimeters)", "\(centimetersFromFeet+centimetersFromInches)"]
     }
     
-    func metricToSIWeight(kilograms : String) -> [String] {
-        var pounds = (kilograms as NSString).floatValue * KILOGRAMS_TO_POUNDS
+    func metricToSIWeight(wholeKilograms: String, decimalKilograms: String) -> [String] {
+        var pounds = ((wholeKilograms as NSString).floatValue + (decimalKilograms as NSString).floatValue) * KILOGRAMS_TO_POUNDS
         var wholePounds = Int(pounds)
         var decimalPounds = pounds % 1
         
@@ -185,6 +187,92 @@ class BodyInformation {
         return text.substringWithRange(range)
     }
     
+    func getWholePoundsFromText(text: String) -> String {
+        var startIndex:String.Index
+        var endIndex:String.Index
+        var length = text.length
+
+        
+        if length == 7 {
+            startIndex = advance(text.startIndex,2)
+            endIndex = advance(text.startIndex,4)
+            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            return text.substringWithRange(range)
+        } else if length == 8 {
+            startIndex = advance(text.startIndex,3)
+            endIndex = advance(text.startIndex,5)
+            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            return text.substringWithRange(range)
+        } else {
+            return ""
+        }
+    }
+    
+    func getDecimalPoundsFromText(text: String) -> String {
+        var startIndex:String.Index
+        var endIndex:String.Index
+        var length = text.length
+        if length == 7 {
+            startIndex = advance(text.startIndex,2)
+            endIndex = advance(text.startIndex,4)
+            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            return text.substringWithRange(range)
+        } else if length == 8 {
+            startIndex = advance(text.startIndex,3)
+            endIndex = advance(text.startIndex,5)
+            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            return text.substringWithRange(range)
+        } else {
+            return ""
+        }
+    }
+    
+    func getWholeKilogramsFromText(text: String) -> String {
+        var startIndex:String.Index
+        var endIndex:String.Index
+        var length = text.length
+        
+        if length == 7 {
+            startIndex = text.startIndex
+            endIndex = advance(text.startIndex,2)
+            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            return text.substringWithRange(range)
+        }
+        
+        else if length == 8 {
+            startIndex = text.startIndex
+            endIndex = advance(startIndex,3)
+            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            return text.substringWithRange(range)
+        } else {
+            return ""
+        }
+        
+    }
+    
+    func getDecimalKilogramsFromText(text: String) -> String {
+        var startIndex:String.Index
+        var endIndex:String.Index
+        var length = text.length
+        if length == 7 {
+            startIndex = advance(text.startIndex,2)
+            endIndex = advance(text.startIndex,4)
+            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            return text.substringWithRange(range)
+        } else if length == 8 {
+            startIndex = advance(text.startIndex,3)
+            endIndex = advance(text.startIndex,5)
+            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            return text.substringWithRange(range)
+        } else {
+            return ""
+        }
+        
+    }
+    /**
+        MARK: formatting body information for textField
+    **/
+    
     func formatHeightMetricString(centimeters : String) -> String {
         var rawCentimeters = (centimeters as NSString).floatValue
         var centimeters = Int(roundf(rawCentimeters))
@@ -197,19 +285,21 @@ class BodyInformation {
         var inchesRawValue = (inches as NSString).floatValue
         
         var feet = Int(floor(feetRawValue))
-        
-        
         var inches = Int(round(inchesRawValue))
-        println()
-        /**
-        if inches == 12 {
-            inches = 0
-            feet++
-        }
-**/
         
         return "\(feet) ft, \(inches) in"
     }
+    
+    func formatWeightMetricString(wholeKilograms: String, decimalKilograms: String) -> String {
+        return wholeKilograms + decimalKilograms + " kg"
+    }
+    
+    func formatWeightSIString(wholePounds: String, decimalPounds: String) -> String {
+        return wholePounds + decimalPounds + " lb"
+    }
+    
+    
+    
     
     
 

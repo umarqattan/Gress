@@ -25,7 +25,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     
     var activeTextField: UITextField?
     var pickerView = UIPickerView()
-    
+    var body:BodyInformation!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +60,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     
         scrollView.delegate = self
         unitSegmentedControl.selectedSegmentIndex = 1
+        unitSegmentedControl.enabled = false
     }
     
     /**
@@ -69,49 +70,32 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
               ToSI methods in BodyInformation.swift
     **/
     
-    
-    
     var tmpDictionary:[String : AnyObject] = [:]
     @IBAction func unitSegmentedControlChanged(sender: UISegmentedControl) {
         
-        if heightField.text.isEmpty {
-            return
-        } else {
-            
-            var SIArray = tmpDictionary["SI"] as! [String]
-            
-            
-            var rawFeet = SIArray[0]
-            var rawInches = SIArray[1]
-            
-            var rawMetricHeight = BodyInformation().SIToMetricHeight(rawFeet, inches: rawInches)
-            var centimeters = rawMetricHeight[1]
-            tmpDictionary["METRIC"] = [centimeters]
-            
-            var metricArray = tmpDictionary["METRIC"] as! [String]
-            var rawSIHeight = BodyInformation().metricToSIHeight(centimeters)
-            var feet = rawSIHeight[2]
-            var inches = rawSIHeight[3]
-            tmpDictionary["SI"] = [feet, inches]
-            
-            
+        
+
             switch sender.selectedSegmentIndex {
                 case SI :
                     
                     println("switched from METRIC TO SI")
-                    println("rawFeet = \(rawFeet) and rawInches = \(rawInches) from rawCentimeters = \(centimeters)")
-                    heightField.text = BodyInformation().formatHeightSIString(feet, inches: rawInches)
+                    
+                    heightField.text = body.heightSI
+                    weightField.text = body.weightSI
                 
                 case METRIC:
                     
                     println("switched from SI TO METRIC")
-                    println("rawCentimeters = \(centimeters) from rawFeet = \(rawFeet) and rawInches = \(rawInches)")
-                    heightField.text = BodyInformation().formatHeightMetricString(centimeters)
+                    
+                    
+                    heightField.text = body.heightMetric
+                    weightField.text = body.weightMetric
+                
+                
                 
                 default : return
             }
-
-        }
+        
 
     }
 
@@ -123,18 +107,18 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         switch activeTextField! {
             case ageField :
-                return BodyInformation.PickerView.Age.numberOfComponents
+                return PickerViewConstants.Age.numberOfComponents
             case heightField :
                 if unitSegmentedControl.selectedSegmentIndex == 0 {
-                    return BodyInformation.PickerView.Height.SI.numberOfComponents
+                    return PickerViewConstants.Height.SI.numberOfComponents
                 } else if unitSegmentedControl.selectedSegmentIndex == 1 {
-                    return BodyInformation.PickerView.Height.Metric.numberOfComponents
+                    return PickerViewConstants.Height.Metric.numberOfComponents
                 } else { return 0 }
             case weightField :
                 if unitSegmentedControl.selectedSegmentIndex == 0 {
-                    return BodyInformation.PickerView.Weight.SI.numberOfComponents
+                    return PickerViewConstants.Weight.SI.numberOfComponents
                 } else if unitSegmentedControl.selectedSegmentIndex == 1 {
-                    return BodyInformation.PickerView.Weight.Metric.numberOfComponents
+                    return PickerViewConstants.Weight.Metric.numberOfComponents
                     
                 } else {return 0 }
             default : return 0
@@ -144,19 +128,19 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch activeTextField! {
         case ageField :
-            return BodyInformation.PickerView.Age.numberOfRowsInComponent
+            return PickerViewConstants.Age.numberOfRowsInComponent
         case heightField :
             if unitSegmentedControl.selectedSegmentIndex == 0 {
                 
-                return BodyInformation.PickerView.Height.SI.heightSI[component].count
+                return PickerViewConstants.Height.SI.heightSI[component].count
             } else if unitSegmentedControl.selectedSegmentIndex == 1 {
-                return BodyInformation.PickerView.Height.Metric.heightMetric[component].count
+                return PickerViewConstants.Height.Metric.heightMetric[component].count
             } else { return 0 }
         case weightField :
             if unitSegmentedControl.selectedSegmentIndex == 0 {
-                return BodyInformation.PickerView.Weight.SI.weightSI[component].count
+                return PickerViewConstants.Weight.SI.weightSI[component].count
             } else if unitSegmentedControl.selectedSegmentIndex == 1 {
-                return BodyInformation.PickerView.Weight.Metric.weightMetric[component].count
+                return PickerViewConstants.Weight.Metric.weightMetric[component].count
             } else {return 0 }
         default : return 0
         }
@@ -165,18 +149,18 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         switch activeTextField! {
         case ageField :
-            return "\(BodyInformation.PickerView.Age.age[row])"
+            return "\(PickerViewConstants.Age.age[row])"
         case heightField :
             if unitSegmentedControl.selectedSegmentIndex == 0 {
-                return BodyInformation.PickerView.Height.SI.heightSI[component][row]
+                return PickerViewConstants.Height.SI.heightSI[component][row]
             } else if unitSegmentedControl.selectedSegmentIndex == 1 {
-                return BodyInformation.PickerView.Height.Metric.heightMetric[component][row]
+                return PickerViewConstants.Height.Metric.heightMetric[component][row]
             } else { return "" }
         case weightField :
             if unitSegmentedControl.selectedSegmentIndex == 0 {
-                return BodyInformation.PickerView.Weight.SI.weightSI[component][row]
+                return PickerViewConstants.Weight.SI.weightSI[component][row]
             } else if unitSegmentedControl.selectedSegmentIndex == 1 {
-                return BodyInformation.PickerView.Weight.Metric.weightMetric[component][row]
+                return PickerViewConstants.Weight.Metric.weightMetric[component][row]
                 
             } else {return "" }
         default : return ""
@@ -186,23 +170,23 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch activeTextField! {
         case ageField :
-            getAgeInfoFromPickerView(BodyInformation.PickerView.Age.age[row])
+            getAgeInfoFromPickerView(PickerViewConstants.Age.age[row])
             
         case heightField :
             
-            if unitSegmentedControl.selectedSegmentIndex == 0 {
+            if unitSegmentedControl.selectedSegmentIndex == SI {
                 var feet:String!
                 var inches:String!
-                feet = BodyInformation.PickerView.Height.SI.heightSI[0][pickerView.selectedRowInComponent(0)]
-                inches = BodyInformation.PickerView.Height.SI.heightSI[2][pickerView.selectedRowInComponent(2)]
+                feet = PickerViewConstants.Height.SI.heightSI[0][pickerView.selectedRowInComponent(0)]
+                inches = PickerViewConstants.Height.SI.heightSI[2][pickerView.selectedRowInComponent(2)]
                 getHeightFromPickerView(feet, inches: inches)
+                 println("feet = \(feet) and inches = \(inches)")
                 
-                
-            } else if unitSegmentedControl.selectedSegmentIndex == 1 {
+            } else if unitSegmentedControl.selectedSegmentIndex == METRIC {
                 var centimeters:String!
-                centimeters = BodyInformation.PickerView.Height.Metric.heightMetric[0][pickerView.selectedRowInComponent(0)]
+                centimeters = PickerViewConstants.Height.Metric.heightMetric[0][pickerView.selectedRowInComponent(0)]
                 getHeightFromPickerView(centimeters)
-
+                println("cm = \(centimeters)")
             }
         case weightField :
             
@@ -211,13 +195,13 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
             var unit:String!
             
             if unitSegmentedControl.selectedSegmentIndex == 0 {
-                wholeWeight = BodyInformation.PickerView.Weight.SI.weightSI[0][pickerView.selectedRowInComponent(0)]
-                decimalWeight = BodyInformation.PickerView.Weight.SI.weightSI[1][pickerView.selectedRowInComponent(1)]
-                unit = BodyInformation.PickerView.Weight.SI.weightSI[2][pickerView.selectedRowInComponent(2)]
+                wholeWeight = PickerViewConstants.Weight.SI.weightSI[0][pickerView.selectedRowInComponent(0)]
+                decimalWeight = PickerViewConstants.Weight.SI.weightSI[1][pickerView.selectedRowInComponent(1)]
+                unit = PickerViewConstants.Weight.SI.weightSI[2][pickerView.selectedRowInComponent(2)]
             } else if unitSegmentedControl.selectedSegmentIndex == 1 {
-                wholeWeight = BodyInformation.PickerView.Weight.Metric.weightMetric[0][pickerView.selectedRowInComponent(0)]
-                decimalWeight = BodyInformation.PickerView.Weight.Metric.weightMetric[1][pickerView.selectedRowInComponent(1)]
-                unit = BodyInformation.PickerView.Weight.Metric.weightMetric[2][pickerView.selectedRowInComponent(2)]
+                wholeWeight = PickerViewConstants.Weight.Metric.weightMetric[0][pickerView.selectedRowInComponent(0)]
+                decimalWeight = PickerViewConstants.Weight.Metric.weightMetric[1][pickerView.selectedRowInComponent(1)]
+                unit = PickerViewConstants.Weight.Metric.weightMetric[2][pickerView.selectedRowInComponent(2)]
             }
             getWeightFromPickerView(wholeWeight, decimalWeight: decimalWeight, unit: unit)
         default : return
@@ -266,33 +250,11 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         activeTextField = nil
         pickerView = UIPickerView()
         
-        if textField == heightField {
-            
-            
-            
-            switch unitSegmentedControl.selectedSegmentIndex {
-                case SI :
-                    if tmpDictionary.isEmpty {
-                    var feet = BodyInformation().getFeetFromText(heightField.text)
-                    var inches = BodyInformation().getInchesFromText(heightField.text)
-                    var rawMetricHeight = BodyInformation().SIToMetricHeight(feet, inches: inches)
-                    var centimeters = rawMetricHeight[1]
-                        println("centimeters in TEXTFIELD = \(centimeters)")
-                    tmpDictionary["METRIC"] = [centimeters]
-                }
-                case METRIC:
-                    if tmpDictionary.isEmpty{
-                    var centimeters = BodyInformation().getCentimetersFromText(heightField.text)
-                    var rawSIHeight = BodyInformation().metricToSIHeight(centimeters)
-                    var feet = rawSIHeight[2]
-                    var inches = rawSIHeight[3]
-                        println("centimeters in TEXTFIELD = \(centimeters)")
-                    tmpDictionary["SI"] = [feet, inches]
-                }
-                default : return
-            }
+        if !ageField.text.isEmpty && !heightField.text.isEmpty && !weightField.text.isEmpty {
+            body = BodyInformation(age: ageField.text!, height: heightField.text!, weight: weightField.text!, unit: unitSegmentedControl.selectedSegmentIndex)
+            unitSegmentedControl.enabled = true
+            configureNewProfileProgressBar(FINISHED)
         }
-        
         
     }
     
