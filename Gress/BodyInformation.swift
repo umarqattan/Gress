@@ -37,13 +37,8 @@ class BodyInformation {
     var rawInches:String!
     
     var rawPounds:String!
-    
-    var wholePounds:String!
-    var decimalPounds:String!
-    
     var rawKilograms:String!
-    var wholeKilograms:String!
-    var decimalKilograms:String!
+    
     
     
     init(age: String?, height:String?, weight: String?, unit:Int) {
@@ -88,25 +83,19 @@ class BodyInformation {
             case SI:
                 println("initializing from SI units")
                 
-                wholePounds = getWholePoundsFromText(aWeight)
-                decimalPounds = getDecimalPoundsFromText(aWeight)
-                weightSI = formatWeightSIString(wholePounds, decimalPounds: decimalPounds)
-                var kilogramsArray = SIToMetricWeight(wholePounds, decimalPounds: decimalPounds)
-                wholeKilograms = kilogramsArray[0]
-                decimalKilograms = kilogramsArray[1]
-                weightMetric = formatWeightMetricString(wholeKilograms, decimalKilograms: decimalKilograms)
+                rawPounds = getPoundsFromText(aWeight)
+                weightSI = formatWeightSIString(rawPounds)
+                rawKilograms = SIToMetricWeight(rawPounds)
+                weightMetric = formatWeightMetricString(rawKilograms)
                 
             
             case METRIC:
                 
                 println("initializing from Metric Units")
-                wholeKilograms = getWholeKilogramsFromText(aWeight)
-                decimalKilograms = getDecimalKilogramsFromText(aWeight)
-                weightMetric = formatWeightMetricString(wholeKilograms, decimalKilograms: decimalKilograms)
-                var poundsArray = metricToSIWeight(wholeKilograms, decimalKilograms: decimalKilograms)
-                wholePounds = poundsArray[0]
-                decimalPounds = poundsArray[1]
-                weightSI = formatWeightSIString(wholePounds, decimalPounds: decimalPounds)
+                rawKilograms = getKilogramsFromText(aWeight)
+                weightMetric = formatWeightMetricString(rawKilograms)
+                rawPounds = metricToSIWeight(rawKilograms)
+                weightSI = formatWeightSIString(rawPounds)
                 
             default : return
             }
@@ -119,7 +108,7 @@ class BodyInformation {
     
     
     /**
-        TODO:
+        TODO: Fix metricToSIWeight and SIToMetricWeight
         FIX:  Modify current MetricToSI and MetricToSI
               methods in BodyInformation.swift
     **/
@@ -140,20 +129,20 @@ class BodyInformation {
         return ["\(centimeters)", "\(centimetersFromFeet+centimetersFromInches)"]
     }
     
-    func metricToSIWeight(wholeKilograms: String, decimalKilograms: String) -> [String] {
-        var pounds = ((wholeKilograms as NSString).floatValue + (decimalKilograms as NSString).floatValue) * KILOGRAMS_TO_POUNDS
-        var wholePounds = Int(pounds)
-        var decimalPounds = pounds % 1
-        
-        return ["\(wholePounds)", ".\(decimalPounds)"]
+    func metricToSIWeight(kilograms:String) -> String {
+        var pounds = ((kilograms as NSString).floatValue) * KILOGRAMS_TO_POUNDS
+        var formattedPounds = floor(pounds * 10)/10
+
+        return "\(formattedPounds)"
     }
     
-    func SIToMetricWeight(wholePounds : String, decimalPounds : String) -> [String] {
-        var kilograms = ((wholePounds as NSString).floatValue + (decimalPounds as NSString).floatValue) * POUNDS_TO_KILOGRAMS
-        var wholeKilograms = Int(kilograms)
-        var decimalKilograms = kilograms % 1
+    func SIToMetricWeight(pounds: String) -> String {
+        
+        var kilograms = ((pounds as NSString).floatValue) * POUNDS_TO_KILOGRAMS
+        var formattedKilograms = floor(kilograms * 10)/10
+        
+        return "\(formattedKilograms)"
     
-        return ["\(wholeKilograms)", ".\(decimalKilograms)"]
     }
     
     func getCentimetersFromText(text : String) -> String {
@@ -187,62 +176,46 @@ class BodyInformation {
         return text.substringWithRange(range)
     }
     
-    func getWholePoundsFromText(text: String) -> String {
-        var startIndex:String.Index
+    func getPoundsFromText(text: String) -> String {
+        var startIndex = text.startIndex
         var endIndex:String.Index
         var length = text.length
 
         
         if length == 7 {
-            startIndex = advance(text.startIndex,2)
             endIndex = advance(text.startIndex,4)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
+            println("wholePounds = \(text.substringWithRange(range))")
             return text.substringWithRange(range)
         } else if length == 8 {
-            startIndex = advance(text.startIndex,3)
             endIndex = advance(text.startIndex,5)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
+            println("wholePounds = \(text.substringWithRange(range))")
             return text.substringWithRange(range)
         } else {
             return ""
         }
     }
     
-    func getDecimalPoundsFromText(text: String) -> String {
-        var startIndex:String.Index
-        var endIndex:String.Index
-        var length = text.length
-        if length == 7 {
-            startIndex = advance(text.startIndex,2)
-            endIndex = advance(text.startIndex,4)
-            var range = Range<String.Index>(start: startIndex, end: endIndex)
-            return text.substringWithRange(range)
-        } else if length == 8 {
-            startIndex = advance(text.startIndex,3)
-            endIndex = advance(text.startIndex,5)
-            var range = Range<String.Index>(start: startIndex, end: endIndex)
-            return text.substringWithRange(range)
-        } else {
-            return ""
-        }
-    }
     
-    func getWholeKilogramsFromText(text: String) -> String {
-        var startIndex:String.Index
+    func getKilogramsFromText(text: String) -> String {
+        var startIndex = text.startIndex
         var endIndex:String.Index
         var length = text.length
         
         if length == 7 {
-            startIndex = text.startIndex
-            endIndex = advance(text.startIndex,2)
+            endIndex = advance(text.startIndex,4)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
+            println("wholeKilograms = \(text.substringWithRange(range))")
+
             return text.substringWithRange(range)
         }
         
         else if length == 8 {
-            startIndex = text.startIndex
-            endIndex = advance(startIndex,3)
+            endIndex = advance(startIndex,5)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
+            println("wholeKilograms = \(text.substringWithRange(range))")
+
             return text.substringWithRange(range)
         } else {
             return ""
@@ -250,25 +223,6 @@ class BodyInformation {
         
     }
     
-    func getDecimalKilogramsFromText(text: String) -> String {
-        var startIndex:String.Index
-        var endIndex:String.Index
-        var length = text.length
-        if length == 7 {
-            startIndex = advance(text.startIndex,2)
-            endIndex = advance(text.startIndex,4)
-            var range = Range<String.Index>(start: startIndex, end: endIndex)
-            return text.substringWithRange(range)
-        } else if length == 8 {
-            startIndex = advance(text.startIndex,3)
-            endIndex = advance(text.startIndex,5)
-            var range = Range<String.Index>(start: startIndex, end: endIndex)
-            return text.substringWithRange(range)
-        } else {
-            return ""
-        }
-        
-    }
     /**
         MARK: formatting body information for textField
     **/
@@ -290,12 +244,12 @@ class BodyInformation {
         return "\(feet) ft, \(inches) in"
     }
     
-    func formatWeightMetricString(wholeKilograms: String, decimalKilograms: String) -> String {
-        return wholeKilograms + decimalKilograms + " kg"
+    func formatWeightMetricString(kilograms: String) -> String {
+        return kilograms + " kg"
     }
     
-    func formatWeightSIString(wholePounds: String, decimalPounds: String) -> String {
-        return wholePounds + decimalPounds + " lb"
+    func formatWeightSIString(pounds : String) -> String {
+        return pounds + " lb"
     }
     
     

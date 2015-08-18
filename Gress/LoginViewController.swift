@@ -53,6 +53,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         self.loginButton.hidden = false
                     })
                     self.showAlertView(true, buttonTitle: "Success", message: "Logged in successfully!") { UIAlertAction in
+                        let newGressProfileNavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileNavigationController") as! UINavigationController
+                            self.presentViewController(newGressProfileNavigationController, animated: true, completion: nil)
                     }
                 }
             }

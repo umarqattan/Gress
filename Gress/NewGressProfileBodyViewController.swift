@@ -27,13 +27,19 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     var pickerView = UIPickerView()
     var body:BodyInformation!
     
+    
+    /**
+        TODO: add selector for forwardButton
+    **/
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setDelegates()
         configureNewProfileProgressBar(NOT_FINISHED)
-        
-        
+        let backButton = UIBarButtonItem(image: UIImage(named: "Left-32"), style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goBackToNewProfile:"))
+        let forwardButton = UIBarButtonItem(image: UIImage(named: "Right-32"), style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goForwardToActivity:"))
+        navigationItem.rightBarButtonItems = [forwardButton, backButton]
     }
     
     func configureNewProfileProgressBar(finished: Bool) {
@@ -48,6 +54,13 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         }
     }
     
+    func goForwardToActivity(sender: UIBarButtonItem) {
+        
+    }
+    
+    func goBackToNewProfile(sender: UIBarButtonItem) {
+        navigationController?.popViewControllerAnimated(true)
+    }
     /**
         MARK: UI[]Delegate methods
     **/
@@ -72,31 +85,21 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     
     var tmpDictionary:[String : AnyObject] = [:]
     @IBAction func unitSegmentedControlChanged(sender: UISegmentedControl) {
-        
-        
-
             switch sender.selectedSegmentIndex {
                 case SI :
                     
                     println("switched from METRIC TO SI")
-                    
                     heightField.text = body.heightSI
                     weightField.text = body.weightSI
                 
                 case METRIC:
                     
                     println("switched from SI TO METRIC")
-                    
-                    
                     heightField.text = body.heightMetric
                     weightField.text = body.weightMetric
-                
-                
-                
+
                 default : return
             }
-        
-
     }
 
     
@@ -227,10 +230,6 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         activeTextField!.inputAccessoryView = keyboardToolbar
     }
     
-    /**
-        
-    **/
-    
     func endEditing(sender : UIBarButtonItem) {
         activeTextField!.resignFirstResponder()
     }
@@ -245,7 +244,6 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         textField.inputView = pickerView
     }
     
-    
     func textFieldDidEndEditing(textField: UITextField) {
         activeTextField = nil
         pickerView = UIPickerView()
@@ -254,6 +252,9 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
             body = BodyInformation(age: ageField.text!, height: heightField.text!, weight: weightField.text!, unit: unitSegmentedControl.selectedSegmentIndex)
             unitSegmentedControl.enabled = true
             configureNewProfileProgressBar(FINISHED)
+        } else {
+            unitSegmentedControl.enabled = false
+            configureNewProfileProgressBar(NOT_FINISHED)
         }
         
     }
@@ -293,12 +294,5 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
             heightField.text = centimeters + " cm"
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
 }

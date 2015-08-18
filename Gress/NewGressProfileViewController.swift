@@ -29,6 +29,7 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
     
     var activeTextField:UITextField?
     var keyboardDismissTapGesture: UIGestureRecognizer!
+    var forwardButton:UIBarButtonItem!
     var height:CGFloat!
     
     override func viewDidLoad() {
@@ -36,10 +37,14 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         
         setDelegates()
         configureNewProfileProgressBar(false)
-        navigationController?.navigationItem.rightBarButtonItem?.enabled = false
+        
+        forwardButton = UIBarButtonItem(image: UIImage(named: "Right-32"), style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goForwardToActivity:"))
+        forwardButton.enabled = false
+        navigationItem.rightBarButtonItems = [forwardButton]
+
         
     }
-    
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -50,6 +55,14 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         super.viewWillDisappear(animated)
         
         unsubscribeFromKeyboardNotifications()
+    }
+    @IBAction func cancel(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func goForwardToActivity(sender: UIBarButtonItem) {
+        let bodyInformationViewController = storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileBodyViewController") as! NewGressProfileBodyViewController
+        navigationController?.pushViewController(bodyInformationViewController, animated: true)
     }
     
     func scrollViewShouldScrollToTop(scrollView: UIScrollView) -> Bool {
@@ -65,7 +78,6 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
             UIView.animateWithDuration(1.5, animations: {
                 self.newProfileProgressBar.progress = 0.000
             })
-            
         }
     }
     
@@ -170,16 +182,13 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
             return
         }
     }
-     
-
+    
     /**
         MARK: When a user cancels making a new profile,
               delete their account and dismiss the view-
               controller.
     **/
-    @IBAction func cancelNewProfile(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
+    
     
     /**
         MARK: TextFieldDelegate methods
@@ -203,9 +212,10 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         
         if !firstNameField.text.isEmpty && !lastNameField.text.isEmpty && !emailAddressField.text.isEmpty {
             configureNewProfileProgressBar(FINISHED)
-            navigationController?.navigationItem.rightBarButtonItem?.enabled = true
+            forwardButton.enabled = true
         } else {
             configureNewProfileProgressBar(NOT_FINISHED)
+            forwardButton.enabled = false
         }
     }
     

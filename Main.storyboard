@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M5O-pf-6Ku">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -209,7 +209,7 @@
         <!--Personal-->
         <scene sceneID="kGr-oB-QH6">
             <objects>
-                <viewController id="fqS-hn-tN5" customClass="NewGressProfileViewController" customModule="Gress" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewGressProfileViewController" id="fqS-hn-tN5" customClass="NewGressProfileViewController" customModule="Gress" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="p6S-C5-t1b"/>
                         <viewControllerLayoutGuide type="bottom" id="4nX-nz-y0c"/>
@@ -383,12 +383,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="R1a-kF-RQ7">
                             <color key="tintColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="cancelNewProfile:" destination="fqS-hn-tN5" id="zlc-ya-BOj"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="Right-32" id="tY2-y4-cAb">
-                            <connections>
-                                <segue destination="snx-jD-Lp7" kind="show" id="rB7-73-bdO"/>
+                                <action selector="cancel:" destination="fqS-hn-tN5" id="37S-Ca-av3"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -641,7 +636,7 @@
         <!--New Gress Profile-->
         <scene sceneID="zUu-uc-hpB">
             <objects>
-                <viewController id="snx-jD-Lp7" customClass="NewGressProfileBodyViewController" customModule="Gress" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewGressProfileBodyViewController" id="snx-jD-Lp7" customClass="NewGressProfileBodyViewController" customModule="Gress" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="guf-sg-ekn"/>
                         <viewControllerLayoutGuide type="bottom" id="Jgh-Sm-r4r"/>
@@ -685,7 +680,7 @@
                                                     <rect key="frame" x="66" y="55" width="31" height="21"/>
                                                 </variation>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="22" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n1U-nB-gNE" userLabel="Age Text Field">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="22" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n1U-nB-gNE" userLabel="Age Text Field">
                                                 <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
                                                 <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -882,7 +877,6 @@
                                 <action selector="cancelNewProfile:" destination="snx-jD-Lp7" id="LUk-kB-ypH"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="Right-32" id="wTx-zC-1CD"/>
                     </navigationItem>
                     <connections>
                         <outlet property="ageField" destination="n1U-nB-gNE" id="hSA-9p-rot"/>
@@ -902,6 +896,5 @@
     <resources>
         <image name="Ok Filled-32" width="32" height="32"/>
         <image name="Profile Male-100" width="100" height="100"/>
-        <image name="Right-32" width="32" height="32"/>
     </resources>
 </document>
