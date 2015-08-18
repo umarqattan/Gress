@@ -16,6 +16,7 @@
 		E177A1901B7FFF5200B7507A /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A18A1B7FFF5200B7507A /* ParseFacebookUtils.framework */; };
 		E177A1911B7FFF5200B7507A /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A18B1B7FFF5200B7507A /* ParseFacebookUtilsV4.framework */; };
 		E177A1921B7FFF5200B7507A /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A18C1B7FFF5200B7507A /* ParseUI.framework */; };
+		E177A1961B82C8EE00B7507A /* PickerViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A1951B82C8EE00B7507A /* PickerViewConstants.swift */; };
 		E19F125F1B75875C002A3D35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F125E1B75875C002A3D35 /* AppDelegate.swift */; };
 		E19F12661B75875C002A3D35 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E19F12651B75875C002A3D35 /* Images.xcassets */; };
 		E19F12691B75875C002A3D35 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E19F12671B75875C002A3D35 /* LaunchScreen.xib */; };
@@ -45,6 +46,7 @@
 		E177A18A1B7FFF5200B7507A /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtils.framework; path = "../Libraries/Parse Library/ParseFacebookUtils.framework"; sourceTree = "<group>"; };
 		E177A18B1B7FFF5200B7507A /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = "../Libraries/Parse Library/ParseFacebookUtilsV4.framework"; sourceTree = "<group>"; };
 		E177A18C1B7FFF5200B7507A /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseUI.framework; path = "../Libraries/Parse Library/ParseUI.framework"; sourceTree = "<group>"; };
+		E177A1951B82C8EE00B7507A /* PickerViewConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerViewConstants.swift; sourceTree = "<group>"; };
 		E19F12591B75875C002A3D35 /* Gress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19F125D1B75875C002A3D35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E19F125E1B75875C002A3D35 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				E19F127F1B7587C9002A3D35 /* ParseClient.swift */,
 				E19F125E1B75875C002A3D35 /* AppDelegate.swift */,
 				E177A1671B7F344800B7507A /* BodyInformation.swift */,
+				E177A1951B82C8EE00B7507A /* PickerViewConstants.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				E19F12821B7587C9002A3D35 /* ParseClient.swift in Sources */,
 				E19F125F1B75875C002A3D35 /* AppDelegate.swift in Sources */,
 				E177A1681B7F344800B7507A /* BodyInformation.swift in Sources */,
+				E177A1961B82C8EE00B7507A /* PickerViewConstants.swift in Sources */,
 				E19F13311B7C35BE002A3D35 /* Utilities.swift in Sources */,
 				E177A1661B7EF83800B7507A /* NewGressProfileBodyViewController.swift in Sources */,
 				E19F12831B7587C9002A3D35 /* SignUpViewController.swift in Sources */,
