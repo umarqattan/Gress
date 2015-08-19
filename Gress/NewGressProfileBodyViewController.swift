@@ -25,11 +25,16 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     
     var activeTextField: UITextField?
     var pickerView = UIPickerView()
+    var backButton:UIBarButtonItem!
+    var forwardButton:UIBarButtonItem!
+    var cancelButton:UIBarButtonItem!
+    
     var body:BodyInformation!
     
     
     /**
-        TODO: add selector for forwardButton
+        MARK: update forward buttons for every viewController 
+              pushed to the navigationController stack.
     **/
     
     override func viewDidLoad() {
@@ -37,9 +42,19 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         
         setDelegates()
         configureNewProfileProgressBar(NOT_FINISHED)
-        let backButton = UIBarButtonItem(image: UIImage(named: "Left-32"), style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goBackToNewProfile:"))
-        let forwardButton = UIBarButtonItem(image: UIImage(named: "Right-32"), style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goForwardToActivity:"))
+        configureNavigationItem()
+    }
+    
+    func configureNavigationItem() {
+        backButton = UIBarButtonItem(image: UIImage(named: "Left-32"), style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goBack:"))
+        forwardButton = UIBarButtonItem(image: UIImage(named: "Right-32"), style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goForward:"))
+        cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("cancel:"))
+        
+        forwardButton.enabled = false
+        
         navigationItem.rightBarButtonItems = [forwardButton, backButton]
+        navigationItem.leftBarButtonItem = cancelButton
+        
     }
     
     func configureNewProfileProgressBar(finished: Bool) {
@@ -47,6 +62,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
             UIView.animateWithDuration(1.5, animations: {
                 self.newProfileProgressBar.progress = 0.50
             })
+            forwardButton.enabled = true
         } else {
             UIView.animateWithDuration(1.5, animations: {
                 self.newProfileProgressBar.progress = 0.28
@@ -54,12 +70,20 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         }
     }
     
-    func goForwardToActivity(sender: UIBarButtonItem) {
+    func goForward(sender: UIBarButtonItem) {
+        let newGressProfileActivityViewController = storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileActivityViewController") as! NewGressProfileActivityViewController
         
+        updateSharedBodyObject(body)
+        
+        navigationController?.pushViewController(newGressProfileActivityViewController, animated: true)
     }
     
-    func goBackToNewProfile(sender: UIBarButtonItem) {
+    func goBack(sender: UIBarButtonItem) {
         navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func cancel(sender : UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     /**
         MARK: UI[]Delegate methods
@@ -83,20 +107,19 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
               ToSI methods in BodyInformation.swift
     **/
     
-    var tmpDictionary:[String : AnyObject] = [:]
     @IBAction func unitSegmentedControlChanged(sender: UISegmentedControl) {
             switch sender.selectedSegmentIndex {
                 case SI :
                     
                     println("switched from METRIC TO SI")
-                    heightField.text = body.heightSI
-                    weightField.text = body.weightSI
+                    heightField.text = getSharedBodyObject().heightSI
+                    weightField.text = getSharedBodyObject().weightSI
                 
                 case METRIC:
                     
                     println("switched from SI TO METRIC")
-                    heightField.text = body.heightMetric
-                    weightField.text = body.weightMetric
+                    heightField.text = getSharedBodyObject().heightMetric
+                    weightField.text = getSharedBodyObject().weightMetric
 
                 default : return
             }
@@ -222,11 +245,9 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
             target: nil, action: nil)
         let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,
             target: view, action: Selector("endEditing:"))
-        let cancelBarButton = UIBarButtonItem(barButtonSystemItem: .Cancel,
-            target: view, action: Selector("endEditing:"))
         keyboardToolbar.tintColor = UIColor(red: 51.0/255.0, green: 147.0/255.0, blue: 210.0/255.0, alpha: 1.0)
         
-        keyboardToolbar.items = [cancelBarButton, flexBarButton, doneBarButton]
+        keyboardToolbar.items = [flexBarButton, doneBarButton]
         activeTextField!.inputAccessoryView = keyboardToolbar
     }
     
@@ -249,7 +270,19 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         pickerView = UIPickerView()
         
         if !ageField.text.isEmpty && !heightField.text.isEmpty && !weightField.text.isEmpty {
-            body = BodyInformation(age: ageField.text!, height: heightField.text!, weight: weightField.text!, unit: unitSegmentedControl.selectedSegmentIndex)
+            var aBody = BodyInformation(age: ageField.text!, height: heightField.text!, weight: weightField.text!, unit: unitSegmentedControl.selectedSegmentIndex)
+            body = getSharedBodyObject()
+            body.age = ageField.text!
+            
+            body.heightSI = aBody.heightSI
+            body.weightSI = aBody.weightSI
+
+            body.heightMetric = aBody.heightMetric
+            body.weightMetric = aBody.weightMetric
+            
+            body.sex = sexSegmentedControl.selectedSegmentIndex
+            updateSharedBodyObject(body)
+            
             unitSegmentedControl.enabled = true
             configureNewProfileProgressBar(FINISHED)
         } else {

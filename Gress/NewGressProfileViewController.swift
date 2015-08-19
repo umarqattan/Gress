@@ -30,7 +30,11 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
     var activeTextField:UITextField?
     var keyboardDismissTapGesture: UIGestureRecognizer!
     var forwardButton:UIBarButtonItem!
+    var backButton:UIBarButtonItem!
+    var cancelButton: UIBarButtonItem!
     var height:CGFloat!
+    
+    var body:BodyInformation!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,10 +42,11 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         setDelegates()
         configureNewProfileProgressBar(false)
         
-        forwardButton = UIBarButtonItem(image: UIImage(named: "Right-32"), style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goForwardToActivity:"))
-        forwardButton.enabled = false
+        forwardButton = UIBarButtonItem(image: UIImage(named: "Right-32"), style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goForward:"))
+        cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("cancel:"))
+        cancelButton.enabled = true
+        navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItems = [forwardButton]
-
         
     }
 
@@ -56,13 +61,14 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         
         unsubscribeFromKeyboardNotifications()
     }
-    @IBAction func cancel(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
     
-    func goForwardToActivity(sender: UIBarButtonItem) {
+    func goForward(sender: UIBarButtonItem) {
         let bodyInformationViewController = storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileBodyViewController") as! NewGressProfileBodyViewController
         navigationController?.pushViewController(bodyInformationViewController, animated: true)
+    }
+    
+    func cancel(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func scrollViewShouldScrollToTop(scrollView: UIScrollView) -> Bool {
@@ -84,6 +90,7 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
     func toggleEditProfileButton(enabled : Bool) {
         editProfilePictureButton.enabled = enabled
     }
+    
     
     @IBAction func editProfilePicture(sender: UIButton) {
         
@@ -207,10 +214,24 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         configureNewProfileProgressBar(NOT_FINISHED)
     }
     
+    /**
+        MARK: Update sharedBody object after the user edits the textFields
+    **/
     func textFieldDidEndEditing(textField: UITextField) {
         activeTextField = nil
         
         if !firstNameField.text.isEmpty && !lastNameField.text.isEmpty && !emailAddressField.text.isEmpty {
+            
+            body = BodyInformation(age: nil, height: nil, weight: nil, unit: 0)
+            body.firstName = firstNameField.text
+            body.lastName = lastNameField.text
+            body.fullName = firstNameField.text + " " + lastNameField.text
+            body.email = emailAddressField.text
+            body.profilePicture = newProfilePictureImageView.image
+            
+            
+            updateSharedBodyObject(body)
+            
             configureNewProfileProgressBar(FINISHED)
             forwardButton.enabled = true
         } else {

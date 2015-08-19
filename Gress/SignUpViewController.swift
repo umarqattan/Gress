@@ -63,8 +63,10 @@ class SignUpViewController : UIViewController, UITextFieldDelegate {
                     })
                     self.showAlertView(success, buttonTitle: "Get Started!", message: "Hooray, you are now apart of Gress!") { UIAlertAction in
                         
-                        let newProfileNavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileNavigationController") as! UINavigationController
-                        self.presentViewController(newProfileNavigationController, animated: true, completion: nil)
+                        let rootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileViewController") as! NewGressProfileViewController
+                        let newGressProfileNavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileNavigationController") as! UINavigationController
+                        newGressProfileNavigationController.setViewControllers([rootViewController], animated: true)
+                        self.presentViewController(newGressProfileNavigationController, animated: true, completion: nil)
                         
                     }
                 }
