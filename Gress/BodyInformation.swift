@@ -21,10 +21,22 @@ let POUNDS_TO_KILOGRAMS = 0.453592 as Float
 let KILOGRAMS_TO_POUNDS = 2.20462 as Float
 let SI = 0
 let METRIC = 1
-
+let MALE = 0
+let FEMALE = 1
 class BodyInformation {
     
-    var age: String!
+    
+    var firstName = "First"
+    var lastName = "Last"
+    var fullName = "First Last"
+    
+    var email = "username@email.com"
+    
+    var profilePicture = UIImage(named: "Profile Male-100")
+    
+    var sex = MALE
+    
+    var age:String!
     
     var heightMetric:String!
     var heightSI:String!
@@ -41,6 +53,7 @@ class BodyInformation {
     
     
     
+    
     init(age: String?, height:String?, weight: String?, unit:Int) {
         
         if let anAge = age {
@@ -50,58 +63,53 @@ class BodyInformation {
         if let aHeight = height {
         
             switch unit {
-            case SI:
-                println("initializing from SI units")
-                var feet = getFeetFromText(aHeight)
-                var inches = getInchesFromText(aHeight)
-                var metricHeightArray = SIToMetricHeight(feet, inches: inches)
-                rawCentimeters = metricHeightArray[1]
-                rawFeet = feet
-                rawInches = inches
-                heightSI = formatHeightSIString(rawFeet, inches: rawInches)
-                heightMetric = formatHeightMetricString(rawCentimeters)
+                case SI:
+                    println("initializing from SI units")
+                    var feet = getFeetFromText(aHeight)
+                    var inches = getInchesFromText(aHeight)
+                    var metricHeightArray = SIToMetricHeight(feet, inches: inches)
+                    rawCentimeters = metricHeightArray[1]
+                    rawFeet = feet
+                    rawInches = inches
+                    heightSI = formatHeightSIString(rawFeet, inches: rawInches)
+                    heightMetric = formatHeightMetricString(rawCentimeters)
+
+                case METRIC:
+                    println("initializing from Metric Units")
+                    var centimeters = getCentimetersFromText(aHeight)
+                    var SIHeightArray = metricToSIHeight(centimeters)
+                    rawFeet = SIHeightArray[2]
+                    rawInches = SIHeightArray[3]
+                    rawCentimeters = centimeters
+                    heightMetric = formatHeightMetricString(centimeters)
+                    heightSI = formatHeightSIString(rawFeet, inches: rawInches)
                 
-                
-            case METRIC:
-                
-                println("initializing from Metric Units")
-                var centimeters = getCentimetersFromText(aHeight)
-                var SIHeightArray = metricToSIHeight(centimeters)
-                rawFeet = SIHeightArray[2]
-                rawInches = SIHeightArray[3]
-                rawCentimeters = centimeters
-                heightMetric = formatHeightMetricString(centimeters)
-                heightSI = formatHeightSIString(rawFeet, inches: rawInches)
-                
-            default : return
+                default : return
             }
         }
         
         if let aWeight = weight {
             
             switch unit {
-            case SI:
-                println("initializing from SI units")
+                case SI:
+                    println("initializing from SI units")
                 
-                rawPounds = getPoundsFromText(aWeight)
-                weightSI = formatWeightSIString(rawPounds)
-                rawKilograms = SIToMetricWeight(rawPounds)
-                weightMetric = formatWeightMetricString(rawKilograms)
+                    rawPounds = getPoundsFromText(aWeight)
+                    weightSI = formatWeightSIString(rawPounds)
+                    rawKilograms = SIToMetricWeight(rawPounds)
+                    weightMetric = formatWeightMetricString(rawKilograms)
                 
-            
-            case METRIC:
+                case METRIC:
                 
-                println("initializing from Metric Units")
-                rawKilograms = getKilogramsFromText(aWeight)
-                weightMetric = formatWeightMetricString(rawKilograms)
-                rawPounds = metricToSIWeight(rawKilograms)
-                weightSI = formatWeightSIString(rawPounds)
+                    println("initializing from Metric Units")
+                    rawKilograms = getKilogramsFromText(aWeight)
+                    weightMetric = formatWeightMetricString(rawKilograms)
+                    rawPounds = metricToSIWeight(rawKilograms)
+                    weightSI = formatWeightSIString(rawPounds)
                 
-            default : return
+                default : return
             }
 
-            
-            
         }
         
     }
@@ -251,10 +259,5 @@ class BodyInformation {
     func formatWeightSIString(pounds : String) -> String {
         return pounds + " lb"
     }
-    
-    
-    
-    
-    
 
 }

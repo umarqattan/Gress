@@ -42,6 +42,7 @@ class PickerViewConstants {
             static let weightSI = PickerViewConstants().weightSI
         }
     }
+    
     lazy var age:[Int] = {
         var array:[Int] = []
         for (var i = 18; i<150; i++) {

@@ -100,6 +100,20 @@ extension UIViewController {
             return
         }
     }
+    
+    func updateSharedBodyObject(updatedBody: BodyInformation) {
+        (UIApplication.sharedApplication().delegate as! AppDelegate).gressUser = updatedBody
+    }
+    
+    func getSharedBodyObject() -> BodyInformation {
+        return (UIApplication.sharedApplication().delegate as! AppDelegate).gressUser
+    }
+    
 
     
+    
 }
+    
+
+    
+
