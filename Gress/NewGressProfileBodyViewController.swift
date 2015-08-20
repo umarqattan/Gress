@@ -35,6 +35,10 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     /**
         MARK: update forward buttons for every viewController 
               pushed to the navigationController stack.
+    
+        TODO: body object gets initialized twice, once in the
+              model (AppDelegate.swift) and again in textField-
+              DidEndEditing(textField: UITextField)
     **/
     
     override func viewDidLoad() {
@@ -43,6 +47,22 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         setDelegates()
         configureNewProfileProgressBar(NOT_FINISHED)
         configureNavigationItem()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        body = getSharedBodyObject()
+        
+        /**
+        if !body.heightSI.isEmpty && !body.weightSI.isEmpty && !body.age.isEmpty {
+            ageField.text = body.age
+            heightField.text = body.heightSI
+            weightField.text = body.weightSI
+            sexSegmentedControl.selectedSegmentIndex = body.sex
+            configureNewProfileProgressBar(FINISHED)
+        }
+**/
     }
     
     func configureNavigationItem() {
@@ -125,7 +145,6 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
             }
     }
 
-    
     /**
         MARK: UIPickerView delegate methods
     **/

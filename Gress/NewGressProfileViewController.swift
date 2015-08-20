@@ -43,6 +43,7 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         configureNewProfileProgressBar(false)
         
         forwardButton = UIBarButtonItem(image: UIImage(named: "Right-32"), style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goForward:"))
+        forwardButton.enabled = false
         cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("cancel:"))
         cancelButton.enabled = true
         navigationItem.leftBarButtonItem = cancelButton

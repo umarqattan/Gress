@@ -10,8 +10,11 @@ import Foundation
 
 
 
+
+
 class PickerViewConstants {
-    
+
+        
     struct Age {
         
         static let numberOfComponents = 1
@@ -41,6 +44,22 @@ class PickerViewConstants {
             static let numberOfComponents = PickerViewConstants().weightSI.count
             static let weightSI = PickerViewConstants().weightSI
         }
+    }
+    
+    struct Activity {
+        
+        struct Exercise {
+            
+            struct Duration {
+                
+                
+                
+                static let numberOfComponents = PickerViewConstants().exerciseDuration.count
+                static let exerciseDuration = PickerViewConstants().exerciseDuration
+                
+            }
+        }
+        
     }
     
     lazy var age:[Int] = {
@@ -101,5 +120,23 @@ class PickerViewConstants {
         }
         return [wholeKilograms, decimalKilograms, kg]
         }()
+    
+    
+    lazy var exerciseDuration:[[String]] = {
+        var hours:[String] = []
+        var minutes:[String] = []
+        var hr = ["hr"]
+        var min = ["min"]
+        
+        for (var i = 0; i < 24; i++) {
+            hours.append("\(i)")
+        }
+        for (var i = 0; i < 60; i++) {
+            minutes.append("\(i)")
+        }
+        
+        return [hours, hr, minutes, min]
+        
+    }()
 
 }
