@@ -679,7 +679,7 @@
                                                     <rect key="frame" x="56" y="110" width="51" height="21"/>
                                                 </variation>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="183 cm" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oQC-G5-ATt" userLabel="Height Text Field">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your Height" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oQC-G5-ATt" userLabel="Height Text Field">
                                                 <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
                                                 <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -697,7 +697,7 @@
                                                     <rect key="frame" x="55" y="181" width="53" height="21"/>
                                                 </variation>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="68.3 kg" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qDB-T2-Zti" userLabel="Weight Text Field">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your Weight" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qDB-T2-Zti" userLabel="Weight Text Field">
                                                 <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
                                                 <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -729,7 +729,7 @@
                                                     <action selector="unitSegmentedControlChanged:" destination="snx-jD-Lp7" eventType="valueChanged" id="7vn-22-8EV"/>
                                                 </connections>
                                             </segmentedControl>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="22" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n1U-nB-gNE" userLabel="Age Text Field">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your Age" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n1U-nB-gNE" userLabel="Age Text Field">
                                                 <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
                                                 <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -932,17 +932,23 @@
                                                 <variation key="widthClass=compact" fixedFrame="YES">
                                                     <rect key="frame" x="39" y="41" width="70" height="30"/>
                                                 </variation>
+                                                <connections>
+                                                    <action selector="showSedentaryView:" destination="O9v-bq-hNY" eventType="touchUpInside" id="Gb8-Iq-5Yx"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rjv-gx-tde">
                                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                <state key="normal" title="Metropolitan">
+                                                <state key="normal" title="Active">
                                                     <color key="titleColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <variation key="widthClass=compact" fixedFrame="YES">
                                                     <rect key="frame" x="122" y="41" width="87" height="30"/>
                                                 </variation>
+                                                <connections>
+                                                    <action selector="showActiveView:" destination="O9v-bq-hNY" eventType="touchUpInside" id="BJT-5g-bqt"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1oW-uy-dWs">
                                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -954,8 +960,11 @@
                                                 <variation key="widthClass=compact" fixedFrame="YES">
                                                     <rect key="frame" x="222" y="41" width="48" height="30"/>
                                                 </variation>
+                                                <connections>
+                                                    <action selector="showAthleteView:" destination="O9v-bq-hNY" eventType="touchUpInside" id="wlf-61-vf5"/>
+                                                </connections>
                                             </button>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="90 min" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mcX-o3-ZUT" userLabel="Age Text Field">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1 hr 30 min" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mcX-o3-ZUT" userLabel="Age Text Field">
                                                 <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
                                                 <color key="textColor" red="0.20000000000000001" green="0.57647058819999997" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -964,6 +973,42 @@
                                                     <rect key="frame" x="117" y="79" width="97" height="30"/>
                                                 </variation>
                                             </textField>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x99-ie-uZS" userLabel="Sedentary Text View">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                <color key="backgroundColor" red="0.38823529410000002" green="0.72549019609999998" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <string key="text">A sedentary lifestyle is a type of lifestyle with no or irregular physical activity. A person who lives a sedentary lifestyle may colloquially be known as a slob or couch potato. It is commonly found in both the developed and developing world. Sedentary activities include sitting, reading, watching television, playing video games, and computer use for much of the day with little or no vigorous physical exercise. A sedentary lifestyle can contribute to many preventable causes of death.</string>
+                                                <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <rect key="frame" x="16" y="133" width="298" height="208"/>
+                                                </variation>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xdw-yP-vZ9" userLabel="Active Text View">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                <color key="backgroundColor" red="0.38823529410000002" green="0.72549019609999998" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <string key="text">A sedentary lifestyle is a type of lifestyle with no or irregular physical activity. A person who lives a sedentary lifestyle may colloquially be known as a slob or couch potato. It is commonly found in both the developed and developing world. Sedentary activities include sitting, reading, watching television, playing video games, and computer use for much of the day with little or no vigorous physical exercise. A sedentary lifestyle can contribute to many preventable causes of death.</string>
+                                                <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <rect key="frame" x="16" y="133" width="298" height="208"/>
+                                                </variation>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l94-M6-bur" userLabel="Athlete Text View">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                <color key="backgroundColor" red="0.38823529410000002" green="0.72549019609999998" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <string key="text">A sedentary lifestyle is a type of lifestyle with no or irregular physical activity. A person who lives a sedentary lifestyle may colloquially be known as a slob or couch potato. It is commonly found in both the developed and developing world. Sedentary activities include sitting, reading, watching television, playing video games, and computer use for much of the day with little or no vigorous physical exercise. A sedentary lifestyle can contribute to many preventable causes of death.</string>
+                                                <color key="textColor" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <variation key="widthClass=compact" fixedFrame="YES">
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <rect key="frame" x="16" y="133" width="298" height="208"/>
+                                                </variation>
+                                            </textView>
                                         </subviews>
                                         <color key="backgroundColor" red="0.23565995070000001" green="0.89427425989999998" blue="1" alpha="0.37" colorSpace="calibratedRGB"/>
                                         <variation key="default">
@@ -975,6 +1020,9 @@
                                                 <exclude reference="Rjv-gx-tde"/>
                                                 <exclude reference="1oW-uy-dWs"/>
                                                 <exclude reference="mcX-o3-ZUT"/>
+                                                <exclude reference="x99-ie-uZS"/>
+                                                <exclude reference="Xdw-yP-vZ9"/>
+                                                <exclude reference="l94-M6-bur"/>
                                             </mask>
                                         </variation>
                                         <variation key="widthClass=compact" fixedFrame="YES">
@@ -987,6 +1035,9 @@
                                                 <include reference="Rjv-gx-tde"/>
                                                 <include reference="1oW-uy-dWs"/>
                                                 <include reference="mcX-o3-ZUT"/>
+                                                <include reference="x99-ie-uZS"/>
+                                                <include reference="Xdw-yP-vZ9"/>
+                                                <include reference="l94-M6-bur"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -1086,10 +1137,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activeButton" destination="Rjv-gx-tde" id="UaK-XW-V89"/>
                         <outlet property="activitySlider" destination="FMc-kJ-rpA" id="nqk-5u-gjr"/>
                         <outlet property="athleteButton" destination="1oW-uy-dWs" id="cNj-Om-0aM"/>
                         <outlet property="exerciseDurationField" destination="mcX-o3-ZUT" id="FKU-xm-6Yx"/>
-                        <outlet property="metropolitanButton" destination="Rjv-gx-tde" id="dtm-z6-CrN"/>
                         <outlet property="newProfileProgressBar" destination="xcK-AN-XGp" id="4yc-fg-8vJ"/>
                         <outlet property="scrollView" destination="tjJ-cZ-x2K" id="QWJ-hL-APd"/>
                         <outlet property="sedentaryButton" destination="CIV-Xe-GLQ" id="TwW-Yf-Smu"/>
