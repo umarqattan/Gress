@@ -12,7 +12,6 @@ import Parse
 
 class ParseClient {
     
-    
     /**
         MARK: When a person first uses Gress, he/she will choose a username.
               If a username is chosen, the below method will check if it's
@@ -72,7 +71,5 @@ class ParseClient {
         
         return hasCapitalLetter && hasNumber && hasSpecialCharacter
     }
-    
-    
-    
+
 }

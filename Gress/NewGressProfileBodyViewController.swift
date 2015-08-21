@@ -308,7 +308,6 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
             unitSegmentedControl.enabled = false
             configureNewProfileProgressBar(NOT_FINISHED)
         }
-        
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
