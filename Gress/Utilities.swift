@@ -108,10 +108,6 @@ extension UIViewController {
     func getSharedBodyObject() -> BodyInformation {
         return (UIApplication.sharedApplication().delegate as! AppDelegate).gressUser
     }
-    
-
-    
-    
 }
     
 

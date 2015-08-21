@@ -8,13 +8,8 @@
 
 import Foundation
 
-
-
-
-
 class PickerViewConstants {
 
-        
     struct Age {
         
         static let numberOfComponents = 1
@@ -52,11 +47,14 @@ class PickerViewConstants {
             
             struct Duration {
                 
-                
-                
                 static let numberOfComponents = PickerViewConstants().exerciseDuration.count
                 static let exerciseDuration = PickerViewConstants().exerciseDuration
                 
+            }
+            
+            struct Frequency {
+                static let numberOfComponents = PickerViewConstants().trainingDays.count
+                static let trainingDays = PickerViewConstants().trainingDays
             }
         }
         
@@ -137,6 +135,15 @@ class PickerViewConstants {
         
         return [hours, hr, minutes, min]
         
+    }()
+    
+    lazy var trainingDays:[[String]] = {
+        var days:[String] = []
+        var perWeek = ["days"]
+        for (var i = 0; i < 8; i++) {
+            days.append("\(i)")
+        }
+        return [days, perWeek]
     }()
 
 }

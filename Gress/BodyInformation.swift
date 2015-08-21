@@ -25,34 +25,30 @@ let MALE = 0
 let FEMALE = 1
 class BodyInformation {
     
-    
+    // Personal
     var firstName = "First"
     var lastName = "Last"
     var fullName = "First Last"
-    
     var email = "username@email.com"
-    
     var profilePicture = UIImage(named: "Profile Male-100")
     
+    // Body
     var sex = MALE
-    
     var age:String!
-    
     var heightMetric:String!
     var heightSI:String!
     var weightMetric:String!
     var weightSI:String!
-    
-    
     var rawCentimeters:String!
     var rawFeet:String!
     var rawInches:String!
-    
     var rawPounds:String!
     var rawKilograms:String!
     
-    
-    
+    // Activity
+    var activityLevel:Float!
+    var exerciseDuration:String!
+    var trainingDays:String!
     
     init(age: String?, height:String?, weight: String?, unit:Int) {
         
@@ -92,8 +88,8 @@ class BodyInformation {
             
             switch unit {
                 case SI:
+                    
                     println("initializing from SI units")
-                
                     rawPounds = getPoundsFromText(aWeight)
                     weightSI = formatWeightSIString(rawPounds)
                     rawKilograms = SIToMetricWeight(rawPounds)
@@ -111,14 +107,12 @@ class BodyInformation {
             }
 
         }
-        
     }
     
     
     /**
-        TODO: Fix metricToSIWeight and SIToMetricWeight
-        FIX:  Modify current MetricToSI and MetricToSI
-              methods in BodyInformation.swift
+        MARK: string formatting methods to convert from Metric
+              to SI and from SI to Metric
     **/
     
     func metricToSIHeight(centimeters: String) -> [String] {
@@ -228,7 +222,6 @@ class BodyInformation {
         } else {
             return ""
         }
-        
     }
     
     /**
