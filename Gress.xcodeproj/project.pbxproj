@@ -12,12 +12,12 @@
 		E177A1681B7F344800B7507A /* BodyInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A1671B7F344800B7507A /* BodyInformation.swift */; };
 		E177A1961B82C8EE00B7507A /* PickerViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A1951B82C8EE00B7507A /* PickerViewConstants.swift */; };
 		E177A1A01B84499C00B7507A /* NewGressProfileActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A19F1B84499C00B7507A /* NewGressProfileActivityViewController.swift */; };
-		E177A1A31B857C6900B7507A /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A1871B7FFF5200B7507A /* Bolts.framework */; };
-		E177A1A41B857C6900B7507A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A1881B7FFF5200B7507A /* Parse.framework */; };
-		E177A1A51B857C6900B7507A /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A1891B7FFF5200B7507A /* ParseCrashReporting.framework */; };
-		E177A1A61B857C6900B7507A /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A18A1B7FFF5200B7507A /* ParseFacebookUtils.framework */; };
-		E177A1A71B857C6900B7507A /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A18B1B7FFF5200B7507A /* ParseFacebookUtilsV4.framework */; };
-		E177A1A81B857C6900B7507A /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A18C1B7FFF5200B7507A /* ParseUI.framework */; };
+		E177A1A91B85EEEB00B7507A /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A1871B7FFF5200B7507A /* Bolts.framework */; };
+		E177A1AA1B85EEEB00B7507A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A1881B7FFF5200B7507A /* Parse.framework */; };
+		E177A1AB1B85EEEB00B7507A /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A1891B7FFF5200B7507A /* ParseCrashReporting.framework */; };
+		E177A1AC1B85EEEB00B7507A /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A18A1B7FFF5200B7507A /* ParseFacebookUtils.framework */; };
+		E177A1AD1B85EEEB00B7507A /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A18B1B7FFF5200B7507A /* ParseFacebookUtilsV4.framework */; };
+		E177A1AE1B85EEEB00B7507A /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E177A18C1B7FFF5200B7507A /* ParseUI.framework */; };
 		E19F125F1B75875C002A3D35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F125E1B75875C002A3D35 /* AppDelegate.swift */; };
 		E19F12661B75875C002A3D35 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E19F12651B75875C002A3D35 /* Images.xcassets */; };
 		E19F12691B75875C002A3D35 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E19F12671B75875C002A3D35 /* LaunchScreen.xib */; };
@@ -77,12 +77,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E177A1A31B857C6900B7507A /* Bolts.framework in Frameworks */,
-				E177A1A41B857C6900B7507A /* Parse.framework in Frameworks */,
-				E177A1A51B857C6900B7507A /* ParseCrashReporting.framework in Frameworks */,
-				E177A1A61B857C6900B7507A /* ParseFacebookUtils.framework in Frameworks */,
-				E177A1A71B857C6900B7507A /* ParseFacebookUtilsV4.framework in Frameworks */,
-				E177A1A81B857C6900B7507A /* ParseUI.framework in Frameworks */,
+				E177A1A91B85EEEB00B7507A /* Bolts.framework in Frameworks */,
+				E177A1AA1B85EEEB00B7507A /* Parse.framework in Frameworks */,
+				E177A1AB1B85EEEB00B7507A /* ParseCrashReporting.framework in Frameworks */,
+				E177A1AC1B85EEEB00B7507A /* ParseFacebookUtils.framework in Frameworks */,
+				E177A1AD1B85EEEB00B7507A /* ParseFacebookUtilsV4.framework in Frameworks */,
+				E177A1AE1B85EEEB00B7507A /* ParseUI.framework in Frameworks */,
 				E19F13231B75B619002A3D35 /* libsqlite3.dylib in Frameworks */,
 				E19F13211B75B60A002A3D35 /* libz.dylib in Frameworks */,
 				E19F131F1B75B600002A3D35 /* SystemConfiguration.framework in Frameworks */,
