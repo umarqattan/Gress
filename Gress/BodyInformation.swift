@@ -252,5 +252,6 @@ class BodyInformation {
     func formatWeightSIString(pounds : String) -> String {
         return pounds + " lb"
     }
+    
 
 }

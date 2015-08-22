@@ -60,6 +60,13 @@ class PickerViewConstants {
         
     }
     
+    struct Nutrition {
+        
+        static let numberOfComponents = PickerViewConstants().macroNutrients.count
+        static let macroNutrients = PickerViewConstants().macroNutrients
+    }
+    
+    
     lazy var age:[Int] = {
         var array:[Int] = []
         for (var i = 18; i<150; i++) {
@@ -145,5 +152,38 @@ class PickerViewConstants {
         }
         return [days, perWeek]
     }()
+    
+    lazy var macroNutrients:[[String]] = {
+        var fat:[String] = []
+        var carbohydrate:[String] = []
+        var protein:[String] = []
+        var percent:[String] = ["%"]
+        for (var i = 0; i < 101; i++) {
+            fat.append("\(i)")
+            carbohydrate.append("\(i)")
+            protein.append("\(i)")
+        }
+        
+        return [fat, percent, carbohydrate, percent, protein, percent]
+    }()
+    
+    class func getRowFromMacronutrient(text : String) -> Int {
+        var startIndex = text.startIndex
+        var endIndex = startIndex
+        var length = text.length
+        if length == 3 {
+            endIndex = advance(text.startIndex, 1)
+        }
+        if length == 4 {
+            endIndex = advance(text.startIndex, 2)
+        }
+        var range = Range<String.Index>(start: startIndex, end: endIndex)
+        var rowString = text.substringWithRange(range) as NSString
+        var row = rowString.integerValue
+        return row
+    }
+    
+    
+    
 
 }
