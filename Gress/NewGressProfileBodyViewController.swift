@@ -14,6 +14,7 @@ import Parse
 class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIScrollViewDelegate, UITextFieldDelegate {
     
     
+    @IBOutlet weak var userInputView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var sexSegmentedControl: UISegmentedControl!
     @IBOutlet weak var unitSegmentedControl: UISegmentedControl!
@@ -22,7 +23,6 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     @IBOutlet weak var heightField: UITextField!
     @IBOutlet weak var weightField: UITextField!
     
-    
     var activeTextField: UITextField?
     var pickerView = UIPickerView()
     var backButton:UIBarButtonItem!
@@ -30,7 +30,6 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     var cancelButton:UIBarButtonItem!
     
     var body:BodyInformation!
-    
     
     /**
         MARK: update forward buttons for every viewController 
@@ -47,6 +46,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         setDelegates()
         configureNewProfileProgressBar(NOT_FINISHED)
         configureNavigationItem()
+        configureUserInputView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -63,6 +63,10 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
             configureNewProfileProgressBar(FINISHED)
         }
 **/
+    }
+    
+    func configureUserInputView() {
+        userInputView.layer.cornerRadius = 12
     }
     
     func configureNavigationItem() {

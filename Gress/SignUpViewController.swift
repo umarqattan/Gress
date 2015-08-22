@@ -12,6 +12,8 @@ import Parse
 
 class SignUpViewController : UIViewController, UITextFieldDelegate {
     
+    @IBOutlet weak var loginButtonView: UIView!
+    @IBOutlet weak var userInputView: UIView!
     @IBOutlet weak var userNameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -29,6 +31,7 @@ class SignUpViewController : UIViewController, UITextFieldDelegate {
         setTextFieldDelegates()
         configureValidImageViews()
         configureButtons()
+        configureUserInputView()
     }
     
     @IBAction func login(sender: UIButton) {
@@ -85,6 +88,12 @@ class SignUpViewController : UIViewController, UITextFieldDelegate {
         userNameValidImageView.hidden = true
         passwordValidImageView.hidden = true
     }
+    
+    func configureUserInputView() {
+        userInputView.layer.cornerRadius = 12
+        loginButtonView.layer.cornerRadius = 12
+    }
+
     
     /**
         MARK: UITextFieldDelegate protocol methods

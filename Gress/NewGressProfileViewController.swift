@@ -41,14 +41,8 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         
         setDelegates()
         configureNewProfileProgressBar(false)
-        
-        forwardButton = UIBarButtonItem(image: UIImage(named: "Right-32"), style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goForward:"))
-        forwardButton.enabled = false
-        cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("cancel:"))
-        cancelButton.enabled = true
-        navigationItem.leftBarButtonItem = cancelButton
-        navigationItem.rightBarButtonItems = [forwardButton]
-        
+        configureUserInputView()
+        configureNavigationItem()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -75,6 +69,21 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
     func scrollViewShouldScrollToTop(scrollView: UIScrollView) -> Bool {
         return true
     }
+    
+    func configureNavigationItem() {
+        forwardButton = UIBarButtonItem(image: UIImage(named: "Right-32"), style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goForward:"))
+        forwardButton.enabled = false
+        cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("cancel:"))
+        cancelButton.enabled = true
+        navigationItem.leftBarButtonItem = cancelButton
+        navigationItem.rightBarButtonItems = [forwardButton]
+
+    }
+    
+    func configureUserInputView() {
+        userInputView.layer.cornerRadius = 12
+    }
+
     
     func configureNewProfileProgressBar(finished: Bool) {
         if finished {

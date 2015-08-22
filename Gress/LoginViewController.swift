@@ -10,6 +10,8 @@ import Parse
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var loginButtonView: UIView!
+    @IBOutlet weak var userInputView: UIView!
     @IBOutlet weak var userNameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var createAnAccountButton: UIButton!
@@ -22,6 +24,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
     
         setTextFieldDelegates()
+        configureUserInputView()
     }
     
     
@@ -57,9 +60,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         let rootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileViewController") as! NewGressProfileViewController
                         let newGressProfileNavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileNavigationController") as! UINavigationController
                         newGressProfileNavigationController.setViewControllers([rootViewController], animated: true)
-                        
-                        
-                        
                         self.presentViewController(newGressProfileNavigationController, animated: true, completion: nil)
                         
                     }
@@ -67,6 +67,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
+    func configureUserInputView() {
+        userInputView.layer.cornerRadius = 12
+        loginButtonView.layer.cornerRadius = 12
+    }
+
     
     /**
         MARK: UITextFieldDelegate Methods

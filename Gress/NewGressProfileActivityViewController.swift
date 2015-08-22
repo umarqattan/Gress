@@ -25,7 +25,6 @@ let ATHLETE = "athlete"
 let NONE = ""
 
 
-
 class NewGressProfileActivityViewController : UIViewController, UINavigationControllerDelegate, UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -66,6 +65,7 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         configureNavigationItem()
         configureActivitySlider()
         configureTextView(NONE)
+        configureUserInputView()
         
     }
     
@@ -77,10 +77,23 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     }
     
     /**
-        TODO: Add a UIButton programmatically and add it as a subview
-              of UITextView. It's target is self and its selector is
-              "changeAttributedText:"
+        MARK: configureTextView is a method that takes a 
+              string that is related to an activityLevel
+              UIButton underneath the activityLevelSlider.
+              When a button is pressed, the UITextView on
+              the bottom of the userInputView is updated 
+              with attributedText that describes the act-
+              itivty level and a clear UIButton appears 
+              at the bottom of the UITextView, which rev-
+              erts the UITextView to its original state.
+        FIX:  make sure that the touchUpInside, touchUpOu-
+              side, etc. change the way the button is high-
+              lighted.
     **/
+    
+    func configureUserInputView() {
+        userInputView.layer.cornerRadius = 12
+    }
     
     func configureTextView(activityLevel: String) {
         
@@ -88,23 +101,24 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         userInputView.addSubview(activityLevelTextView)
         activityLevelTextView.hidden = false
         activityLevelTextView.backgroundColor = UIColor(red: 99.0/255.0, green: 185.0/255.0, blue: 239.0/255.0, alpha: 1.0)
+        activityLevelTextView.layer.cornerRadius = 12
+        
         
         var paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = NSTextAlignment.Center
         
-        let coordX = activityLevelTextView.frame.size.width/2.0 - 40
-        let coordY = activityLevelTextView.frame.size.height - 20.0
+        let coordX = activityLevelTextView.frame.size.width/2.0 - 25
+        let coordY = activityLevelTextView.frame.size.height - 55.0
         
+        let OkImage = UIImage(named: "Ok-50")!
+        let OkImageFilled = UIImage(named: "Ok Filled-50")!
+        let clearButtonSize = OkImage.size
+        let clearButton = UIButton(frame: CGRectMake(coordX, coordY, clearButtonSize.width, clearButtonSize.height))
         
-        let clearButton = UIButton(frame: CGRectMake(coordX, coordY, 80.0, 21.0))
-        let clearButtonAttributedTitle = NSAttributedString(string: "Clear", attributes: [NSParagraphStyleAttributeName: paragraphStyle,NSForegroundColorAttributeName : UIColor(red: 60.0/255.0, green: 228.0/255.0, blue: 255.0/255.0, alpha: 1.0)])
-        let boldClearButtonAttributedTitle = NSAttributedString(string: "Clear", attributes: [NSFontAttributeName : UIFont.boldSystemFontOfSize(14),   NSParagraphStyleAttributeName: paragraphStyle,NSForegroundColorAttributeName : UIColor(red: 60.0/255.0, green: 228.0/255.0, blue: 255.0/255.0, alpha: 1.0)])
-        
-        clearButton.addTarget(self, action: Selector("changeAttributedText:"), forControlEvents: UIControlEvents.TouchUpInside)
-        clearButton.setAttributedTitle(clearButtonAttributedTitle, forState: UIControlState.Normal)
-        clearButton.setAttributedTitle(boldClearButtonAttributedTitle, forState: UIControlState.Highlighted)
-        clearButton.enabled = true
-        
+        clearButton.addTarget(self, action: Selector("changeTextInView:"), forControlEvents: UIControlEvents.TouchUpInside)
+        clearButton.setImage(UIImage(named: "Ok-50"), forState: UIControlState.Normal)
+        clearButton.setImage(UIImage(named: "Ok Filled-50"), forState: UIControlState.Selected)
+        clearButton.setImage(UIImage(named: "Ok Filled-50"), forState: UIControlState.Highlighted)
         
         switch activityLevel {
             case NONE :
@@ -129,14 +143,13 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
                 attributedText.addAttributes([NSForegroundColorAttributeName : UIColor(red: 60.0/255.0, green: 228.0/255.0, blue: 255.0/255.0, alpha: 1.0)], range: NSRange(location: 0, length: athleteString.length))
                 activityLevelTextView.attributedText = attributedText
                 activityLevelTextView.addSubview(clearButton)
-            
             default : return
         }
-        
     }
     
-    func changeAttributedText(sender: UIButton) {
+    func changeTextInView(sender: UIButton) {
     
+        sender.selected = !sender.selected;
         configureTextView(NONE)
     }
     
@@ -188,7 +201,6 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
               sedentary, metropolitan, and athlete mean.
     **/
     
-  
     @IBAction func sedentaryButtonAction(sender: UIButton) {
         configureTextView(SEDENTARY)
     }
@@ -202,10 +214,6 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     /**
         MARK: UIPickerViewDataSource required protocol methods
     **/
-    
-    
-    
-
 
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return PickerViewConstants.Activity.Exercise.Duration.numberOfComponents
@@ -290,24 +298,21 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     
     func textFieldDidBeginEditing(textField: UITextField) {
         activeTextField = textField
+        pickerView = UIPickerView()
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        pickerView.backgroundColor = UIColor(red: 51.0/255.0, green: 147.0/255.0, blue: 210.0/255.0, alpha: 1.0)
+        addDoneButtonToActiveTextField()
+
+        
         
         switch textField {
             case exerciseDurationField :
-                pickerView = UIPickerView()
-                pickerView.delegate = self
-                pickerView.dataSource = self
-                pickerView.backgroundColor = UIColor(red: 51.0/255.0, green: 147.0/255.0, blue: 210.0/255.0, alpha: 1.0)
-                addDoneButtonToActiveTextField()
                 exerciseDurationField.inputView = pickerView
             case trainingDaysField :
-                pickerView = UIPickerView()
-                pickerView.delegate = self
-                pickerView.dataSource = self
-                pickerView.backgroundColor = UIColor(red: 51.0/255.0, green: 147.0/255.0, blue: 210.0/255.0, alpha: 1.0)
-                addDoneButtonToActiveTextField()
+                
                 trainingDaysField.inputView = pickerView
             default : return
-            
         }
     }
     
@@ -331,7 +336,6 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-        
     }
     
 }
