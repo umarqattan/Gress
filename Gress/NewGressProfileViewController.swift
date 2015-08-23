@@ -40,9 +40,10 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         super.viewDidLoad()
         
         setDelegates()
-        configureNewProfileProgressBar(false)
+        
         configureUserInputView()
         configureNavigationItem()
+        configureNewProfileProgressBar(false)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -51,10 +52,21 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         subscribeToKeyboardNotifications()
     }
     
+    
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
         unsubscribeFromKeyboardNotifications()
+        
+        body = BodyInformation(age: nil, height: nil, weight: nil, unit: 0)
+        body.firstName = firstNameField.text
+        body.lastName = lastNameField.text
+        body.fullName = firstNameField.text + " " + lastNameField.text
+        body.email = emailAddressField.text
+        body.profilePicture = newProfilePictureImageView.image
+        updateSharedBodyObject(body)
+        
     }
     
     func goForward(sender: UIBarButtonItem) {
@@ -89,10 +101,12 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         if finished {
             UIView.animateWithDuration(1.5, animations: {
                 self.newProfileProgressBar.progress = 0.28
+                self.forwardButton.enabled = true
             })
         } else {
             UIView.animateWithDuration(1.5, animations: {
                 self.newProfileProgressBar.progress = 0.000
+                self.forwardButton.enabled = false
             })
         }
     }
@@ -231,22 +245,9 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         activeTextField = nil
         
         if !firstNameField.text.isEmpty && !lastNameField.text.isEmpty && !emailAddressField.text.isEmpty {
-            
-            body = BodyInformation(age: nil, height: nil, weight: nil, unit: 0)
-            body.firstName = firstNameField.text
-            body.lastName = lastNameField.text
-            body.fullName = firstNameField.text + " " + lastNameField.text
-            body.email = emailAddressField.text
-            body.profilePicture = newProfilePictureImageView.image
-            
-            
-            updateSharedBodyObject(body)
-            
             configureNewProfileProgressBar(FINISHED)
-            forwardButton.enabled = true
         } else {
             configureNewProfileProgressBar(NOT_FINISHED)
-            forwardButton.enabled = false
         }
     }
     

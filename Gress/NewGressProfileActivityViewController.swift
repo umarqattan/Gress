@@ -61,12 +61,22 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         super.viewDidLoad()
         
         setDelegates()
-        configureNewProfileProgressBar(NOT_FINISHED)
         configureNavigationItem()
+        configureNewProfileProgressBar(NOT_FINISHED)
         configureActivitySlider()
         configureTextView(NONE)
         configureUserInputView()
         
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        body = getSharedBodyObject()
+        body.exerciseDuration = exerciseDurationField.text
+        body.trainingDays = trainingDaysField.text
+        body.activityLevel = activitySlider.value
+        updateSharedBodyObject(body)
     }
     
     func setDelegates() {
@@ -170,20 +180,24 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         if finished {
             UIView.animateWithDuration(1.5, animations: {
                 self.newProfileProgressBar.progress = 0.74
+                self.forwardButton.enabled = true
             })
         } else {
             UIView.animateWithDuration(1.5, animations: {
                 self.newProfileProgressBar.progress = 0.50
+                self.forwardButton.enabled = false
             })
         }
     }
+    
     
     /**
         MARK: NavigationItem's rightBarButtonItems' actions
     **/
     
     func goForward(sender: UIBarButtonItem) {
-        return
+        let newGressProfileGoalsViewController = storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileGoalsViewController") as! NewGressProfileGoalsViewController
+        navigationController?.pushViewController(newGressProfileGoalsViewController, animated: true)
     }
     
     func goBack(sender: UIBarButtonItem) {
@@ -310,7 +324,6 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
             case exerciseDurationField :
                 exerciseDurationField.inputView = pickerView
             case trainingDaysField :
-                
                 trainingDaysField.inputView = pickerView
             default : return
         }
@@ -322,14 +335,6 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         
         if !exerciseDurationField.text.isEmpty && !trainingDaysField.text.isEmpty {
             configureNewProfileProgressBar(FINISHED)
-            body = getSharedBodyObject()
-            body.exerciseDuration = exerciseDurationField.text
-            body.trainingDays = trainingDaysField.text
-            body.activityLevel = activitySlider.value
-            updateSharedBodyObject(body)
-            println(body.fullName)
-            println(body.profilePicture)
-            forwardButton.enabled = true
         }
     }
     

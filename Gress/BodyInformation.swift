@@ -50,6 +50,11 @@ class BodyInformation {
     var exerciseDuration:String!
     var trainingDays:String!
     
+    // Goals and Nutrition
+    var nutrition:String!
+    var goalLevel:Float!
+    
+    
     init(age: String?, height:String?, weight: String?, unit:Int) {
         
         if let anAge = age {

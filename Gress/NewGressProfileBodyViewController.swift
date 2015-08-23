@@ -44,25 +44,36 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         super.viewDidLoad()
         
         setDelegates()
-        configureNewProfileProgressBar(NOT_FINISHED)
         configureNavigationItem()
+        configureNewProfileProgressBar(NOT_FINISHED)
         configureUserInputView()
     }
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         body = getSharedBodyObject()
         
-        /**
-        if !body.heightSI.isEmpty && !body.weightSI.isEmpty && !body.age.isEmpty {
-            ageField.text = body.age
-            heightField.text = body.heightSI
-            weightField.text = body.weightSI
-            sexSegmentedControl.selectedSegmentIndex = body.sex
-            configureNewProfileProgressBar(FINISHED)
-        }
-**/
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        var aBody = BodyInformation(age: ageField.text!, height: heightField.text!, weight: weightField.text!, unit: unitSegmentedControl.selectedSegmentIndex)
+        body = getSharedBodyObject()
+        body.age = ageField.text!
+        
+        body.heightSI = aBody.heightSI
+        body.weightSI = aBody.weightSI
+        
+        body.heightMetric = aBody.heightMetric
+        body.weightMetric = aBody.weightMetric
+        
+        body.sex = sexSegmentedControl.selectedSegmentIndex
+        updateSharedBodyObject(body)
+        unitSegmentedControl.enabled = true
     }
     
     func configureUserInputView() {
@@ -85,20 +96,20 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         if finished {
             UIView.animateWithDuration(1.5, animations: {
                 self.newProfileProgressBar.progress = 0.50
+                self.forwardButton.enabled = true
             })
             forwardButton.enabled = true
         } else {
             UIView.animateWithDuration(1.5, animations: {
                 self.newProfileProgressBar.progress = 0.28
+                self.forwardButton.enabled = false
+                
             })
         }
     }
     
     func goForward(sender: UIBarButtonItem) {
         let newGressProfileActivityViewController = storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileActivityViewController") as! NewGressProfileActivityViewController
-        
-        updateSharedBodyObject(body)
-        
         navigationController?.pushViewController(newGressProfileActivityViewController, animated: true)
     }
     
@@ -293,21 +304,9 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         pickerView = UIPickerView()
         
         if !ageField.text.isEmpty && !heightField.text.isEmpty && !weightField.text.isEmpty {
-            var aBody = BodyInformation(age: ageField.text!, height: heightField.text!, weight: weightField.text!, unit: unitSegmentedControl.selectedSegmentIndex)
-            body = getSharedBodyObject()
-            body.age = ageField.text!
-            
-            body.heightSI = aBody.heightSI
-            body.weightSI = aBody.weightSI
-
-            body.heightMetric = aBody.heightMetric
-            body.weightMetric = aBody.weightMetric
-            
-            body.sex = sexSegmentedControl.selectedSegmentIndex
-            updateSharedBodyObject(body)
-            
-            unitSegmentedControl.enabled = true
             configureNewProfileProgressBar(FINISHED)
+            unitSegmentedControl.enabled = true
+            
         } else {
             unitSegmentedControl.enabled = false
             configureNewProfileProgressBar(NOT_FINISHED)
