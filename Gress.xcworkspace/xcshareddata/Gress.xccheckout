@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2DC056E7-6F1D-4342-A697-4E1D00D0AA32</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Gress</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3377A14AABFB8BF84B72EA683354A7C77EB9323C</key>
+		<string>https://github.com/umarqattan/MemeMe.git</string>
+		<key>583319C2D8823D128711E3D7F9E5472B80CBE0B9</key>
+		<string>github.com:umarqattan/Gress.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Gress.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3377A14AABFB8BF84B72EA683354A7C77EB9323C</key>
+		<string>../..</string>
+		<key>583319C2D8823D128711E3D7F9E5472B80CBE0B9</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:umarqattan/Gress.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>583319C2D8823D128711E3D7F9E5472B80CBE0B9</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3377A14AABFB8BF84B72EA683354A7C77EB9323C</string>
+			<key>IDESourceControlWCCName</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>583319C2D8823D128711E3D7F9E5472B80CBE0B9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Gress</string>
+		</dict>
+	</array>
+</dict>
+</plist>
