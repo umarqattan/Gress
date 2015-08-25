@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+
 enum Macronutrients: Int {
     case FAT = 0, FAT_PERCENT, CARBOHYDRATE, CARBOHYDRATE_PERCENT, PROTEIN, PROTEIN_PERCENT
 }

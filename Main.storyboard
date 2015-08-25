@@ -67,7 +67,7 @@
                                                 </state>
                                                 <variation key="widthClass=compact" fixedFrame="YES">
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                                    <rect key="frame" x="0.0" y="-1" width="270" height="29"/>
+                                                    <rect key="frame" x="0.0" y="-1" width="326" height="29"/>
                                                 </variation>
                                                 <connections>
                                                     <action selector="login:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kXI-Ru-DQj"/>
@@ -77,7 +77,7 @@
                                                 <rect key="frame" x="-10" y="-10" width="20" height="20"/>
                                                 <color key="color" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                                    <rect key="frame" x="125" y="4" width="20" height="20"/>
+                                                    <rect key="frame" x="153" y="4" width="20" height="20"/>
                                                 </variation>
                                             </activityIndicatorView>
                                         </subviews>
@@ -89,20 +89,20 @@
                                             </mask>
                                         </variation>
                                         <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="8" y="129" width="270" height="27"/>
+                                            <rect key="frame" x="8" y="129" width="326" height="27"/>
                                             <mask key="subviews">
                                                 <include reference="jCy-Yd-xRk"/>
                                                 <include reference="4wK-HM-f5r"/>
                                             </mask>
                                         </variation>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New to Gress?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZl-F5-Jrl">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New to Gress?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZl-F5-Jrl">
                                         <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                         <color key="textColor" red="0.1980473995" green="0.57496402140000002" blue="0.82381836990000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="26" y="164" width="114" height="21"/>
+                                            <rect key="frame" x="36" y="164" width="124" height="21"/>
                                         </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohb-C2-Jho">
@@ -113,7 +113,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="112" y="160" width="166" height="30"/>
+                                            <rect key="frame" x="150" y="160" width="166" height="30"/>
                                         </variation>
                                         <connections>
                                             <action selector="createAnAccount:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OTx-T4-aog"/>
@@ -455,7 +455,7 @@
                                                 </state>
                                                 <variation key="widthClass=compact" fixedFrame="YES">
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                                    <rect key="frame" x="0.0" y="-1" width="270" height="29"/>
+                                                    <rect key="frame" x="0.0" y="-1" width="326" height="29"/>
                                                 </variation>
                                                 <connections>
                                                     <action selector="signUp:" destination="tK7-Nn-SVV" eventType="touchUpInside" id="IiX-gC-k2C"/>
@@ -465,7 +465,7 @@
                                                 <rect key="frame" x="-10" y="-10" width="20" height="20"/>
                                                 <color key="color" red="0.23667450740000001" green="0.89506246369999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                                    <rect key="frame" x="125" y="4" width="20" height="20"/>
+                                                    <rect key="frame" x="153" y="4" width="20" height="20"/>
                                                 </variation>
                                             </activityIndicatorView>
                                         </subviews>
@@ -477,7 +477,7 @@
                                             </mask>
                                         </variation>
                                         <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="8" y="129" width="270" height="27"/>
+                                            <rect key="frame" x="8" y="129" width="326" height="27"/>
                                             <mask key="subviews">
                                                 <include reference="YIi-mf-drb"/>
                                                 <include reference="HmR-88-4Oo"/>
@@ -500,7 +500,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="207" y="160" width="38" height="30"/>
+                                            <rect key="frame" x="243" y="160" width="38" height="30"/>
                                         </variation>
                                         <connections>
                                             <action selector="login:" destination="tK7-Nn-SVV" eventType="touchUpInside" id="mVk-Mb-rLf"/>
@@ -509,25 +509,25 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ok Filled-32" translatesAutoresizingMaskIntoConstraints="NO" id="mxH-nz-U5N">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="246" y="32" width="32" height="32"/>
+                                            <rect key="frame" x="302" y="32" width="32" height="32"/>
                                         </variation>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ok Filled-32" translatesAutoresizingMaskIntoConstraints="NO" id="bZG-p6-tQm">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="246" y="75" width="32" height="32"/>
+                                            <rect key="frame" x="302" y="75" width="32" height="32"/>
                                         </variation>
                                     </imageView>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4Mz-jC-Iuf">
                                         <rect key="frame" x="-10" y="-10" width="20" height="20"/>
                                         <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="252" y="38" width="20" height="20"/>
+                                            <rect key="frame" x="308" y="38" width="20" height="20"/>
                                         </variation>
                                     </activityIndicatorView>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="UFD-76-aLW">
                                         <rect key="frame" x="-10" y="-10" width="20" height="20"/>
                                         <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="252" y="81" width="20" height="20"/>
+                                            <rect key="frame" x="308" y="81" width="20" height="20"/>
                                         </variation>
                                     </activityIndicatorView>
                                 </subviews>
