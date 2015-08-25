@@ -14,6 +14,8 @@
 		<string>https://github.com/umarqattan/MemeMe.git</string>
 		<key>583319C2D8823D128711E3D7F9E5472B80CBE0B9</key>
 		<string>github.com:umarqattan/Gress.git</string>
+		<key>8B3D884E5CB77CFCF2CE65E14C999AAC1DC843A5</key>
+		<string>https://github.com/core-plot/core-plot.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Gress.xcodeproj</string>
@@ -23,6 +25,8 @@
 		<string>../../..</string>
 		<key>583319C2D8823D128711E3D7F9E5472B80CBE0B9</key>
 		<string>../..</string>
+		<key>8B3D884E5CB77CFCF2CE65E14C999AAC1DC843A5</key>
+		<string>../../../core-plot</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>github.com:umarqattan/Gress.git</string>
@@ -39,6 +43,14 @@
 			<string>3377A14AABFB8BF84B72EA683354A7C77EB9323C</string>
 			<key>IDESourceControlWCCName</key>
 			<string></string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8B3D884E5CB77CFCF2CE65E14C999AAC1DC843A5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>core-plot</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
