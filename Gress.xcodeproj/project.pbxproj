@@ -13,6 +13,7 @@
 		E101A63E1B97A8C40004AE55 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E101A6381B97A8C40004AE55 /* ParseFacebookUtils.framework */; };
 		E101A63F1B97A8C40004AE55 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E101A6391B97A8C40004AE55 /* ParseFacebookUtilsV4.framework */; };
 		E101A6401B97A8C40004AE55 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E101A63A1B97A8C40004AE55 /* ParseUI.framework */; };
+		E101A6421B97ACEA0004AE55 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E101A6411B97ACEA0004AE55 /* PieChartView.swift */; };
 		E177A14A1B7D7E4A00B7507A /* NewGressProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A1491B7D7E4A00B7507A /* NewGressProfileViewController.swift */; };
 		E177A1661B7EF83800B7507A /* NewGressProfileBodyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A1651B7EF83800B7507A /* NewGressProfileBodyViewController.swift */; };
 		E177A1681B7F344800B7507A /* BodyInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A1671B7F344800B7507A /* BodyInformation.swift */; };
@@ -45,6 +46,7 @@
 		E101A6381B97A8C40004AE55 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
 		E101A6391B97A8C40004AE55 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		E101A63A1B97A8C40004AE55 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		E101A6411B97ACEA0004AE55 /* PieChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		E177A1491B7D7E4A00B7507A /* NewGressProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGressProfileViewController.swift; sourceTree = "<group>"; };
 		E177A1651B7EF83800B7507A /* NewGressProfileBodyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGressProfileBodyViewController.swift; sourceTree = "<group>"; };
 		E177A1671B7F344800B7507A /* BodyInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BodyInformation.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 		E19F12B41B7589B0002A3D35 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E101A6411B97ACEA0004AE55 /* PieChartView.swift */,
 				E19F12B11B758980002A3D35 /* Main.storyboard */,
 				E19F12671B75875C002A3D35 /* LaunchScreen.xib */,
 			);
@@ -299,6 +302,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E101A6421B97ACEA0004AE55 /* PieChartView.swift in Sources */,
 				E177A14A1B7D7E4A00B7507A /* NewGressProfileViewController.swift in Sources */,
 				E177A1A01B84499C00B7507A /* NewGressProfileActivityViewController.swift in Sources */,
 				E19F12811B7587C9002A3D35 /* LoginViewController.swift in Sources */,

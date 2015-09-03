@@ -32,6 +32,7 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
     @IBOutlet weak var carbohydrateField: UITextField!
     @IBOutlet weak var proteinField: UITextField!
     
+    @IBOutlet weak var macroPieChart: PieChartView!
     
     var backButton:UIBarButtonItem!
     var forwardButton:UIBarButtonItem!
@@ -61,6 +62,9 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         setDelegates()
         configureTextFields()
         
+        
+        
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -71,7 +75,6 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         body.goalLevel = goalSlider.value
         updateSharedBodyObject(body)
     }
-    
     
     func setDelegates() {
         scrollView.delegate = self
@@ -129,8 +132,6 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         dismissViewControllerAnimated(true, completion: nil)
     }
 
-    
-    
     /**
         MARK: UIPickerViewDelegate methods
     **/
@@ -301,6 +302,7 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
                 activeTextField!.resignFirstResponder()
             default : return
         }
+        setMacroPieChart()
     }
     
     /**
@@ -347,6 +349,17 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         customView.addSubview(proteinLabel)
         customView.addSubview(totalPercentageLabel)
         customView.addSubview(pickerView)
+    }
+    
+    /**
+        MARK: Set MacroPieChart sections using the macronutrient
+              percentages.
+    **/
+    
+    func setMacroPieChart() {
+        macroPieChart.fatEndArc = CGFloat((fatField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+        macroPieChart.carbohydrateEndArc = CGFloat((carbohydrateField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+        macroPieChart.proteinEndArc = CGFloat((proteinField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
     }
     
     /**
