@@ -61,10 +61,6 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         configureUserInputView()
         setDelegates()
         configureTextFields()
-        
-        
-        
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -74,6 +70,7 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         body.nutrition = fatField.text + " " + carbohydrateField.text + " " + proteinField.text
         body.goalLevel = goalSlider.value
         updateSharedBodyObject(body)
+        
     }
     
     func setDelegates() {
@@ -110,6 +107,7 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
     
     func configureUserInputView() {
         userInputView.layer.cornerRadius = 12
+        macroPieChart.layer.cornerRadius = 12
     }
     
     func configureTextFields() {
@@ -360,6 +358,11 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         macroPieChart.fatEndArc = CGFloat((fatField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
         macroPieChart.carbohydrateEndArc = CGFloat((carbohydrateField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
         macroPieChart.proteinEndArc = CGFloat((proteinField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+        
+        macroPieChart.fatLabel.text = "FAT"
+        macroPieChart.carbohydrateLabel.text = "CARB"
+        macroPieChart.proteinLabel.text = "PROT"
+        
     }
     
     /**
@@ -374,6 +377,8 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         pickerView.dataSource = self
         pickerView.backgroundColor = UIColor(red: 51.0/255.0, green: 147.0/255.0, blue: 210.0/255.0, alpha: 1.0)
 
+        
+        
         addCustomViewToTextFieldInputView()
         addDoneButtonToActiveTextField()
         configureDefaultPickerViewValues()
