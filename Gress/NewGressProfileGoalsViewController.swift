@@ -51,6 +51,11 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
     var checkmarkButton:UIButton!
     var cancelPickerButton:UIButton!
     
+    var macroPieChartFatLabel:UILabel!
+    var macroPieChartCarbohydrateLabel:UILabel!
+    var macroPieChartProteinLabel:UILabel!
+    
+    
     var body:BodyInformation!
 
     override func viewDidLoad() {
@@ -61,6 +66,9 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         configureUserInputView()
         setDelegates()
         configureTextFields()
+        setMacroPieChart()
+        
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -171,15 +179,14 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         getPercentagesFromPickerView(fat, carbohydrate: carbohydrate, protein: protein)
         toggleCheckmarkButton()
         
+        
     }
     
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
         var pickerLabel = view as? UILabel;
         
-        if (pickerLabel == nil)
-        {
+        if (pickerLabel == nil) {
             pickerLabel = UILabel()
-            
             pickerLabel?.font = UIFont(name: "HelvetiaNeue-Light", size: 15)
             pickerLabel?.textAlignment = NSTextAlignment.Center
         }
@@ -280,8 +287,10 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         if totalPercentageInt == 100 {
             attributedText.addAttributes([NSForegroundColorAttributeName : UIColor.greenColor()], range: NSRange(location: 19, length: totalPercentage.length))
             totalPercentageLabel.attributedText = NSAttributedString(attributedString: attributedText)
+            
             checkmarkButton.enabled = true
         } else {
+            
             attributedText.addAttributes([NSForegroundColorAttributeName : UIColor.redColor()], range: NSRange(location: 19, length: totalPercentage.length))
             totalPercentageLabel.attributedText = NSAttributedString(attributedString: attributedText)
             checkmarkButton.enabled = false
@@ -292,15 +301,37 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
        
         switch sender {
             case checkmarkButton :
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.macroPieChart.fatEndArc = CGFloat((self.fatField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+                    self.macroPieChart.carbohydrateEndArc = CGFloat((self.carbohydrateField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+                    self.macroPieChart.proteinEndArc = CGFloat((self.proteinField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+                    self.macroPieChart.fatPercent = CGFloat((self.fatField.text as NSString).floatValue)
+                    self.macroPieChart.carbohydratePercent = CGFloat((self.carbohydrateField.text as NSString).floatValue)
+                    self.macroPieChart.proteinPercent = CGFloat((self.proteinField.text as NSString).floatValue)
+                    self.addMacroLabelsToPieChart()
+                    self.macroPieChart.setNeedsDisplay()
+                }
+                
                 activeTextField!.resignFirstResponder()
+            
             case cancelPickerButton :
+                
                 fatField.text = "15 %"
                 carbohydrateField.text = "65 %"
                 proteinField.text = "20 %"
+                
+                macroPieChart.fatEndArc = CGFloat((fatField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+                macroPieChart.carbohydrateEndArc = CGFloat((carbohydrateField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+                macroPieChart.proteinEndArc = CGFloat((proteinField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+                macroPieChart.fatPercent = CGFloat((fatField.text as NSString).floatValue)
+                macroPieChart.carbohydratePercent = CGFloat((carbohydrateField.text as NSString).floatValue)
+                macroPieChart.proteinPercent = CGFloat((proteinField.text as NSString).floatValue)
+                macroPieChart.setNeedsDisplay()
+                
                 activeTextField!.resignFirstResponder()
             default : return
         }
-        setMacroPieChart()
     }
     
     /**
@@ -355,15 +386,108 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
     **/
     
     func setMacroPieChart() {
+    
+        macroPieChart.clearsContextBeforeDrawing = true
         macroPieChart.fatEndArc = CGFloat((fatField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
         macroPieChart.carbohydrateEndArc = CGFloat((carbohydrateField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
         macroPieChart.proteinEndArc = CGFloat((proteinField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
         
-        macroPieChart.fatLabel.text = "FAT"
-        macroPieChart.carbohydrateLabel.text = "CARB"
-        macroPieChart.proteinLabel.text = "PROT"
-        
+        dispatch_async(dispatch_get_main_queue()) {
+            
+            self.macroPieChart.setNeedsDisplay()
+            self.addMacroLabelsToPieChart()
+        }
     }
+    
+    func addMacroLabelsToPieChart() {
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            var macroPieChartRect = self.macroPieChart.bounds
+            var centerPoint = CGPointMake(CGRectGetMidX(macroPieChartRect), CGRectGetMidY(macroPieChartRect))
+            var radius:CGFloat = {
+                var width = CGRectGetWidth(macroPieChartRect)
+                var height = CGRectGetHeight(macroPieChartRect)
+                if width > height {
+                    return height/2.0
+                } else {
+                    return width/2.0
+                }
+            }()
+            
+            
+            var fatHalfAngle:CGFloat = (self.macroPieChart.fatEnd-self.macroPieChart.fatStart)/2.0 + self.macroPieChart.fatStart
+            var fatX:CGFloat = centerPoint.x + radius * cos(fatHalfAngle  ) / 2.0
+            var fatY:CGFloat = centerPoint.y + radius * sin(fatHalfAngle ) / 2.0
+            var fatCenterPoint:CGPoint = CGPointMake(fatX-15, fatY)
+            
+            var fatPercent = CGFloat((self.fatField.text as NSString).floatValue)
+            var fatString = NSString(format: "Fat\n %.2f \\%", fatPercent)
+            var fatStringSize = fatString.sizeWithAttributes([NSFontAttributeName : font])
+            
+            self.macroPieChartFatLabel = UILabel(frame: CGRectMake(fatCenterPoint.x, fatCenterPoint.y, fatStringSize.width, fatStringSize.height))
+            self.macroPieChartFatLabel.lineBreakMode = .ByWordWrapping
+            self.macroPieChartFatLabel.textAlignment = NSTextAlignment.Center
+            self.macroPieChartFatLabel.numberOfLines = 0
+            self.macroPieChartFatLabel.text = "Fat\n\(fatPercent)%"
+            self.macroPieChartFatLabel.font = font
+            
+            
+            var carbohydrateHalfAngle:CGFloat = (self.macroPieChart.carbohydrateEnd-self.macroPieChart.carbohydrateStart)/2.0 + self.macroPieChart.carbohydrateStart
+            var carbohydrateX:CGFloat = centerPoint.x + radius * cos(carbohydrateHalfAngle ) / 2.0
+            var carbohydrateY:CGFloat = centerPoint.y + radius * sin(carbohydrateHalfAngle ) / 2.0
+            var carbohydrateCenterPoint:CGPoint = CGPointMake(carbohydrateX-15.0, carbohydrateY-10.0)
+            
+            
+            var carbohydratePercent = CGFloat((self.carbohydrateField.text as NSString).floatValue)
+            var carbohydrateString = NSString(format: "Carbohydrate\n %.2f \\%", carbohydratePercent)
+            var carbohydrateStringSize = carbohydrateString.sizeWithAttributes([NSFontAttributeName : font])
+            
+            self.macroPieChartCarbohydrateLabel = UILabel(frame: CGRectMake(carbohydrateCenterPoint.x, carbohydrateCenterPoint.y, carbohydrateStringSize.width, carbohydrateStringSize.height))
+            self.macroPieChartCarbohydrateLabel.lineBreakMode = .ByWordWrapping
+            self.macroPieChartCarbohydrateLabel.textAlignment = NSTextAlignment.Center
+            self.macroPieChartCarbohydrateLabel.numberOfLines = 0
+            self.macroPieChartCarbohydrateLabel.text = "Carbohydrate\n\(carbohydratePercent)%"
+            self.macroPieChartCarbohydrateLabel.font = font
+            
+
+            var proteinHalfAngle:CGFloat = (self.macroPieChart.proteinEnd-self.macroPieChart.proteinStart)/2.0 + self.macroPieChart.proteinStart
+            var proteinX:CGFloat = centerPoint.x + radius * cos(proteinHalfAngle ) / 2.0
+            var proteinY:CGFloat = centerPoint.y + radius * sin(proteinHalfAngle ) / 2.0
+            var proteinCenterPoint:CGPoint = CGPointMake(proteinX-10, proteinY)
+            
+            
+            var proteinPercent = CGFloat((self.proteinField.text as NSString).floatValue)
+            var proteinString = NSString(format: "Protein\n%.2f\\%", proteinPercent)
+            var proteinStringSize = proteinString.sizeWithAttributes([NSFontAttributeName : font])
+            
+            
+            self.macroPieChartProteinLabel = UILabel(frame: CGRectMake(proteinCenterPoint.x, proteinCenterPoint.y, proteinStringSize.width, proteinStringSize.height))
+            self.macroPieChartProteinLabel.lineBreakMode = .ByWordWrapping
+            self.macroPieChartProteinLabel.textAlignment = NSTextAlignment.Center
+            self.macroPieChartProteinLabel.numberOfLines = 0
+            self.macroPieChartProteinLabel.text = "Protein\n\(proteinPercent)%"
+            self.macroPieChartProteinLabel.font = font
+
+            
+            
+            self.macroPieChart.addSubview(self.macroPieChartFatLabel)
+            self.macroPieChart.addSubview(self.macroPieChartCarbohydrateLabel)
+            self.macroPieChart.addSubview(self.macroPieChartProteinLabel)
+        }
+    }
+    
+    func removeMacroLabelsFromPieChart() {
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            for subview in self.macroPieChart.subviews {
+                if subview as! NSObject == self.macroPieChartFatLabel || subview as! NSObject == self.macroPieChartCarbohydrateLabel || subview as! NSObject == self.macroPieChartProteinLabel {
+                    subview.removeFromSuperview()
+                }
+            }
+        }
+    
+    }
+    
     
     /**
         MARK: UITextFieldDelegate methods
@@ -376,9 +500,8 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         pickerView.delegate = self
         pickerView.dataSource = self
         pickerView.backgroundColor = UIColor(red: 51.0/255.0, green: 147.0/255.0, blue: 210.0/255.0, alpha: 1.0)
-
         
-        
+        removeMacroLabelsFromPieChart()
         addCustomViewToTextFieldInputView()
         addDoneButtonToActiveTextField()
         configureDefaultPickerViewValues()
