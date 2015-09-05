@@ -52,68 +52,68 @@ class BodyInformation {
     
     // Goals and Nutrition
     var nutrition:String!
+    var fatPercent:Float!
+    var carbohydratePercent:Float!
+    var proteinPercent:Float!
+    
     var goalLevel:Float!
     
     
-    init(age: String?, height:String?, weight: String?, unit:Int) {
+    // Completed New Profile
+    var didCompleteNewProfile:Bool = false
+    
+    
+    // init method
+    
+    init(firstName: String, lastName: String, email: String, profilePicture: UIImage?) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.fullName = firstName + " " + lastName
+        self.email = email
+        self.profilePicture = profilePicture
         
-        if let anAge = age {
-            self.age = anAge
-        }
+    }
+    
+    /**
+        MARK: Nutrition Information
+    **/
+    
+    struct Nutrition {
         
-        if let aHeight = height {
-        
-            switch unit {
-                case SI:
-                    println("initializing from SI units")
-                    var feet = getFeetFromText(aHeight)
-                    var inches = getInchesFromText(aHeight)
-                    var metricHeightArray = SIToMetricHeight(feet, inches: inches)
-                    rawCentimeters = metricHeightArray[1]
-                    rawFeet = feet
-                    rawInches = inches
-                    heightSI = formatHeightSIString(rawFeet, inches: rawInches)
-                    heightMetric = formatHeightMetricString(rawCentimeters)
-
-                case METRIC:
-                    println("initializing from Metric Units")
-                    var centimeters = getCentimetersFromText(aHeight)
-                    var SIHeightArray = metricToSIHeight(centimeters)
-                    rawFeet = SIHeightArray[2]
-                    rawInches = SIHeightArray[3]
-                    rawCentimeters = centimeters
-                    heightMetric = formatHeightMetricString(centimeters)
-                    heightSI = formatHeightSIString(rawFeet, inches: rawInches)
-                
-                default : return
-            }
-        }
-        
-        if let aWeight = weight {
+        struct Macronutrients {
             
-            switch unit {
-                case SI:
-                    
-                    println("initializing from SI units")
-                    rawPounds = getPoundsFromText(aWeight)
-                    weightSI = formatWeightSIString(rawPounds)
-                    rawKilograms = SIToMetricWeight(rawPounds)
-                    weightMetric = formatWeightMetricString(rawKilograms)
-                
-                case METRIC:
-                
-                    println("initializing from Metric Units")
-                    rawKilograms = getKilogramsFromText(aWeight)
-                    weightMetric = formatWeightMetricString(rawKilograms)
-                    rawPounds = metricToSIWeight(rawKilograms)
-                    weightSI = formatWeightSIString(rawPounds)
-                
-                default : return
-            }
-
+            static let Fat = "Fat"
+            static let Carbohydrate = "Carbohydrate"
+            static let Protein = "Protein"
+    
         }
     }
     
+    
+    /**
+        MARK: method to print out contents of a BodyInformation 
+              object
+    **/
+    
+    func printBodyInformation() {
+        
+        println("Name\n First Name: \(firstName)\n Last Name: \(lastName)\n Email: \(email)\n Profile Picture: \(profilePicture)")
+        
+        println("Body\n Sex: \(sexString(sex))\n Age: \(age)\n Height Metric: \(heightMetric)\n Height SI: \(heightSI)\n Weight Metric: \(weightMetric)\n Weight SI: \(weightSI)")
+        
+        println("Activity\n Activity Level: \(activityLevel)\n Exercise Duration: \(exerciseDuration)\n Number of Training Days: \(trainingDays)")
+        
+        println("Nutrition\n Macronutrient Ratio: \(nutrition)\n Goal Level: \(goalLevel)")
+        
+    }
+    
+    func sexString(sex: Int) -> String {
+        switch sex {
+            case 0: return "Male"
+            case 1: return "Female"
+            default: return ""
+        }
+    }
     
     /**
         MARK: string formatting methods to convert from Metric
@@ -152,14 +152,14 @@ class BodyInformation {
     
     }
     
-    func getCentimetersFromText(text : String) -> String {
+    class func getCentimetersFromText(text : String) -> String {
         var startIndex = text.startIndex
         var endIndex = advance(startIndex, 3)
         var range = Range<String.Index>(start: startIndex, end: endIndex)
         return text.substringWithRange(range)
     }
     
-    func getFeetFromText(text : String) -> String {
+    class func getFeetFromText(text : String) -> String {
         var startIndex = text.startIndex
         var endIndex = advance(startIndex, 1)
         var range = Range<String.Index>(start: startIndex, end: endIndex)
@@ -167,7 +167,7 @@ class BodyInformation {
         return text.substringWithRange(range)
     }
     
-    func getInchesFromText(text : String) -> String {
+    class func getInchesFromText(text : String) -> String {
         var startIndex = advance(text.startIndex, 6)
         var endIndex = startIndex
         var length = text.length
@@ -183,7 +183,7 @@ class BodyInformation {
         return text.substringWithRange(range)
     }
     
-    func getPoundsFromText(text: String) -> String {
+    class func getPoundsFromText(text: String) -> String {
         var startIndex = text.startIndex
         var endIndex:String.Index
         var length = text.length
@@ -192,12 +192,12 @@ class BodyInformation {
         if length == 7 {
             endIndex = advance(text.startIndex,4)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
-            println("wholePounds = \(text.substringWithRange(range))")
+            
             return text.substringWithRange(range)
         } else if length == 8 {
             endIndex = advance(text.startIndex,5)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
-            println("wholePounds = \(text.substringWithRange(range))")
+            
             return text.substringWithRange(range)
         } else {
             return ""
@@ -205,7 +205,7 @@ class BodyInformation {
     }
     
     
-    func getKilogramsFromText(text: String) -> String {
+    class func getKilogramsFromText(text: String) -> String {
         var startIndex = text.startIndex
         var endIndex:String.Index
         var length = text.length
@@ -213,7 +213,7 @@ class BodyInformation {
         if length == 7 {
             endIndex = advance(text.startIndex,4)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
-            println("wholeKilograms = \(text.substringWithRange(range))")
+            
 
             return text.substringWithRange(range)
         }
@@ -221,7 +221,7 @@ class BodyInformation {
         else if length == 8 {
             endIndex = advance(startIndex,5)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
-            println("wholeKilograms = \(text.substringWithRange(range))")
+            
 
             return text.substringWithRange(range)
         } else {
@@ -256,6 +256,69 @@ class BodyInformation {
     
     func formatWeightSIString(pounds : String) -> String {
         return pounds + " lb"
+    }
+    
+    class func determineUnitFromString(text : String) -> Int {
+        var substring = text as NSString
+        
+        if substring.hasSuffix("cm") || substring.hasSuffix("kg") {
+            return METRIC
+        }
+        else if substring.hasSuffix("in") || substring.hasSuffix("lb") {
+            return SI
+        } else {
+            return -1
+        }
+        
+    }
+    
+    func setWeightFromText(text : String) {
+        var unit = BodyInformation.determineUnitFromString(text)
+        switch unit {
+            case SI :
+                rawPounds = BodyInformation.getPoundsFromText(text)
+                weightSI = formatWeightSIString(rawPounds)
+                rawKilograms = SIToMetricWeight(rawPounds)
+                weightMetric = formatWeightMetricString(rawKilograms)
+            case METRIC:
+                rawKilograms = BodyInformation.getKilogramsFromText(text)
+                weightMetric = formatWeightMetricString(rawKilograms)
+                rawPounds = metricToSIWeight(rawKilograms)
+                weightSI = formatWeightSIString(rawPounds)
+            default: return
+        }
+        
+    }
+    
+    func setHeightFromText(text : String) {
+        var unit = BodyInformation.determineUnitFromString(text)
+        switch unit {
+            case SI :
+                var feet = BodyInformation.getFeetFromText(text)
+                var inches = BodyInformation.getInchesFromText(text)
+                var metricHeightArray = SIToMetricHeight(feet, inches: inches)
+                rawCentimeters = metricHeightArray[1]
+                rawFeet = feet
+                rawInches = inches
+                heightSI = formatHeightSIString(rawFeet, inches: rawInches)
+                heightMetric = formatHeightMetricString(rawCentimeters)
+
+            case METRIC:
+                println("initializing from Metric Units")
+                var centimeters = BodyInformation.getCentimetersFromText(text)
+                var SIHeightArray = metricToSIHeight(centimeters)
+                rawFeet = SIHeightArray[2]
+                rawInches = SIHeightArray[3]
+                rawCentimeters = centimeters
+                heightMetric = formatHeightMetricString(centimeters)
+                heightSI = formatHeightSIString(rawFeet, inches: rawInches)
+            default: return
+        }
+
+    }
+    
+    func setAgeFromText(text : String) {
+        self.age = text
     }
     
 

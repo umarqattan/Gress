@@ -36,6 +36,7 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
     
     var body:BodyInformation!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,18 +60,21 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         
         unsubscribeFromKeyboardNotifications()
         
-        body = BodyInformation(age: nil, height: nil, weight: nil, unit: 0)
-        body.firstName = firstNameField.text
-        body.lastName = lastNameField.text
-        body.fullName = firstNameField.text + " " + lastNameField.text
-        body.email = emailAddressField.text
-        body.profilePicture = newProfilePictureImageView.image
-        updateSharedBodyObject(body)
         
     }
     
     func goForward(sender: UIBarButtonItem) {
+        
+        
+        body = BodyInformation(firstName: firstNameField.text, lastName: lastNameField.text, email: emailAddressField.text, profilePicture: newProfilePictureImageView.image)
+        updateSharedBodyObject(body)
         let bodyInformationViewController = storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileBodyViewController") as! NewGressProfileBodyViewController
+        /**
+        bodyInformationViewController.firstName = firstNameField.text
+        bodyInformationViewController.lastName = lastNameField.text
+        bodyInformationViewController.email = emailAddressField.text
+        bodyInformationViewController.profilePicture = newProfilePictureImageView.image
+        **/
         navigationController?.pushViewController(bodyInformationViewController, animated: true)
     }
     

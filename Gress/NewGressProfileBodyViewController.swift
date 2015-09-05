@@ -30,7 +30,10 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     var cancelButton:UIBarButtonItem!
     
     var body:BodyInformation!
-    
+    var email:String!
+    var firstName:String!
+    var lastName:String!
+    var profilePicture:UIImage?
     /**
         MARK: update forward buttons for every viewController 
               pushed to the navigationController stack.
@@ -47,21 +50,31 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         configureNavigationItem()
         configureNewProfileProgressBar(NOT_FINISHED)
         configureUserInputView()
+        unitSegmentedControl.enabled = false
     }
     
+    func updateSharedBodyObjectWithBody() {
+        
+        body = getSharedBodyObject()
+        body.setAgeFromText(ageField.text)
+        body.setHeightFromText(heightField.text)
+        body.setWeightFromText(weightField.text)
+        updateSharedBodyObject(body)
+        
+    }
     
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        body = getSharedBodyObject()
+        
         
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-       
+        
     }
     
     func configureUserInputView() {
@@ -96,7 +109,30 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         }
     }
     
+    func configureDefaultPickerViewValues() {
+        
+        switch activeTextField! {
+            case ageField :
+                var ageRow = PickerViewConstants.getRowFromAge(ageField.text)
+                pickerView.selectRow(ageRow, inComponent: 0, animated: true)
+            case heightField :
+                var height = PickerViewConstants.getRowFromHeight(heightField.text)
+                pickerView.selectRow(height[0], inComponent: 0, animated: true)
+                pickerView.selectRow(height[1], inComponent: 1, animated: true)
+
+            case weightField :
+                var weight = PickerViewConstants.getRowFromWeight(weightField.text)
+                pickerView.selectRow(weight[0], inComponent: 0, animated: true)
+                pickerView.selectRow(0, inComponent: 1, animated: true)
+            default: return
+        }
+        
+        
+    }
+    
     func goForward(sender: UIBarButtonItem) {
+        
+        updateSharedBodyObjectWithBody()
         let newGressProfileActivityViewController = storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileActivityViewController") as! NewGressProfileActivityViewController
         navigationController?.pushViewController(newGressProfileActivityViewController, animated: true)
     }
@@ -228,13 +264,13 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
                 feet = PickerViewConstants.Height.SI.heightSI[0][pickerView.selectedRowInComponent(0)]
                 inches = PickerViewConstants.Height.SI.heightSI[2][pickerView.selectedRowInComponent(2)]
                 getHeightFromPickerView(feet, inches: inches)
-                 println("feet = \(feet) and inches = \(inches)")
+                
                 
             } else if unitSegmentedControl.selectedSegmentIndex == METRIC {
                 var centimeters:String!
                 centimeters = PickerViewConstants.Height.Metric.heightMetric[0][pickerView.selectedRowInComponent(0)]
                 getHeightFromPickerView(centimeters)
-                println("cm = \(centimeters)")
+                
             }
         case weightField :
             
@@ -284,6 +320,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         pickerView.backgroundColor = UIColor(red: 51.0/255.0, green: 147.0/255.0, blue: 210.0/255.0, alpha: 1.0)
         activeTextField = textField
         addDoneButtonToActiveTextField()
+        configureDefaultPickerViewValues()
         textField.inputView = pickerView
     }
     
@@ -293,14 +330,10 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         
         if !ageField.text.isEmpty && !heightField.text.isEmpty && !weightField.text.isEmpty {
             
-            body = BodyInformation(age: ageField.text!, height: heightField.text!, weight: weightField.text!, unit: unitSegmentedControl.selectedSegmentIndex)
-            body.sex = sexSegmentedControl.selectedSegmentIndex
-            updateSharedBodyObject(body)
+            
+            updateSharedBodyObjectWithBody()
             unitSegmentedControl.enabled = true
-            
-            
             configureNewProfileProgressBar(FINISHED)
-            unitSegmentedControl.enabled = true
             
         } else {
             unitSegmentedControl.enabled = false

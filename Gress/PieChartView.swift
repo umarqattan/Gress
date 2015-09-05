@@ -43,13 +43,8 @@ class PieChartView : UIView {
     var proteinLabel = UILabel(frame: CGRectZero)
     var proteinPercent:CGFloat = 20.0
     
-    
-    
-    
-    
     override func drawRect(rect: CGRect) {
-        
-        
+    
         var centerPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect))
         var radius:CGFloat = {
             var width = CGRectGetWidth(rect)
@@ -88,7 +83,6 @@ class PieChartView : UIView {
             Fat Sector
         **/
         
-        
         CGContextSetFillColorWithColor(context, fatArcColor.CGColor)
         CGContextMoveToPoint(context, centerPoint.x, centerPoint.y)
         CGContextAddArc(context, centerPoint.x, centerPoint.y, radius, fatStart, fatEnd, 0)
@@ -97,8 +91,7 @@ class PieChartView : UIView {
         /**
             Carbohydrate Sector
         **/
-        
-        
+    
         CGContextSetFillColorWithColor(context, carbohydrateArcColor.CGColor)
         CGContextMoveToPoint(context, centerPoint.x, centerPoint.y)
         CGContextAddArc(context, centerPoint.x, centerPoint.y, radius, carbohydrateStart, carbohydrateEnd, 0)
@@ -114,7 +107,6 @@ class PieChartView : UIView {
         CGContextAddArc(context, centerPoint.x, centerPoint.y, radius, proteinStart, proteinEnd, 0)
         CGContextFillPath(context)
 
-        
     }
     
 }

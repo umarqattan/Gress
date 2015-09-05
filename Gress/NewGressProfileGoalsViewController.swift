@@ -74,11 +74,18 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
+        
+    }
+    
+    func updateSharedBodyObjectWithGoals() {
         body = getSharedBodyObject()
         body.nutrition = fatField.text + " " + carbohydrateField.text + " " + proteinField.text
+        body.fatPercent = Float(macroPieChart.fatPercent)
+        body.carbohydratePercent = Float(macroPieChart.carbohydratePercent)
+        body.proteinPercent = Float(macroPieChart.proteinPercent)
         body.goalLevel = goalSlider.value
+        body.didCompleteNewProfile = true
         updateSharedBodyObject(body)
-        
     }
     
     func setDelegates() {
@@ -125,7 +132,9 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
     }
     
     func goForward(sender: UIBarButtonItem) {
-        return
+        
+        updateSharedBodyObjectWithGoals()
+        body.printBodyInformation()
     
     }
     
@@ -321,13 +330,17 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
                 carbohydrateField.text = "65 %"
                 proteinField.text = "20 %"
                 
-                macroPieChart.fatEndArc = CGFloat((fatField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
-                macroPieChart.carbohydrateEndArc = CGFloat((carbohydrateField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
-                macroPieChart.proteinEndArc = CGFloat((proteinField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
-                macroPieChart.fatPercent = CGFloat((fatField.text as NSString).floatValue)
-                macroPieChart.carbohydratePercent = CGFloat((carbohydrateField.text as NSString).floatValue)
-                macroPieChart.proteinPercent = CGFloat((proteinField.text as NSString).floatValue)
-                macroPieChart.setNeedsDisplay()
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.macroPieChart.fatEndArc = CGFloat((self.fatField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+                    self.macroPieChart.carbohydrateEndArc = CGFloat((self.carbohydrateField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+                    self.macroPieChart.proteinEndArc = CGFloat((self.proteinField.text as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+                    self.macroPieChart.fatPercent = CGFloat((self.fatField.text as NSString).floatValue)
+                    self.macroPieChart.carbohydratePercent = CGFloat((self.carbohydrateField.text as NSString).floatValue)
+                    self.macroPieChart.proteinPercent = CGFloat((self.proteinField.text as NSString).floatValue)
+                    self.addMacroLabelsToPieChart()
+                    self.macroPieChart.setNeedsDisplay()
+                }
+                
                 
                 activeTextField!.resignFirstResponder()
             default : return
@@ -363,7 +376,7 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         
         totalPercentageLabel = UILabel(frame: CGRectMake(20, customView.frame.height*0.8, 200, 50))
         var attributedText = NSMutableAttributedString(string: "Total Percentage = \(totalPercentage) %")
-         attributedText.addAttributes([NSForegroundColorAttributeName : UIColor.greenColor()], range: NSRange(location: 19, length: totalPercentage.length))
+        attributedText.addAttributes([NSForegroundColorAttributeName : UIColor.greenColor()], range: NSRange(location: 19, length: totalPercentage.length))
         totalPercentageLabel.attributedText = attributedText
         totalPercentageLabel.font = UIFont(name: "HelveticaNeue-Light", size: 15)
         

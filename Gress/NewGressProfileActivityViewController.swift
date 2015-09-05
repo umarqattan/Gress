@@ -72,6 +72,9 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
+    }
+    
+    func updateSharedBodyObjectWithActivity() {
         body = getSharedBodyObject()
         body.exerciseDuration = exerciseDurationField.text
         body.trainingDays = trainingDaysField.text
@@ -157,6 +160,17 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         }
     }
     
+    func configureDefaultPickerViewValues() {
+        switch activeTextField! {
+            case trainingDaysField :
+                pickerView.selectRow(4, inComponent: 0, animated: true)
+            case exerciseDurationField :
+                pickerView.selectRow(1, inComponent: 0, animated: true)
+                pickerView.selectRow(30, inComponent: 2, animated: true)
+            default : return
+        }
+    }
+    
     func changeTextInView(sender: UIButton) {
     
         sender.selected = !sender.selected;
@@ -196,6 +210,9 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     **/
     
     func goForward(sender: UIBarButtonItem) {
+        
+        updateSharedBodyObjectWithActivity()
+        
         let newGressProfileGoalsViewController = storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileGoalsViewController") as! NewGressProfileGoalsViewController
         navigationController?.pushViewController(newGressProfileGoalsViewController, animated: true)
     }
@@ -317,7 +334,7 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         pickerView.dataSource = self
         pickerView.backgroundColor = UIColor(red: 51.0/255.0, green: 147.0/255.0, blue: 210.0/255.0, alpha: 1.0)
         addDoneButtonToActiveTextField()
-
+        configureDefaultPickerViewValues()
         
         
         switch textField {

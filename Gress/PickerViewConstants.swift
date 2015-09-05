@@ -183,6 +183,75 @@ class PickerViewConstants {
         return row
     }
     
+    class func getRowFromAge(text : String) -> Int {
+        var ageString = text as NSString
+        var age = ageString.integerValue
+        for ( var i = 18; i < 150; i++) {
+            if i == age {
+                return i - 18
+            }
+        }
+        return -1
+    }
+    
+    class func getRowFromHeight(text : String) -> [Int] {
+        var unit = BodyInformation.determineUnitFromString(text)
+        switch unit {
+            case SI:
+                var feet = (BodyInformation.getFeetFromText(text) as NSString).integerValue
+                var inches = (BodyInformation.getInchesFromText(text) as NSString).integerValue
+                var feetRow:Int!
+                var inchesRow:Int!
+                for (var i = 4; i < 8; i++) {
+                    if i == feet {
+                        feetRow = i - 4
+                    }
+                }
+                for (var i = 0; i < 12; i++) {
+                    if i == inches {
+                        inchesRow = i
+                    }
+                }
+                return [feetRow, inchesRow]
+            case METRIC:
+                var centimeters = (BodyInformation.getCentimetersFromText(text) as NSString).integerValue
+                var centimetersRow:Int!
+                for (var i = 122; i < 241; i++) {
+                    if i == centimeters {
+                        centimetersRow = i - 122
+                    }
+                }
+                return [centimetersRow, 0]
+            default: return []
+        }
+    }
+    
+    class func getRowFromWeight(text : String) -> [Int] {
+        var unit = BodyInformation.determineUnitFromString(text)
+        switch unit {
+        case SI:
+            var pounds = (BodyInformation.getPoundsFromText(text) as NSString).integerValue
+            var poundsRow:Int!
+            for (var i = 60; i < 998; i++) {
+                if i == pounds {
+                    poundsRow = i - 60
+                }
+            }
+            return [poundsRow]
+        case METRIC:
+            var kilograms = (BodyInformation.getKilogramsFromText(text) as NSString).integerValue
+            var kilogramsRow:Int!
+            for (var i = 27; i < 453; i++) {
+                if i == kilograms {
+                    kilogramsRow = i - 27
+                }
+            }
+            return [kilogramsRow]
+        default: return []
+        }
+    }
+    
+    
     
     
 
