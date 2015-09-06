@@ -321,5 +321,25 @@ class BodyInformation {
         self.age = text
     }
     
+    /**
+        TODO: Use the Revised Harris-Benedict Equation to calculate BMR ->
+              
+                Men: BMR = 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) - (5.677 x age in years)
+    
+                Women: BMR = 447.593 + (9.247 x weight in kg) + (3.098 x height in cm) - (4.330 x age in years)
+    
+                TDEE: 1.2*BMR <= TDEE <= 2.1*BMR or body.activityLevel*BMR
+                Deficit = TDEE - 300
+                Maintenance = TDEE
+                Surplus = TDEE + 300
+                return [Deficit, Maintenance, Surplus]
+    **/
+    
+    func calculateTDEEFromBodyInformation(body: BodyInformation) -> [Float] {
+        return [2100.0, 2400.0, 2700.0]
+    }
+    
+    
+    
 
 }

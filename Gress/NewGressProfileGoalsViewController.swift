@@ -135,6 +135,8 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         
         updateSharedBodyObjectWithGoals()
         body.printBodyInformation()
+        let gressNavigationController = storyboard?.instantiateViewControllerWithIdentifier("GressNavigationController") as! UINavigationController
+        presentViewController(gressNavigationController, animated: true, completion: nil)
     
     }
     

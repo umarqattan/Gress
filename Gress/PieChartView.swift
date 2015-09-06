@@ -45,6 +45,8 @@ class PieChartView : UIView {
     
     override func drawRect(rect: CGRect) {
     
+        
+        
         var centerPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect))
         var radius:CGFloat = {
             var width = CGRectGetWidth(rect)
