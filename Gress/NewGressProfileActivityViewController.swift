@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Parse
 
 enum Time:Int {
     case HOURS = 0, HR, MINUTES, MIN
@@ -178,7 +179,7 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     }
     
     func configureActivitySlider() {
-        activitySlider.value = 0.50
+        activitySlider.value = (activitySlider.maximumValue - activitySlider.minimumValue)/2.0
     }
     
     func configureNavigationItem() {
@@ -222,9 +223,12 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         navigationController?.popViewControllerAnimated(true)
     }
     
-    func cancel(sender : UIBarButtonItem) {
+    func cancel(sender: UIBarButtonItem) {
+        var user:PFUser = PFUser.currentUser()!
+        user.delete()
         dismissViewControllerAnimated(true, completion: nil)
     }
+
     
     /**
         MARK: Activity level button actions (explanation)

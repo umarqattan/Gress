@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import Parse
 
 enum Macronutrients: Int {
     case FAT = 0, FAT_PERCENT, CARBOHYDRATE, CARBOHYDRATE_PERCENT, PROTEIN, PROTEIN_PERCENT
@@ -77,6 +77,18 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         
     }
     
+    /**
+        MARK: Saving the newly created Gress user using NSFileManager
+    
+    **/
+    
+    var filePath : String {
+        let urlPath = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        return urlPath.URLByAppendingPathComponent("GressUsers").path!
+    }
+    
+    
+    
     func updateSharedBodyObjectWithGoals() {
         body = getSharedBodyObject()
         body.nutrition = fatField.text + " " + carbohydrateField.text + " " + proteinField.text
@@ -133,11 +145,15 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
     
     func goForward(sender: UIBarButtonItem) {
         
+        /**
+            TODO: Make sure email hasn't already been taken
+        **/
+        
         updateSharedBodyObjectWithGoals()
-        body.printBodyInformation()
-        let gressNavigationController = storyboard?.instantiateViewControllerWithIdentifier("GressNavigationController") as! UINavigationController
-        presentViewController(gressNavigationController, animated: true, completion: nil)
-    
+        saveNewGressUserToParse() { UIAlertAction in
+            let gressTabBarController = self.storyboard?.instantiateViewControllerWithIdentifier("GressTabBarController") as! GressTabBarController
+            self.navigationController?.pushViewController(gressTabBarController, animated: true)
+        }
     }
     
     func goBack(sender: UIBarButtonItem) {
@@ -145,10 +161,33 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         navigationController?.popViewControllerAnimated(true)
     }
     
-    func cancel(sender : UIBarButtonItem) {
+    func cancel(sender: UIBarButtonItem) {
+        var user:PFUser = PFUser.currentUser()!
+        user.delete()
         dismissViewControllerAnimated(true, completion: nil)
     }
 
+
+    func saveNewGressUserToParse(completionHandler : ((UIAlertAction!) -> Void)!) {
+        
+        
+        var bodyInformation = PFObject(className: "BodyInformation")
+        var user:PFUser = PFUser.currentUser()!
+        user = body.savePFUserBodyInformation(user)
+        user.saveInBackgroundWithBlock() { (success: Bool, downloadError: NSError?) -> Void in
+            if let error = downloadError {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.showAlertView(success, buttonTitle: "Dismiss", message: error.localizedDescription, completionHandler: nil)
+                }
+            } else {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.showAlertView(success, buttonTitle: "Dismiss", message: "Your profile has been saved!", completionHandler: completionHandler)
+                }
+            }
+        }
+    }
+
+    
     /**
         MARK: UIPickerViewDelegate methods
     **/

@@ -41,6 +41,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         activityIndicator.startAnimating()
         
         PFUser.logInWithUsernameInBackground(userNameField.text, password: passwordField.text) { user, downloadError in
+            
+            
+            
             if let error = downloadError {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.activityIndicator.stopAnimating()
@@ -57,15 +60,30 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     })
                     self.showAlertView(true, buttonTitle: "Success", message: "Logged in successfully!") { UIAlertAction in
                         
-                        let rootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileViewController") as! NewGressProfileViewController
-                        let newGressProfileNavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileNavigationController") as! UINavigationController
-                        newGressProfileNavigationController.setViewControllers([rootViewController], animated: true)
-                        self.presentViewController(newGressProfileNavigationController, animated: true, completion: nil)
+                        let user:PFUser = PFUser.currentUser()!
+                        if let alreadyCompletedProfile = user.valueForKey("complete_profile") as? Bool {
+                            if alreadyCompletedProfile {
+                               
+                                let gressTabBarController = self.storyboard?.instantiateViewControllerWithIdentifier("GressTabBarController") as! GressTabBarController
+                                let gressNavigationController = UINavigationController(rootViewController: gressTabBarController)
+                                self.presentViewController(gressNavigationController, animated: true, completion: nil)
+                            } else {
+                                let rootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileViewController") as! NewGressProfileViewController
+                                let newGressProfileNavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileNavigationController") as! UINavigationController
+                                newGressProfileNavigationController.setViewControllers([rootViewController], animated: true)
+                                self.presentViewController(newGressProfileNavigationController, animated: true, completion: nil)
+                            }
+                        }
+                        
                         
                     }
                 }
             }
         }
+        
+        
+        
+        
     }
     
     func configureUserInputView() {

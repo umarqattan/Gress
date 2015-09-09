@@ -141,9 +141,12 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         navigationController?.popViewControllerAnimated(true)
     }
     
-    func cancel(sender : UIBarButtonItem) {
+    func cancel(sender: UIBarButtonItem) {
+        var user:PFUser = PFUser.currentUser()!
+        user.delete()
         dismissViewControllerAnimated(true, completion: nil)
     }
+
     /**
         MARK: UI[]Delegate methods
     **/

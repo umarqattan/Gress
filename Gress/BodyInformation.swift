@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import Parse
 /**
     MARK: methods that convert from SI to Metric
           and vice versa
@@ -23,6 +23,19 @@ let SI = 0
 let METRIC = 1
 let MALE = 0
 let FEMALE = 1
+
+let MALE_BMR_CONSTANT = 88.362 as Float
+let FEMALE_BMR_CONSTANT = 447.593 as Float
+
+let MALE_BMR_WEIGHT_MULTIPLIER = 13.397 as Float
+let FEMALE_BMR_WEIGHT_MULTIPLIER = 9.247 as Float
+
+let MALE_BMR_HEIGHT_MULTIPLIER = 4.799 as Float
+let FEMALE_BMR_HEIGHT_MULTIPLIER = 3.098 as Float
+
+let MALE_BMR_AGE_MULTIPLIER = 5.677 as Float
+let FEMALE_BMR_AGE_MULTIPLIER = 4.330 as Float
+
 class BodyInformation {
     
     // Personal
@@ -57,7 +70,7 @@ class BodyInformation {
     var proteinPercent:Float!
     
     var goalLevel:Float!
-    
+    var goalCalories:Int!
     
     // Completed New Profile
     var didCompleteNewProfile:Bool = false
@@ -72,6 +85,61 @@ class BodyInformation {
         self.email = email
         self.profilePicture = profilePicture
         
+    }
+    
+    
+    func setBodyInformationFromDictionary(dictionary : PFUser) {
+        firstName = dictionary["first_name"] as! String
+        lastName = dictionary["last_name"] as! String
+        fullName = dictionary["full_name"] as! String
+        email = dictionary["email"] as! String
+        //profilePicture = dictionary["profile_picture"] as? UIImage
+        sex = dictionary["sex"] as! Int
+        age = dictionary["age"] as! String
+        heightMetric = dictionary["height_metric"] as! String
+        heightSI = dictionary["height_SI"] as! String
+        weightMetric = dictionary["weight_metric"] as! String
+        weightSI = dictionary["weight_SI"] as! String
+        activityLevel = dictionary["activity_level"] as! Float
+        exerciseDuration = dictionary["exercise_duration"] as! String
+        trainingDays = dictionary["training_days"] as! String
+        nutrition = dictionary["nutrition"] as! String
+        fatPercent = dictionary["fat_percent"] as! Float
+        carbohydratePercent = dictionary["carbohydrate_percent"] as! Float
+        proteinPercent = dictionary["protein_percent"] as! Float
+        goalLevel = dictionary["goal_level"] as! Float
+        goalCalories = dictionary["goal_calories"] as! Int
+        didCompleteNewProfile = dictionary["complete_profile"] as! Bool
+        
+        
+    }
+    
+    func savePFUserBodyInformation(user : PFUser) -> PFUser {
+        
+        
+        user["first_name"] = firstName
+        user["last_name"] = lastName
+        user["full_name"] = fullName
+        user["email"] = email
+        user["sex"] = sex
+        user["age"] = age
+        user["height_metric"] = heightMetric
+        user["height_SI"] = heightSI
+        user["weight_metric"] = weightMetric
+        user["weight_SI"] = weightSI
+        user["activity_level"] = activityLevel
+        user["exercise_duration"] = exerciseDuration
+        user["training_days"] = trainingDays
+        user["nutrition"] = nutrition
+        user["fat_percent"] = fatPercent
+        user["carbohydrate_percent"] = carbohydratePercent
+        user["protein_percent"] = proteinPercent
+        user["goal_level"] = goalLevel
+        //user["goal_calories"] = goalCalories
+
+    
+        println(user)
+        return user
     }
     
     /**
@@ -103,7 +171,7 @@ class BodyInformation {
         
         println("Activity\n Activity Level: \(activityLevel)\n Exercise Duration: \(exerciseDuration)\n Number of Training Days: \(trainingDays)")
         
-        println("Nutrition\n Macronutrient Ratio: \(nutrition)\n Goal Level: \(goalLevel)")
+        println("Nutrition\n Macronutrient Ratio: \(nutrition)\n Goal Level: \(goalLevel)\n Goal Calories: \(goalCalories)")
         
     }
     
@@ -114,6 +182,7 @@ class BodyInformation {
             default: return ""
         }
     }
+    
     
     /**
         MARK: string formatting methods to convert from Metric
@@ -322,7 +391,7 @@ class BodyInformation {
     }
     
     /**
-        TODO: Use the Revised Harris-Benedict Equation to calculate BMR ->
+        MARK: Use the Revised Harris-Benedict Equation to calculate BMR ->
               
                 Men: BMR = 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) - (5.677 x age in years)
     
@@ -335,8 +404,57 @@ class BodyInformation {
                 return [Deficit, Maintenance, Surplus]
     **/
     
-    func calculateTDEEFromBodyInformation(body: BodyInformation) -> [Float] {
-        return [2100.0, 2400.0, 2700.0]
+    func getBMR() -> Float {
+        var sex = self.sex
+        var age = (self.age as NSString).integerValue
+        var weightKg = (self.weightMetric as NSString).floatValue
+        var heightCm = (self.heightMetric as NSString).floatValue
+        var activityLevel = self.activityLevel
+        var BMR:Float!
+        
+        var weightPart:Float!, heightPart:Float!, agePart:Float!
+        
+        switch sex {
+            case MALE:
+                weightPart = MALE_BMR_WEIGHT_MULTIPLIER * weightKg
+                heightPart = MALE_BMR_HEIGHT_MULTIPLIER * heightCm
+                agePart = MALE_BMR_AGE_MULTIPLIER * Float(age)
+                BMR = MALE_BMR_CONSTANT + weightPart + heightPart - agePart
+            
+            case FEMALE:
+                weightPart = FEMALE_BMR_WEIGHT_MULTIPLIER * weightKg
+                heightPart = FEMALE_BMR_HEIGHT_MULTIPLIER * heightCm
+                agePart = FEMALE_BMR_AGE_MULTIPLIER * Float(age)
+                BMR = FEMALE_BMR_CONSTANT + weightPart + heightPart - agePart
+            default : BMR = 0
+        }
+        return BMR
+    }
+    
+    func getTDEE() -> Float {
+        var BMR = getBMR()
+        var activityLevelMult = self.activityLevel
+        
+        return activityLevelMult * BMR
+
+    }
+    
+    func getCalorieRange() -> [Int] {
+        var TDEE = getTDEE()
+        var calorieDeficit = 0.9 * TDEE
+        var calorieMaintenance = TDEE
+        var calorieSurplus = 1.1 * TDEE
+        
+        return [Int(calorieDeficit), Int(calorieMaintenance), Int(calorieSurplus)]
+    }
+    
+    func getMacronutrientsFromCalories(calories : Float) -> [Int] {
+        
+        var fatGrams = Int(calories * fatPercent/100)/9
+        var carbohydrateGrams = Int(calories * carbohydratePercent/100)/4
+        var proteinGrams = Int(calories * proteinPercent/100)/4
+        
+        return [fatGrams, carbohydrateGrams, proteinGrams]
     }
     
     

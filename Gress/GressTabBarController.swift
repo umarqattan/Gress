@@ -8,25 +8,37 @@
 
 import Foundation
 import UIKit
-
+import Parse
 
 class GressTabBarController : UITabBarController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var cancelButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("logout:"))
+        var logoutButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("logout:"))
         
-        navigationItem.leftBarButtonItem = cancelButton
+        navigationItem.leftBarButtonItem = logoutButton
         
         
     }
     func logout(sender : UIBarButtonItem) {
         /**
-        TODO: Update Gress User before s/he logs out
+            TODO: Update Gress User before s/he logs out
         **/
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            
+        
+            PFUser.logOutInBackground()
+            
+            self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            
+            
+            
+        }
+        
+        
     }
     
     

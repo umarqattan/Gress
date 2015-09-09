@@ -69,16 +69,12 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         body = BodyInformation(firstName: firstNameField.text, lastName: lastNameField.text, email: emailAddressField.text, profilePicture: newProfilePictureImageView.image)
         updateSharedBodyObject(body)
         let bodyInformationViewController = storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileBodyViewController") as! NewGressProfileBodyViewController
-        /**
-        bodyInformationViewController.firstName = firstNameField.text
-        bodyInformationViewController.lastName = lastNameField.text
-        bodyInformationViewController.email = emailAddressField.text
-        bodyInformationViewController.profilePicture = newProfilePictureImageView.image
-        **/
         navigationController?.pushViewController(bodyInformationViewController, animated: true)
     }
     
     func cancel(sender: UIBarButtonItem) {
+        var user:PFUser = PFUser.currentUser()!
+        user.delete()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
