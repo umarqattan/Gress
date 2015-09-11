@@ -238,9 +238,6 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         configureNewProfileProgressBar(NOT_FINISHED)
     }
     
-    /**
-        MARK: Update sharedBody object after the user edits the textFields
-    **/
     func textFieldDidEndEditing(textField: UITextField) {
         activeTextField = nil
         

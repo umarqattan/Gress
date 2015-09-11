@@ -74,6 +74,7 @@ class BodyInformation {
     
     // Completed New Profile
     var didCompleteNewProfile:Bool = false
+    var unit:Int = SI
     
     
     // init method
@@ -93,7 +94,6 @@ class BodyInformation {
         lastName = dictionary["last_name"] as! String
         fullName = dictionary["full_name"] as! String
         email = dictionary["email"] as! String
-        //profilePicture = dictionary["profile_picture"] as? UIImage
         sex = dictionary["sex"] as! Int
         age = dictionary["age"] as! String
         heightMetric = dictionary["height_metric"] as! String
@@ -110,7 +110,6 @@ class BodyInformation {
         goalLevel = dictionary["goal_level"] as! Float
         goalCalories = dictionary["goal_calories"] as! Int
         didCompleteNewProfile = dictionary["complete_profile"] as! Bool
-        
         
     }
     
@@ -135,10 +134,7 @@ class BodyInformation {
         user["carbohydrate_percent"] = carbohydratePercent
         user["protein_percent"] = proteinPercent
         user["goal_level"] = goalLevel
-        //user["goal_calories"] = goalCalories
 
-    
-        println(user)
         return user
     }
     
@@ -153,7 +149,6 @@ class BodyInformation {
             static let Fat = "Fat"
             static let Carbohydrate = "Carbohydrate"
             static let Protein = "Protein"
-    
         }
     }
     
@@ -177,13 +172,19 @@ class BodyInformation {
     
     func sexString(sex: Int) -> String {
         switch sex {
-            case 0: return "Male"
-            case 1: return "Female"
+            case MALE: return "Male"
+            case FEMALE: return "Female"
             default: return ""
         }
     }
     
-    
+    func sexInt(sex : String) -> Int {
+        switch sex {
+        case "Male" : return MALE
+        case "Female" : return FEMALE
+        default: return 0
+        }
+    }
     /**
         MARK: string formatting methods to convert from Metric
               to SI and from SI to Metric
@@ -341,16 +342,16 @@ class BodyInformation {
         
     }
     
-    func setWeightFromText(text : String) {
-        var unit = BodyInformation.determineUnitFromString(text)
+    func setWeightFromText(text : String, unit: Int) {
+        
         switch unit {
             case SI :
-                rawPounds = BodyInformation.getPoundsFromText(text)
+                rawPounds = "\((text as NSString).floatValue)"
                 weightSI = formatWeightSIString(rawPounds)
                 rawKilograms = SIToMetricWeight(rawPounds)
                 weightMetric = formatWeightMetricString(rawKilograms)
             case METRIC:
-                rawKilograms = BodyInformation.getKilogramsFromText(text)
+                rawKilograms = "\((text as NSString).floatValue)"
                 weightMetric = formatWeightMetricString(rawKilograms)
                 rawPounds = metricToSIWeight(rawKilograms)
                 weightSI = formatWeightSIString(rawPounds)
@@ -359,8 +360,29 @@ class BodyInformation {
         
     }
     
-    func setHeightFromText(text : String) {
-        var unit = BodyInformation.determineUnitFromString(text)
+    func getWeightFromText(text : String, unit: Int) -> [String] {
+        
+        switch unit {
+        case SI :
+            rawPounds = "\((text as NSString).floatValue)"
+            weightSI = formatWeightSIString(rawPounds)
+            rawKilograms = SIToMetricWeight(rawPounds)
+            weightMetric = formatWeightMetricString(rawKilograms)
+        case METRIC:
+            rawKilograms = "\((text as NSString).floatValue)"
+            weightMetric = formatWeightMetricString(rawKilograms)
+            rawPounds = metricToSIWeight(rawKilograms)
+            weightSI = formatWeightSIString(rawPounds)
+        default: return []
+        }
+        
+        return [weightSI, weightMetric]
+        
+        
+    }
+    
+    func setHeightFromText(text : String, unit: Int) {
+        
         switch unit {
             case SI :
                 var feet = BodyInformation.getFeetFromText(text)
@@ -385,6 +407,35 @@ class BodyInformation {
         }
 
     }
+    
+    func getHeightFromText(text : String, unit: Int) -> [String] {
+        
+        switch unit {
+        case SI :
+            var feet = BodyInformation.getFeetFromText(text)
+            var inches = BodyInformation.getInchesFromText(text)
+            var metricHeightArray = SIToMetricHeight(feet, inches: inches)
+            rawCentimeters = metricHeightArray[1]
+            rawFeet = feet
+            rawInches = inches
+            heightSI = formatHeightSIString(rawFeet, inches: rawInches)
+            heightMetric = formatHeightMetricString(rawCentimeters)
+            
+        case METRIC:
+            println("initializing from Metric Units")
+            var centimeters = BodyInformation.getCentimetersFromText(text)
+            var SIHeightArray = metricToSIHeight(centimeters)
+            rawFeet = SIHeightArray[2]
+            rawInches = SIHeightArray[3]
+            rawCentimeters = centimeters
+            heightMetric = formatHeightMetricString(centimeters)
+            heightSI = formatHeightSIString(rawFeet, inches: rawInches)
+        default: return []
+        }
+        
+        return [heightSI, heightMetric]
+    }
+    
     
     func setAgeFromText(text : String) {
         self.age = text

@@ -115,14 +115,10 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         setDelegates()
         configureTableView()
         setMacroPieChart()
         configureNavigationItem()
-        
-        
-        
         
     }
     
@@ -135,7 +131,6 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        
         
     }
     
@@ -179,10 +174,14 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
             
             default : return
         }
-        
     }
     
     
+    /**
+        MARK: Initialize body object from Parse user's name and email
+              address.
+
+    **/
     func setCalorieVariablesAndLabels() {
         
         var user:PFUser = PFUser.currentUser()!
@@ -253,7 +252,7 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     func setMacroPieChart() {
         
         /**
-            TODO: *Draw Macro Pie Chart with the user's macronutrient
+            MARK: *Draw Macro Pie Chart with the user's macronutrient
                    percentages
         **/
         
@@ -378,9 +377,10 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
                     }
                 }
             } else {
-                
+                dispatch_async(dispatch_get_main_queue()) {
+                    println("Goal Calories have been updated")
+                }
             }
-            
         }
     }
     
@@ -418,11 +418,7 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     
     
     @IBAction func changeCalorieGoal(sender: UISlider) {
-        /**
-            TODO: *Change color of calorieGoalSlider at certain values
-                  *Change fatGrams.text, carbohydrateGrams.textm and
-                   proteinGrams.text based on a formula
-        **/
+
         goalCalories = Int(sender.value)
         goalCaloriesLabel.text = "Goal: \(goalCalories)"
         
@@ -434,13 +430,5 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         
     }
-    
-    
-    
-    
-    
-    
-   
-    
-    
+
 }

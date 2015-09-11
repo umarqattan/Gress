@@ -41,9 +41,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         activityIndicator.startAnimating()
         
         PFUser.logInWithUsernameInBackground(userNameField.text, password: passwordField.text) { user, downloadError in
-            
-            
-            
             if let error = downloadError {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.activityIndicator.stopAnimating()

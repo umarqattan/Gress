@@ -168,88 +168,144 @@ class PickerViewConstants {
     }()
     
     class func getRowFromMacronutrient(text : String) -> Int {
-        var startIndex = text.startIndex
-        var endIndex = startIndex
-        var length = text.length
-        if length == 3 {
-            endIndex = advance(text.startIndex, 1)
-        }
-        if length == 4 {
-            endIndex = advance(text.startIndex, 2)
-        }
-        var range = Range<String.Index>(start: startIndex, end: endIndex)
-        var rowString = text.substringWithRange(range) as NSString
-        var row = rowString.integerValue
-        return row
+        
+        return (text as NSString).integerValue
     }
     
     class func getRowFromAge(text : String) -> Int {
         var ageString = text as NSString
-        var age = ageString.integerValue
-        for ( var i = 18; i < 150; i++) {
-            if i == age {
-                return i - 18
-            }
-        }
-        return -1
+        var age = ageString.integerValue - 18
+        
+        return age
     }
     
-    class func getRowFromHeight(text : String) -> [Int] {
-        var unit = BodyInformation.determineUnitFromString(text)
+    class func getRowFromHeight(text : String, unit: Int) -> [Int] {
+        
         switch unit {
             case SI:
                 var feet = (BodyInformation.getFeetFromText(text) as NSString).integerValue
                 var inches = (BodyInformation.getInchesFromText(text) as NSString).integerValue
-                var feetRow:Int!
-                var inchesRow:Int!
-                for (var i = 4; i < 8; i++) {
-                    if i == feet {
-                        feetRow = i - 4
-                    }
-                }
-                for (var i = 0; i < 12; i++) {
-                    if i == inches {
-                        inchesRow = i
-                    }
-                }
+                var feetRow = feet - 4
+                var inchesRow = inches
+                println("\(feetRow), \(inchesRow)")
                 return [feetRow, inchesRow]
             case METRIC:
                 var centimeters = (BodyInformation.getCentimetersFromText(text) as NSString).integerValue
-                var centimetersRow:Int!
-                for (var i = 122; i < 241; i++) {
-                    if i == centimeters {
-                        centimetersRow = i - 122
-                    }
-                }
+                println("\(text.length)")
+                var centimetersRow = centimeters - 122
                 return [centimetersRow, 0]
             default: return []
         }
     }
     
-    class func getRowFromWeight(text : String) -> [Int] {
-        var unit = BodyInformation.determineUnitFromString(text)
+    
+    
+    class func getRowFromWeight(text : String, unit : Int) -> [Int] {
+        
         switch unit {
         case SI:
-            var pounds = (BodyInformation.getPoundsFromText(text) as NSString).integerValue
-            var poundsRow:Int!
-            for (var i = 60; i < 998; i++) {
-                if i == pounds {
-                    poundsRow = i - 60
-                }
-            }
-            return [poundsRow]
+        
+            var pounds = (text as NSString).floatValue
+            var poundsRow = Int(floor(pounds))
+            var decPoundsRow = Int((pounds % 1) * 10)
+            
+            poundsRow = poundsRow - 60
+            println("poundsRow : \(poundsRow) \ndecPounds : \(decPoundsRow)")
+            return [poundsRow, decPoundsRow]
         case METRIC:
-            var kilograms = (BodyInformation.getKilogramsFromText(text) as NSString).integerValue
-            var kilogramsRow:Int!
-            for (var i = 27; i < 453; i++) {
-                if i == kilograms {
-                    kilogramsRow = i - 27
-                }
-            }
-            return [kilogramsRow]
+            
+            var kilograms = (text as NSString).floatValue
+            var grams = Int((kilograms % 1) * 10)
+            var kilogramsRow = Int(floor(kilograms)) - 27
+            var gramsRow = grams
+            
+            return [kilogramsRow, gramsRow]
         default: return []
         }
     }
+    
+    class func getRowFromTrainingDays(text : String) -> Int {
+        var startIndex = text.startIndex
+        var endIndex = advance(text.startIndex, 1)
+        var range = Range<String.Index>(start: startIndex, end: endIndex)
+        var trainingDaysString = text.substringWithRange(range)
+        var trainingDaysRow = (trainingDaysString as NSString).integerValue
+        println(trainingDaysRow)
+        return trainingDaysRow
+    }
+    
+    class func getRowFromExerciseDuration(text: String) -> [Int] {
+        
+        var exerciseDurationArray = getHoursAndMinutesFromText(text)
+        var hours = (exerciseDurationArray[0] as NSString).integerValue
+        var minutes = (exerciseDurationArray[1] as NSString).integerValue
+        
+        return [hours, minutes]
+    }
+    
+    class func getHoursAndMinutesFromText(text : String) -> [String] {
+        
+        var startIndex = text.startIndex
+        var endIndex = startIndex
+        var length = text.length
+        var sublength:Int!
+        var hours:String!
+        var minutes:String!
+        
+        
+        if length == 10 {
+            endIndex = advance(text.startIndex, 1)
+            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            hours = text.substringWithRange(range)
+            
+            startIndex = advance(text.startIndex, 5)
+            endIndex = advance(text.startIndex, 6)
+            range = Range<String.Index>(start: startIndex, end: endIndex)
+            minutes = text.substringWithRange(range)
+        }
+        if length == 11 {
+            
+            endIndex = advance(text.startIndex, 2)
+            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            var hoursInt = (text.substringWithRange(range) as NSString).integerValue
+            
+            if hoursInt < 10 {
+                endIndex = advance(text.startIndex, 1)
+                range = Range<String.Index>(start: startIndex, end: endIndex)
+                hours = text.substringWithRange(range)
+                
+                startIndex = advance(text.startIndex, 5)
+                endIndex = advance(text.startIndex, 7)
+                
+                range = Range<String.Index>(start: startIndex, end: endIndex)
+                minutes = text.substringWithRange(range)
+            } else {
+                endIndex = advance(text.startIndex, 2)
+                range = Range<String.Index>(start: startIndex, end: endIndex)
+                hours = text.substringWithRange(range)
+                
+                startIndex = advance(text.startIndex, 6)
+                endIndex = advance(text.startIndex, 7)
+                
+                range = Range<String.Index>(start: startIndex, end: endIndex)
+                minutes = text.substringWithRange(range)
+            }
+        }
+        if length == 12 {
+            endIndex = advance(text.startIndex, 2)
+            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            hours = text.substringWithRange(range)
+            
+            startIndex = advance(text.startIndex, 6)
+            endIndex = advance(text.startIndex, 8)
+            range = Range<String.Index>(start: startIndex, end: endIndex)
+            minutes = text.substringWithRange(range)
+        }
+        
+        return [hours, minutes]
+        
+    }
+    
     
     
     

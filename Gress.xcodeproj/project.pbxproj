@@ -39,6 +39,7 @@
 		E19F13311B7C35BE002A3D35 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F13301B7C35BE002A3D35 /* Utilities.swift */; };
 		E1A4E46F1B9AB08400AA4F74 /* GressGoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4E46E1B9AB08400AA4F74 /* GressGoalsViewController.swift */; };
 		E1A4E4771B9C01A800AA4F74 /* GressTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */; };
+		E1A4E4791BA128CA00AA4F74 /* GressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4E4781BA128CA00AA4F74 /* GressSettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		E19F13301B7C35BE002A3D35 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		E1A4E46E1B9AB08400AA4F74 /* GressGoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressGoalsViewController.swift; sourceTree = "<group>"; };
 		E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressTabBarController.swift; sourceTree = "<group>"; };
+		E1A4E4781BA128CA00AA4F74 /* GressSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressSettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 				E177A1AF1B881AA700B7507A /* NewGressProfileGoalsViewController.swift */,
 				E1A4E46E1B9AB08400AA4F74 /* GressGoalsViewController.swift */,
 				E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */,
+				E1A4E4781BA128CA00AA4F74 /* GressSettingsViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				E177A1A01B84499C00B7507A /* NewGressProfileActivityViewController.swift in Sources */,
 				E19F12811B7587C9002A3D35 /* LoginViewController.swift in Sources */,
 				E19F12821B7587C9002A3D35 /* ParseClient.swift in Sources */,
+				E1A4E4791BA128CA00AA4F74 /* GressSettingsViewController.swift in Sources */,
 				E19F125F1B75875C002A3D35 /* AppDelegate.swift in Sources */,
 				E177A1681B7F344800B7507A /* BodyInformation.swift in Sources */,
 				E177A1961B82C8EE00B7507A /* PickerViewConstants.swift in Sources */,

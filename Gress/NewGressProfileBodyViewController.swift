@@ -38,9 +38,6 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         MARK: update forward buttons for every viewController 
               pushed to the navigationController stack.
     
-        TODO: body object gets initialized twice, once in the
-              model (AppDelegate.swift) and again in textField-
-              DidEndEditing(textField: UITextField)
     **/
     
     override func viewDidLoad() {
@@ -57,23 +54,9 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         
         body = getSharedBodyObject()
         body.setAgeFromText(ageField.text)
-        body.setHeightFromText(heightField.text)
-        body.setWeightFromText(weightField.text)
+        body.setHeightFromText(heightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
+        body.setWeightFromText(weightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
         updateSharedBodyObject(body)
-        
-    }
-    
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        
-        
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
         
     }
     
@@ -116,12 +99,12 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
                 var ageRow = PickerViewConstants.getRowFromAge(ageField.text)
                 pickerView.selectRow(ageRow, inComponent: 0, animated: true)
             case heightField :
-                var height = PickerViewConstants.getRowFromHeight(heightField.text)
+                var height = PickerViewConstants.getRowFromHeight(heightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
                 pickerView.selectRow(height[0], inComponent: 0, animated: true)
                 pickerView.selectRow(height[1], inComponent: 1, animated: true)
 
             case weightField :
-                var weight = PickerViewConstants.getRowFromWeight(weightField.text)
+                var weight = PickerViewConstants.getRowFromWeight(weightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
                 pickerView.selectRow(weight[0], inComponent: 0, animated: true)
                 pickerView.selectRow(0, inComponent: 1, animated: true)
             default: return
