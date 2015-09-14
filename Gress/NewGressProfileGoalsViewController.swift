@@ -171,8 +171,8 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
     func saveNewGressUserToParse(completionHandler : ((UIAlertAction!) -> Void)!) {
         
         
-        var bodyInformation = PFObject(className: "BodyInformation")
         var user:PFUser = PFUser.currentUser()!
+        
         user = body.savePFUserBodyInformation(user)
         user.saveInBackgroundWithBlock() { (success: Bool, downloadError: NSError?) -> Void in
             if let error = downloadError {

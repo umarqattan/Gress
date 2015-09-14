@@ -108,6 +108,34 @@ extension UIViewController {
     func getSharedBodyObject() -> BodyInformation {
         return (UIApplication.sharedApplication().delegate as! AppDelegate).gressUser
     }
+    
+    func drawText(text : NSString, point : CGPoint) -> UIImage {
+        
+        var size = CGSizeMake(31, 31);
+        UIGraphicsBeginImageContextWithOptions(size, true, 0);
+        
+        UIColor.whiteColor().setFill()
+        UIRectFill(CGRectMake(0, 0, size.width, size.height));
+        var image:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        
+        var font = UIFont(name: "HelveticaNeue", size: 12.0)!
+        UIGraphicsBeginImageContext(image.size)
+        
+        image.drawInRect(CGRectMake(0, 15, image.size.width, image.size.height))
+        var rect:CGRect = CGRectMake(point.x, point.y, image.size.width, image.size.height)
+        UIColor.whiteColor().set()
+        text.drawInRect(CGRectIntegral(rect), withAttributes: [NSFontAttributeName : font, NSForegroundColorAttributeName : UIColor(red: 0.0, green: 122.0/255.0, blue: 255.0/255.0, alpha: 1.0)])
+        var newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        
+        return newImage
+        
+    }
+
+    
 }
     
 

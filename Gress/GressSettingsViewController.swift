@@ -19,21 +19,25 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
     @IBOutlet weak var sexField: UITextField!
     @IBOutlet weak var heightField: UITextField!
     @IBOutlet weak var weightField: UITextField!
-    @IBOutlet weak var activityLevelField: UITextField!
     @IBOutlet weak var exerciseDurationField: UITextField!
     @IBOutlet weak var trainingDaysField: UITextField!
-    @IBOutlet weak var goalCaloriesField: UITextField!
     
+    @IBOutlet weak var activityLevelSlider: UISlider!
     @IBOutlet weak var proteinField: UITextField!
     @IBOutlet weak var carbohydrateField: UITextField!
     @IBOutlet weak var fatField: UITextField!
-    @IBOutlet weak var goalLevelField: UITextField!
+    
     @IBOutlet weak var unitSegmentedControl: UISegmentedControl!
+    
+    
+    
+    
     
     var activeTextField:UITextField?
     var pickerView = UIPickerView()
     var body:BodyInformation!
     
+    var calorieGoalCustomView : UIView!
     var customView:UIView!
     var fatLabel:UILabel!
     var carbohydrateLabel:UILabel!
@@ -43,39 +47,53 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
     var totalPercentage = "100"
     var checkmarkButton:UIButton!
     var cancelPickerButton:UIButton!
-
     
+    @IBOutlet weak var calorieGoalLabel: UILabel!
+    @IBOutlet weak var calorieGoalSlider: UISlider!
+    @IBOutlet weak var surplusCaloriesLabel: UILabel!
+    @IBOutlet weak var maintenanceCaloriesLabel: UILabel!
+    @IBOutlet weak var deficitCaloriesLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setDelegates()
-        setBodyObject()
-        configureSettings(body.unit)
+        
+        
         configureTableView()
-        configureNavigationBar()
-        unitSegmentedControl.selectedSegmentIndex = SI
+        configureNavigationItem()
+        
     }
     
-    func setBodyObject() {
-        body = BodyInformation(firstName: "Umar", lastName: "Qattan", email: "u.qattan@gmail.com", profilePicture: UIImage(named: "Male Profile-100"))
-        body.age = "20"
-        body.sex = MALE
-        body.heightMetric = "183.0 cm"
-        body.heightSI = "6 ft, 0 in"
-        body.weightMetric = "78.5 kg"
-        body.weightSI = "173.1 lb"
-        body.goalLevel = 0.87
-        body.activityLevel = 2.000
-        body.exerciseDuration = "3 hr 30 min"
-        body.trainingDays = "5 days"
-        body.nutrition = "15f/60c/20p"
-        body.fatPercent = 15.00
-        body.carbohydratePercent = 65.00
-        body.proteinPercent = 20.00
-        body.goalCalories = 3400
-        body.unit = SI
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setCalorieVariablesAndLabels()
+        
+        configureSettings(body.unit)
+        configureNavigationItem()
+        configureSliders()
+        
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        saveGoalCaloriesToParse()
+    }
+    
+    func setCalorieVariablesAndLabels() {
+        
+        var user:PFUser = PFUser.currentUser()!
+        body = BodyInformation(firstName: user.valueForKey("first_name") as! String, lastName: user.valueForKey("last_name") as! String, email: user.valueForKey("email") as! String, profilePicture: nil)
+        
+        body.setBodyInformationFromDictionary(user)
+        
+        setCalorieLabels()
+        
+        setSliderThumbImage(ON)
+    }
+
     
     func setDelegates() {
         
@@ -87,38 +105,41 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         sexField.delegate = self
         heightField.delegate = self
         weightField.delegate = self
-        activityLevelField.delegate = self
+        
         exerciseDurationField.delegate = self
         trainingDaysField.delegate = self
-        goalCaloriesField.delegate = self
         fatField.delegate = self
         carbohydrateField.delegate = self
         proteinField.delegate = self
-        goalLevelField.delegate = self
+        
         
     }
     
     func configureTableView() {
         
-        var inset = UIEdgeInsetsMake(66, 0, 0, 0)
+        
+        var inset = UIEdgeInsetsMake(66, 0, 66, 0)
         tableView.contentInset = inset
         tableView.scrollIndicatorInsets = inset
+        
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView(frame: CGRect.zeroRect)
+        self.edgesForExtendedLayout = UIRectEdge.None
+        
+    }
+    
+    func configureSliders() {
+        activityLevelSlider.continuous = false
+    }
+    
+    func configureNavigationItem() {
+        
+        self.tabBarController?.navigationItem.title = "Goals"
+        self.tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editGoalLevel:")
+        self.tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logout:")
+    }
+    
 
-        
-    }
-    
-    func configureNavigationBar() {
-        let editButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editSettings:")
-        tabBarController?.navigationItem.rightBarButtonItem = editButton
-    }
-    
-    func editSettings(sender: UIBarButtonItem) {
-        
-    }
-    
-    
     func addDoneButtonToActiveTextField() {
         var keyboardToolbar = UIToolbar()
         keyboardToolbar.sizeToFit()
@@ -151,10 +172,10 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         
         
         var checkmarkBarButton = UIBarButtonItem(customView: checkmarkButton)
-        var cancelBarButton = UIBarButtonItem(customView: cancelPickerButton)
+        //var cancelBarButton = UIBarButtonItem(customView: cancelPickerButton)
         
         keyboardToolbar.barTintColor = UIColor(red: 60.0/255.0, green: 208.0/255.0, blue: 255.0/255.0, alpha: 1.0)
-        keyboardToolbar.items = [cancelBarButton, flexBarButton, checkmarkBarButton]
+        keyboardToolbar.items = [flexBarButton, checkmarkBarButton]
         activeTextField!.inputAccessoryView = keyboardToolbar
     }
     
@@ -203,26 +224,6 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         MARK: UIPickerViewDataSource Protocol
     **/
     
-    /**
-    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
-        var pickerLabel = view as? UILabel;
-        
-        switch activeTextField! {
-        case fatField, carbohydrateField, proteinField :
-            if (pickerLabel == nil) {
-                pickerLabel = UILabel()
-                pickerLabel?.font = UIFont(name: "HelvetiaNeue-Light", size: 15)
-                pickerLabel?.textAlignment = NSTextAlignment.Center
-            }
-            
-            pickerLabel?.text = macroNutrients[component][row]
-            
-            return pickerLabel!
-        default: return pickerLabel!
-        }
-        
-    }
-**/
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         switch activeTextField! {
@@ -375,8 +376,7 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
             getExerciseDurationFromPickerView(hours, hr: hr, minutes: minutes, min: min)
         case trainingDaysField :
             var days = trainingDays[Day.DAY.rawValue][pickerView.selectedRowInComponent(Day.DAY.rawValue)]
-            var perWeek = trainingDays[Day.PERWEEK.rawValue][pickerView.selectedRowInComponent(Day.PERWEEK.rawValue)]
-            getTrainingDaysFromPickerView(days, perWeek: perWeek)
+            getTrainingDaysFromPickerView(days)
         case fatField, carbohydrateField, proteinField :
             var fat = macroNutrients[Macronutrients.FAT.rawValue][pickerView.selectedRowInComponent(Macronutrients.FAT.rawValue)]
             var carbohydrate = macroNutrients[Macronutrients.CARBOHYDRATE.rawValue][pickerView.selectedRowInComponent(Macronutrients.CARBOHYDRATE.rawValue)]
@@ -428,9 +428,16 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         }
     }
     
-    func getTrainingDaysFromPickerView(days: String, perWeek: String) {
+    func getTrainingDaysFromPickerView(days: String) {
         if activeTextField! == trainingDaysField {
-            trainingDaysField.text = days + " " + perWeek
+            let daysInt = (days as NSString).integerValue
+            switch daysInt {
+                case 1 :
+                    trainingDaysField.text = days + " day"
+                default:
+                    trainingDaysField.text = days + " days"
+            }
+            
         }
     }
     
@@ -487,14 +494,10 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
             pickerView.selectRow(fatRow, inComponent: fatComponent, animated: true)
             pickerView.selectRow(carbohydrateRow, inComponent: carbohydrateComponent, animated: true)
             pickerView.selectRow(proteinRow, inComponent: proteinComponent, animated: true)
-            println("fat = \(fatRow) carb = \(carbohydrateRow) protein = \(proteinRow)")
         default: return
         }
     }
-    
-    /**
-        MARK: UITextfield Delegate Protocol
-    **/
+
     func toggleCheckmarkButton() {
         var fatPercentage = PickerViewConstants.getRowFromMacronutrient(fatField.text)
         var carbohydratePercentage = PickerViewConstants.getRowFromMacronutrient(carbohydrateField.text)
@@ -516,36 +519,102 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
             checkmarkButton.enabled = false
         }
     }
-
-    
-    /**
-    func addDoneButtonToActiveTextField() {
-        var keyboardToolbar = UIToolbar()
-        keyboardToolbar.sizeToFit()
-        let flexBarButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
-            target: nil, action: nil)
-        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .Done,
-            target: view, action: Selector("endEditing:"))
-        keyboardToolbar.tintColor = UIColor(red: 51.0/255.0, green: 147.0/255.0, blue: 210.0/255.0, alpha: 1.0)
-        
-        keyboardToolbar.items = [flexBarButton, doneBarButton]
-        activeTextField!.inputAccessoryView = keyboardToolbar
-    }
-    **/
     
     func endEditing(sender : UIBarButtonItem) {
         switch sender {
         case checkmarkButton:
             activeTextField!.resignFirstResponder()
-        case cancelPickerButton :
-            fatField.text = "15 %"
-            carbohydrateField.text = "65 %"
-            proteinField.text = "20 %"
-            
-            activeTextField!.resignFirstResponder()
         default : return
         }
     }
+    
+    @IBAction func changeCalorieGoal(sender: UISlider) {
+        calorieGoalLabel.text = "Goal: \(Int(sender.value))"
+        saveSettings()
+        
+        
+        
+        
+    }
+
+    @IBAction func changeActivityLevel(sender: UISlider) {
+        saveSettings()
+        saveGoalCaloriesToParse()
+        setCalorieVariablesAndLabels()
+    }
+    func setSliderThumbImage(toggle : Int) {
+        switch toggle {
+        case ON:
+            var string = NSString(format: "%d", body.goalCalories)
+            var calorieGoalSliderThumbImage = drawText(string, point: CGPointMake(2, 8))
+            dispatch_async(dispatch_get_main_queue()) {
+                self.calorieGoalSlider.setNeedsDisplay()
+                //self.calorieGoalSlider.setThumbImage(calorieGoalSliderThumbImage, forState: UIControlState.Normal)
+            }
+            
+        case OFF:
+            dispatch_async(dispatch_get_main_queue()) {
+                //self.calorieGoalSlider.setThumbImage(nil, forState: UIControlState.Normal)
+            }
+            
+        default : return
+        }
+    }
+    
+    func editGoalLevel(sender : UIBarButtonItem) {
+        
+        switch sender.title! {
+        case EDIT:
+            tabBarController?.navigationItem.rightBarButtonItem?.title = DONE
+            setSliderThumbImage(OFF)
+            calorieGoalSlider.enabled = true
+            
+        case DONE:
+            tabBarController?.navigationItem.rightBarButtonItem?.title = EDIT
+            setSliderThumbImage(ON)
+            
+            
+            body.goalLevel = (calorieGoalSlider.value - calorieGoalSlider.minimumValue)/(calorieGoalSlider.maximumValue - calorieGoalSlider.minimumValue)
+            body.goalCalories = Int(calorieGoalSlider.value)
+            calorieGoalSlider.enabled = false
+            body.printBodyInformation()
+            saveGoalCaloriesToParse()
+            
+        default : return
+        }
+    }
+
+    
+    func setCalorieLabels() {
+        var goal = body.goalLevel
+        
+        var calorieGoalArray = body.getCalorieRange()
+        
+        var deficitCalories = calorieGoalArray[CalorieGoal.Deficit.rawValue]
+        var maintenanceCalories = calorieGoalArray[CalorieGoal.Maintenance.rawValue]
+        var surplusCalories = calorieGoalArray[CalorieGoal.Surplus.rawValue]
+        
+        var defCal:Float = Float(deficitCalories)
+        var surCal:Float = Float(surplusCalories)
+        
+        calorieGoalSlider.minimumValue = defCal
+        calorieGoalSlider.maximumValue = surCal
+        calorieGoalSlider.enabled = false
+        calorieGoalSlider.value = goal * (calorieGoalSlider.maximumValue - calorieGoalSlider.minimumValue) + calorieGoalSlider.minimumValue
+        var goalCalories = Int(calorieGoalSlider.value)
+        
+        
+        
+        deficitCaloriesLabel.text = "\(deficitCalories)"
+        maintenanceCaloriesLabel.text = "\(maintenanceCalories)"
+        surplusCaloriesLabel.text = "\(surplusCalories)"
+        calorieGoalLabel.text = "Goal: \(goalCalories)"
+        
+    }
+    
+    /**
+        MARK: UITextfield Delegate Protocol
+    **/
     
     func textFieldDidBeginEditing(textField: UITextField) {
         activeTextField = textField
@@ -557,20 +626,14 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         addCustomViewToTextFieldInputView()
         addDoneButtonToActiveTextField()
         configureDefaultPickerViewValues()
+        
         switch textField {
             
         case ageField, sexField, heightField, weightField, exerciseDurationField, trainingDaysField :
             addDoneButtonToActiveTextField()
             textField.inputView = pickerView
-        case activityLevelField :
-            println()
-        case goalCaloriesField :
-            println()
         case fatField, carbohydrateField, proteinField :
-            
             activeTextField!.inputView = customView
-            println()
-        case goalLevelField :
             println()
         default : return
         }
@@ -578,10 +641,21 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
+        
         activeTextField = nil
         customView = nil
+        calorieGoalCustomView = nil
+        
+        if textField == emailField {
+            emailField.keyboardType = UIKeyboardType.EmailAddress
+        }
+        
+        
         pickerView = UIPickerView()
+        
         saveSettings()
+        saveGoalCaloriesToParse()
+        setCalorieVariablesAndLabels()
         
     }
     
@@ -621,16 +695,22 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         body.weightSI = weight[0]
         body.weightMetric = weight[1]
         
-    
-        body.activityLevel = (activityLevelField.text as NSString).floatValue
+        body.activityLevel = activityLevelSlider.value
         body.exerciseDuration = exerciseDurationField.text
         body.trainingDays = trainingDaysField.text
         
-        body.goalCalories = (goalCaloriesField.text as NSString).integerValue
+        body.goalCalories = Int(calorieGoalSlider.value)
         
-        body.goalLevel = (goalLevelField.text as NSString).floatValue
+        body.fatPercent = (fatField.text as NSString).floatValue
+        body.carbohydratePercent = (carbohydrateField.text as NSString).floatValue
+        body.proteinPercent = (proteinField.text as NSString).floatValue
+        
+        
+        body.goalLevel = (calorieGoalSlider.value - calorieGoalSlider.minimumValue)/(calorieGoalSlider.maximumValue - calorieGoalSlider.minimumValue)
         body.unit = unitSegmentedControl.selectedSegmentIndex
-    
+        
+        
+        
     }
     
     func configureSettings(unit: Int) {
@@ -650,25 +730,23 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
             default : return
         }
         
-        activityLevelField.text = "\(body.activityLevel)"
+        activityLevelSlider.value = body.activityLevel
         exerciseDurationField.text = body.exerciseDuration
         trainingDaysField.text = body.trainingDays
         
-        goalCaloriesField.text = "\(body.goalCalories)"
         fatField.text = "\(body.fatPercent) %"
         carbohydrateField.text = "\(body.carbohydratePercent) %"
         proteinField.text = "\(body.proteinPercent) %"
-        goalLevelField.text = "\(body.goalLevel)"
+        
         
         
     }
-
+    
     
     func saveGoalCaloriesToParse() {
         var user:PFUser = PFUser.currentUser()!
-        //user.setValue(goalCalories, forKey: "goal_calories")
-        //user.setValue(goal, forKey: "goal_level")
-        //user.setValue(true, forKey: "complete_profile")
+        user = body.savePFUserBodyInformation(user)
+        
         user.saveInBackgroundWithBlock() { (success:Bool, downloadError:NSError?) in
             if let error = downloadError {
                 dispatch_async(dispatch_get_main_queue()) {
@@ -678,12 +756,18 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
                 }
             } else {
                 dispatch_async(dispatch_get_main_queue()) {
-                    println("Goal Calories have been updated")
+                    println("Goals have been updated")
                 }
             }
         }
     }
     
+    func logout(sender : UIBarButtonItem) {
+        saveGoalCaloriesToParse()
+        self.navigationController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
     
     
 }

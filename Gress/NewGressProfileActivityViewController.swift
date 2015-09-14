@@ -164,11 +164,13 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     func configureDefaultPickerViewValues() {
         switch activeTextField! {
             case trainingDaysField :
-                pickerView.selectRow(4, inComponent: 0, animated: true)
+                var trainingDays = PickerViewConstants.getRowFromTrainingDays(trainingDaysField.text)
+                pickerView.selectRow(trainingDays, inComponent: 0, animated: true)
             case exerciseDurationField :
-                pickerView.selectRow(1, inComponent: 0, animated: true)
-                pickerView.selectRow(30, inComponent: 2, animated: true)
-            default : return
+                var exerciseDurationArray = PickerViewConstants.getRowFromExerciseDuration(exerciseDurationField.text)
+                pickerView.selectRow(exerciseDurationArray[0], inComponent: 0, animated: true)
+                pickerView.selectRow(exerciseDurationArray[1], inComponent: 2, animated: true)
+        default : return
         }
     }
     
@@ -179,7 +181,7 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     }
     
     func configureActivitySlider() {
-        activitySlider.value = (activitySlider.maximumValue - activitySlider.minimumValue)/2.0
+        activitySlider.value = 1.65
     }
     
     func configureNavigationItem() {
@@ -251,7 +253,16 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     **/
 
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return PickerViewConstants.Activity.Exercise.Duration.numberOfComponents
+        
+        
+        switch activeTextField! {
+        case exerciseDurationField :
+            return PickerViewConstants.Activity.Exercise.Duration.numberOfComponents
+        case trainingDaysField :
+            return PickerViewConstants.Activity.Exercise.Frequency.numberOfComponents
+        default: return 0
+        }
+        
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -267,7 +278,7 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
                 } else {
                     return 0
             }
-            default : return 0
+        default : return 0
         }
     }
     
@@ -292,8 +303,7 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
                 getExerciseDurationFromPickerView(hours, hr: hr, minutes: minutes, min: min)
             case trainingDaysField :
                 var days = trainingDays[Day.DAY.rawValue][pickerView.selectedRowInComponent(Day.DAY.rawValue)]
-                var perWeek = trainingDays[Day.PERWEEK.rawValue][pickerView.selectedRowInComponent(Day.PERWEEK.rawValue)]
-                getTrainingDaysFromPickerView(days, perWeek: perWeek)
+                getTrainingDaysFromPickerView(days)
             default : return
         }
     }
@@ -304,9 +314,16 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         }
     }
     
-    func getTrainingDaysFromPickerView(days: String, perWeek: String) {
+    func getTrainingDaysFromPickerView(days: String) {
         if activeTextField! == trainingDaysField {
-            trainingDaysField.text = days + " " + perWeek
+            let daysInt = (days as NSString).integerValue
+            switch daysInt {
+            case 1 :
+                trainingDaysField.text = days + " day"
+            default:
+                trainingDaysField.text = days + " days"
+            }
+            
         }
     }
     

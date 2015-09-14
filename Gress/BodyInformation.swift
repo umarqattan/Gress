@@ -47,30 +47,30 @@ class BodyInformation {
     
     // Body
     var sex = MALE
-    var age:String!
-    var heightMetric:String!
-    var heightSI:String!
-    var weightMetric:String!
-    var weightSI:String!
-    var rawCentimeters:String!
-    var rawFeet:String!
-    var rawInches:String!
-    var rawPounds:String!
-    var rawKilograms:String!
+    var age:String = ""
+    var heightMetric = ""
+    var heightSI:String! = ""
+    var weightMetric:String! = ""
+    var weightSI:String! = ""
+    var rawCentimeters:String! = ""
+    var rawFeet:String! = ""
+    var rawInches:String! = ""
+    var rawPounds:String! = ""
+    var rawKilograms:String! = ""
     
     // Activity
-    var activityLevel:Float!
-    var exerciseDuration:String!
-    var trainingDays:String!
+    var activityLevel:Float! = 0.00
+    var exerciseDuration:String! = ""
+    var trainingDays:String! = ""
     
     // Goals and Nutrition
-    var nutrition:String!
-    var fatPercent:Float!
-    var carbohydratePercent:Float!
-    var proteinPercent:Float!
+    var nutrition:String! = ""
+    var fatPercent:Float! = 0.00
+    var carbohydratePercent:Float! = 0.00
+    var proteinPercent:Float! = 0.00
     
-    var goalLevel:Float!
-    var goalCalories:Int!
+    var goalLevel:Float! = 0.00
+    var goalCalories:Int! = 0
     
     // Completed New Profile
     var didCompleteNewProfile:Bool = false
@@ -110,31 +110,77 @@ class BodyInformation {
         goalLevel = dictionary["goal_level"] as! Float
         goalCalories = dictionary["goal_calories"] as! Int
         didCompleteNewProfile = dictionary["complete_profile"] as! Bool
+        unit = dictionary["unit"] as! Int
         
     }
     
     func savePFUserBodyInformation(user : PFUser) -> PFUser {
         
+        if !firstName.isEmpty {
+            user["first_name"] = firstName
+        }
+        if !lastName.isEmpty {
+            user["last_name"] = lastName
+        }
+        if !fullName.isEmpty {
+            user["full_name"] = fullName
+        }
         
-        user["first_name"] = firstName
-        user["last_name"] = lastName
-        user["full_name"] = fullName
-        user["email"] = email
-        user["sex"] = sex
-        user["age"] = age
-        user["height_metric"] = heightMetric
-        user["height_SI"] = heightSI
-        user["weight_metric"] = weightMetric
-        user["weight_SI"] = weightSI
-        user["activity_level"] = activityLevel
-        user["exercise_duration"] = exerciseDuration
-        user["training_days"] = trainingDays
-        user["nutrition"] = nutrition
-        user["fat_percent"] = fatPercent
-        user["carbohydrate_percent"] = carbohydratePercent
-        user["protein_percent"] = proteinPercent
-        user["goal_level"] = goalLevel
-
+        if !email.isEmpty {
+            user["email"] = email
+        }
+        if sex >= 0 {
+            user["sex"] = sex
+        }
+        if !age.isEmpty {
+            user["age"] = age
+        }
+        
+        if !heightMetric.isEmpty {
+            user["height_metric"] = heightMetric
+        }
+        if !weightMetric.isEmpty {
+            user["weight_metric"] = weightMetric
+        }
+        if !heightSI.isEmpty {
+            user["height_SI"] = heightSI
+        }
+        if !weightSI.isEmpty {
+            user["weight_SI"] = weightSI
+        }
+        if activityLevel >= 0.00 {
+            user["activity_level"] = activityLevel
+        }
+        if !exerciseDuration.isEmpty {
+            user["exercise_duration"] = exerciseDuration
+        }
+        if !trainingDays.isEmpty {
+            user["training_days"] = trainingDays
+        }
+        if !nutrition.isEmpty {
+            user["nutrition"] = nutrition
+        }
+        if fatPercent >= 0.00 {
+            user["fat_percent"] = fatPercent
+        }
+        if carbohydratePercent >= 0.00 {
+            user["carbohydrate_percent"] = carbohydratePercent
+        }
+        if proteinPercent >= 0.00 {
+             user["protein_percent"] = proteinPercent
+        }
+        if goalLevel >= 0.00 {
+            user["goal_level"] = goalLevel
+        }
+        if goalCalories >= 0 {
+            user["goal_calories"] = goalCalories
+        }
+        if unit >= 0 {
+            user["unit"] = unit
+        }
+        if didCompleteNewProfile {
+            user["complete_profile"] = didCompleteNewProfile
+        }
         return user
     }
     
@@ -395,7 +441,6 @@ class BodyInformation {
                 heightMetric = formatHeightMetricString(rawCentimeters)
 
             case METRIC:
-                println("initializing from Metric Units")
                 var centimeters = BodyInformation.getCentimetersFromText(text)
                 var SIHeightArray = metricToSIHeight(centimeters)
                 rawFeet = SIHeightArray[2]
@@ -422,7 +467,7 @@ class BodyInformation {
             heightMetric = formatHeightMetricString(rawCentimeters)
             
         case METRIC:
-            println("initializing from Metric Units")
+            
             var centimeters = BodyInformation.getCentimetersFromText(text)
             var SIHeightArray = metricToSIHeight(centimeters)
             rawFeet = SIHeightArray[2]

@@ -11,40 +11,6 @@ import UIKit
 import Parse
 
 
-let CALORIE_GOAL:Int = 0
-let MACRONUTRIENT_GOAL:Int = 1
-let ON:Int = 1
-let OFF:Int = 0
-let EDIT = "Edit"
-let DONE = "Done"
-
-
-enum ReuseIdentifier:String {
-    case Calorie = "CalorieTableViewCell"
-    case MacronutrientPieChart = "MacronutrientPieChartTableViewCell"
-    case Fat = "FatTableViewCell"
-    case Carbohydrate = "CarbohydrateTableViewCell"
-    case Protein = "ProteinTableViewCell"
-}
-
-enum MacronutrientSection:Int {
-    case PieChart = 0
-    case Fat = 2
-    case Carbohydrate = 3
-    case Protein = 4
-}
-
-enum CalorieGoal:Int {
-    case Deficit = 0
-    case Maintenance = 1
-    case Surplus = 2
-}
-
-enum MacronutrientGoal: Int {
-    case Fat = 0
-    case Carbohydrate = 1
-    case Protein = 2
-}
 
 
 class GressGoalsViewController : UITableViewController, UITableViewDelegate, UINavigationControllerDelegate {
@@ -117,7 +83,6 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
         
         setDelegates()
         configureTableView()
-        setMacroPieChart()
         configureNavigationItem()
         
     }
@@ -126,12 +91,15 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
         super.viewWillAppear(animated)
         
         setCalorieVariablesAndLabels()
-        
+        setMacroPieChart()
+        configureNavigationItem()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
+        saveGoalCaloriesToParse()
+        removeLabelsFromMacroPieChart()
     }
     
     func setDelegates() {
@@ -152,29 +120,6 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     }
 
     
-    func editGoalLevel(sender : UIBarButtonItem) {
-        
-        switch sender.title! {
-            case EDIT:
-                tabBarController?.navigationItem.rightBarButtonItem?.title = DONE
-                setSliderThumbImage(OFF)
-                calorieGoalSlider.enabled = true
-            
-            case DONE:
-                tabBarController?.navigationItem.rightBarButtonItem?.title = EDIT
-                setMacronutrientLabels(calorieGoalSlider.value)
-                setSliderThumbImage(ON)
-                
-                
-                body.goalLevel = (calorieGoalSlider.value - calorieGoalSlider.minimumValue)/(calorieGoalSlider.maximumValue - calorieGoalSlider.minimumValue)
-                body.goalCalories = goalCalories
-                calorieGoalSlider.enabled = false
-                body.printBodyInformation()
-                saveGoalCaloriesToParse()
-            
-            default : return
-        }
-    }
     
     
     /**
@@ -190,21 +135,12 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
         body.setBodyInformationFromDictionary(user)
         
         setCalorieLabels()
+        
         setMacronutrientLabels(calorieGoalSlider.value)
         setSliderThumbImage(ON)
     }
     
-    func setSliderThumbImage(toggle : Int) {
-        switch toggle {
-            case ON:
-                var string = NSString(format: "%d", goalCalories)
-                var calorieGoalSliderThumbImage = drawText(string, point: CGPointMake(2, 8))
-                calorieGoalSlider.setThumbImage(calorieGoalSliderThumbImage, forState: UIControlState.Normal)
-            case OFF:
-                calorieGoalSlider.setThumbImage(nil, forState: UIControlState.Normal)
-            default : return
-        }
-    }
+    
     
     func setCalorieLabels() {
         
@@ -243,6 +179,10 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
         carbohydrateGrams = macronutrientGoalArray[MacronutrientGoal.Carbohydrate.rawValue]
         proteinGrams = macronutrientGoalArray[MacronutrientGoal.Protein.rawValue]
         
+        fatPercentLabel.text = "\(Int(body.fatPercent)) %"
+        carbohydratePercentLabel.text = "\(Int(body.carbohydratePercent)) %"
+        proteinPercentLabel.text = "\(Int(body.proteinPercent)) %"
+        
         fatGramsLabel.text = "\(fatGrams) g"
         carbohydrateGramsLabel.text = "\(carbohydrateGrams) g"
         proteinGramsLabel.text = "\(proteinGrams) g"
@@ -256,15 +196,17 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
                    percentages
         **/
         
-        macroPieChart.clearsContextBeforeDrawing = true
-        macroPieChart.fatEndArc = CGFloat((fatPercentLabel.text! as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
-        macroPieChart.carbohydrateEndArc = CGFloat((carbohydratePercentLabel.text! as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
-        macroPieChart.proteinEndArc = CGFloat((proteinPercentLabel.text! as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+        
         
         dispatch_async(dispatch_get_main_queue()) {
             
+            self.macroPieChart.clearsContextBeforeDrawing = true
+            self.macroPieChart.fatEndArc = CGFloat((self.fatPercentLabel.text! as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+            self.macroPieChart.carbohydrateEndArc = CGFloat((self.carbohydratePercentLabel.text! as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
+            self.macroPieChart.proteinEndArc = CGFloat((self.proteinPercentLabel.text! as NSString).floatValue)/100.0 * 2 * CGFloat(M_PI)
             self.macroPieChart.setNeedsDisplay()
             self.addMacroLabelsToPieChart()
+            
         }
     }
     
@@ -345,30 +287,19 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
         }
     }
     
-    func setBodyObject() {
-        body = BodyInformation(firstName: "Umar", lastName: "Qattan", email: "u.qattan@gmail.com", profilePicture: UIImage(named: "Male Profile-100"))
-        body.age = "20"
-        body.sex = MALE
-        body.heightMetric = "183.0 cm"
-        body.heightSI = "6 ft, 0 in"
-        body.weightMetric = "78.5 kg"
-        body.weightSI = "173.1 lb"
-        body.goalLevel = 0.87
-        body.activityLevel = 2.000
-        body.exerciseDuration = "3 hr, 30 min"
-        body.trainingDays = "5 days"
-        body.nutrition = "10 % 60 % 30 %"
-        body.fatPercent = 10.00
-        body.carbohydratePercent = 60.00
-        body.proteinPercent = 30.00
-        
+    func removeLabelsFromMacroPieChart() {
+        dispatch_async(dispatch_get_main_queue()) {
+            for subview in self.macroPieChart.subviews {
+                if subview as! UILabel == self.macroPieChartFatLabel || subview as! UILabel == self.macroPieChartCarbohydrateLabel || subview as! UILabel == self.macroPieChartProteinLabel {
+                    subview.removeFromSuperview()
+                }
+            }
+        }
     }
     
     func saveGoalCaloriesToParse() {
         var user:PFUser = PFUser.currentUser()!
-        user.setValue(goalCalories, forKey: "goal_calories")
-        user.setValue(goal, forKey: "goal_level")
-        user.setValue(true, forKey: "complete_profile")
+        user = body.savePFUserBodyInformation(user)
         user.saveInBackgroundWithBlock() { (success:Bool, downloadError:NSError?) in
             if let error = downloadError {
                 dispatch_async(dispatch_get_main_queue()) {
@@ -390,32 +321,20 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
               UISlider thumbImage.
     **/
     
-    func drawText(text : NSString, point : CGPoint) -> UIImage {
         
-        var size = CGSizeMake(31, 31);
-        UIGraphicsBeginImageContextWithOptions(size, true, 0);
-        
-        UIColor.whiteColor().setFill()
-        UIRectFill(CGRectMake(0, 0, size.width, size.height));
-        var image:UIImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        
-        var font = UIFont(name: "HelveticaNeue", size: 12.0)!
-        UIGraphicsBeginImageContext(image.size)
-        
-        image.drawInRect(CGRectMake(0, 15, image.size.width, image.size.height))
-        var rect:CGRect = CGRectMake(point.x, point.y, image.size.width, image.size.height)
-        UIColor.whiteColor().set()
-        text.drawInRect(CGRectIntegral(rect), withAttributes: [NSFontAttributeName : font, NSForegroundColorAttributeName : UIColor(red: 0.0, green: 122.0/255.0, blue: 255.0/255.0, alpha: 1.0)])
-        var newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        var anImage = UIImage()
-        
-        return newImage
-        
-    }
     
+    func setSliderThumbImage(toggle : Int) {
+        switch toggle {
+        case ON:
+            var string = NSString(format: "%d", goalCalories)
+            var calorieGoalSliderThumbImage = drawText(string, point: CGPointMake(2, 8))
+            //calorieGoalSlider.setThumbImage(calorieGoalSliderThumbImage, forState: UIControlState.Normal)
+        case OFF:
+            //calorieGoalSlider.setThumbImage(nil, forState: UIControlState.Normal)
+            println()
+        default : return
+        }
+    }
     
     @IBAction func changeCalorieGoal(sender: UISlider) {
 
@@ -423,6 +342,31 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
         goalCaloriesLabel.text = "Goal: \(goalCalories)"
         
     }
+    
+    func editGoalLevel(sender : UIBarButtonItem) {
+        
+        switch sender.title! {
+        case EDIT:
+            tabBarController?.navigationItem.rightBarButtonItem?.title = DONE
+            setSliderThumbImage(OFF)
+            calorieGoalSlider.enabled = true
+            
+        case DONE:
+            tabBarController?.navigationItem.rightBarButtonItem?.title = EDIT
+            setMacronutrientLabels(calorieGoalSlider.value)
+            setSliderThumbImage(ON)
+            
+            
+            body.goalLevel = (calorieGoalSlider.value - calorieGoalSlider.minimumValue)/(calorieGoalSlider.maximumValue - calorieGoalSlider.minimumValue)
+            body.goalCalories = goalCalories
+            calorieGoalSlider.enabled = false
+            body.printBodyInformation()
+            saveGoalCaloriesToParse()
+            
+        default : return
+        }
+    }
+
     
     func logout(sender : UIBarButtonItem) {
         saveGoalCaloriesToParse()

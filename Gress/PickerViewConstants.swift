@@ -146,11 +146,11 @@ class PickerViewConstants {
     
     lazy var trainingDays:[[String]] = {
         var days:[String] = []
-        var perWeek = ["days"]
+        
         for (var i = 0; i < 8; i++) {
             days.append("\(i)")
         }
-        return [days, perWeek]
+        return [days]
     }()
     
     lazy var macroNutrients:[[String]] = {

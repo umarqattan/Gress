@@ -40,6 +40,9 @@
 		E1A4E46F1B9AB08400AA4F74 /* GressGoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4E46E1B9AB08400AA4F74 /* GressGoalsViewController.swift */; };
 		E1A4E4771B9C01A800AA4F74 /* GressTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */; };
 		E1A4E4791BA128CA00AA4F74 /* GressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4E4781BA128CA00AA4F74 /* GressSettingsViewController.swift */; };
+		E1A4E47B1BA3BA5100AA4F74 /* GoalCaloriesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A4E47A1BA3BA5100AA4F74 /* GoalCaloriesView.xib */; };
+		E1A4E47D1BA3BBF600AA4F74 /* GoalCalorieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4E47C1BA3BBF600AA4F74 /* GoalCalorieView.swift */; };
+		E1C7588A1BA6477D0059587C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C758891BA6477D0059587C /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +89,9 @@
 		E1A4E46E1B9AB08400AA4F74 /* GressGoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressGoalsViewController.swift; sourceTree = "<group>"; };
 		E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressTabBarController.swift; sourceTree = "<group>"; };
 		E1A4E4781BA128CA00AA4F74 /* GressSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressSettingsViewController.swift; sourceTree = "<group>"; };
+		E1A4E47A1BA3BA5100AA4F74 /* GoalCaloriesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoalCaloriesView.xib; sourceTree = "<group>"; };
+		E1A4E47C1BA3BBF600AA4F74 /* GoalCalorieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalCalorieView.swift; sourceTree = "<group>"; };
+		E1C758891BA6477D0059587C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,8 +186,8 @@
 				E177A19F1B84499C00B7507A /* NewGressProfileActivityViewController.swift */,
 				E177A1AF1B881AA700B7507A /* NewGressProfileGoalsViewController.swift */,
 				E1A4E46E1B9AB08400AA4F74 /* GressGoalsViewController.swift */,
-				E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */,
 				E1A4E4781BA128CA00AA4F74 /* GressSettingsViewController.swift */,
+				E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -192,6 +198,8 @@
 				E101A6411B97ACEA0004AE55 /* PieChartView.swift */,
 				E19F12B11B758980002A3D35 /* Main.storyboard */,
 				E19F12671B75875C002A3D35 /* LaunchScreen.xib */,
+				E1A4E47A1BA3BA5100AA4F74 /* GoalCaloriesView.xib */,
+				E1A4E47C1BA3BBF600AA4F74 /* GoalCalorieView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -203,6 +211,7 @@
 				E19F125E1B75875C002A3D35 /* AppDelegate.swift */,
 				E177A1671B7F344800B7507A /* BodyInformation.swift */,
 				E177A1951B82C8EE00B7507A /* PickerViewConstants.swift */,
+				E1C758891BA6477D0059587C /* Constants.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -299,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E19F12691B75875C002A3D35 /* LaunchScreen.xib in Resources */,
+				E1A4E47B1BA3BA5100AA4F74 /* GoalCaloriesView.xib in Resources */,
 				E19F12661B75875C002A3D35 /* Images.xcassets in Resources */,
 				E19F12B21B758980002A3D35 /* Main.storyboard in Resources */,
 			);
@@ -312,6 +322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E101A6421B97ACEA0004AE55 /* PieChartView.swift in Sources */,
+				E1C7588A1BA6477D0059587C /* Constants.swift in Sources */,
 				E1A4E46F1B9AB08400AA4F74 /* GressGoalsViewController.swift in Sources */,
 				E177A14A1B7D7E4A00B7507A /* NewGressProfileViewController.swift in Sources */,
 				E177A1A01B84499C00B7507A /* NewGressProfileActivityViewController.swift in Sources */,
@@ -324,6 +335,7 @@
 				E19F13311B7C35BE002A3D35 /* Utilities.swift in Sources */,
 				E1A4E4771B9C01A800AA4F74 /* GressTabBarController.swift in Sources */,
 				E177A1661B7EF83800B7507A /* NewGressProfileBodyViewController.swift in Sources */,
+				E1A4E47D1BA3BBF600AA4F74 /* GoalCalorieView.swift in Sources */,
 				E19F12831B7587C9002A3D35 /* SignUpViewController.swift in Sources */,
 				E177A1B01B881AA700B7507A /* NewGressProfileGoalsViewController.swift in Sources */,
 			);
