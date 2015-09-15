@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 import Parse
 
 let FINISHED = true
@@ -34,8 +35,32 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
     var cancelButton: UIBarButtonItem!
     var height:CGFloat!
     
-    var body:BodyInformation!
+    var body:Body!
     
+    
+    lazy var sharedContext : NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        }()
+    
+    func fetchBodies() -> [Body] {
+        let error: NSErrorPointer = nil
+        let fetchRequest = NSFetchRequest(entityName: "Body")
+        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        if error != nil {
+            println("Could not execute fetch request due to: \(error)")
+        }
+        return result as! [Body]
+    }
+    
+    func findBodyWithCurrentUserName(username : String) -> Body? {
+        let bodies = fetchBodies()
+        for body in bodies {
+            if body.userName == username {
+                return body
+            }
+        }
+        return nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,29 +77,56 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         
         subscribeToKeyboardNotifications()
     }
-    
-    
-    
+
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
         unsubscribeFromKeyboardNotifications()
-        
-        
+    }
+    
+    func updateSharedBodyWithPersonal() {
+        body.firstName = firstNameField.text
+        body.lastName = lastNameField.text
+        body.fullName = firstNameField.text + " " + lastNameField.text
+        body.email = emailAddressField.text
+        CoreDataStackManager.sharedInstance().saveContext()
     }
     
     func goForward(sender: UIBarButtonItem) {
         
+        updateSharedBodyWithPersonal()
+       
         
-        body = BodyInformation(firstName: firstNameField.text, lastName: lastNameField.text, email: emailAddressField.text, profilePicture: newProfilePictureImageView.image)
-        updateSharedBodyObject(body)
         let bodyInformationViewController = storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileBodyViewController") as! NewGressProfileBodyViewController
+        bodyInformationViewController.body = body
         navigationController?.pushViewController(bodyInformationViewController, animated: true)
     }
     
+    /**
+        MARK: If a new user decides to cancel making a profile,
+              then the user must be deleted from both Parse and
+              Core Data.
+    **/
     func cancel(sender: UIBarButtonItem) {
         var user:PFUser = PFUser.currentUser()!
+        
+        /**
+            Delete from CoreData first so that we can use Parse
+            to get the currentUser.
+        **/
+        let username = user.valueForKey(Body.Keys.USER_NAME) as! String
+        let currentBody = findBodyWithCurrentUserName(username)!
+        sharedContext.deleteObject(currentBody)
+        
+        
+        /**
+            Delete user from Parse
+        **/
         user.delete()
+        
+        /**
+            Go back to the home screen
+        **/
         dismissViewControllerAnimated(true, completion: nil)
     }
     

@@ -43,6 +43,9 @@
 		E1A4E47B1BA3BA5100AA4F74 /* GoalCaloriesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A4E47A1BA3BA5100AA4F74 /* GoalCaloriesView.xib */; };
 		E1A4E47D1BA3BBF600AA4F74 /* GoalCalorieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4E47C1BA3BBF600AA4F74 /* GoalCalorieView.swift */; };
 		E1C7588A1BA6477D0059587C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C758891BA6477D0059587C /* Constants.swift */; };
+		E1C7588C1BA77F820059587C /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7588B1BA77F820059587C /* CoreDataStackManager.swift */; };
+		E1C7588F1BA77FCA0059587C /* Gress.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1C7588D1BA77FCA0059587C /* Gress.xcdatamodeld */; };
+		E1C758911BA781790059587C /* Body.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C758901BA781790059587C /* Body.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +95,9 @@
 		E1A4E47A1BA3BA5100AA4F74 /* GoalCaloriesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoalCaloriesView.xib; sourceTree = "<group>"; };
 		E1A4E47C1BA3BBF600AA4F74 /* GoalCalorieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalCalorieView.swift; sourceTree = "<group>"; };
 		E1C758891BA6477D0059587C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E1C7588B1BA77F820059587C /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		E1C7588E1BA77FCA0059587C /* Gress.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gress.xcdatamodel; sourceTree = "<group>"; };
+		E1C758901BA781790059587C /* Body.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Body.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,7 +186,6 @@
 			children = (
 				E19F127E1B7587C9002A3D35 /* LoginViewController.swift */,
 				E19F12801B7587C9002A3D35 /* SignUpViewController.swift */,
-				E19F13301B7C35BE002A3D35 /* Utilities.swift */,
 				E177A1491B7D7E4A00B7507A /* NewGressProfileViewController.swift */,
 				E177A1651B7EF83800B7507A /* NewGressProfileBodyViewController.swift */,
 				E177A19F1B84499C00B7507A /* NewGressProfileActivityViewController.swift */,
@@ -188,6 +193,7 @@
 				E1A4E46E1B9AB08400AA4F74 /* GressGoalsViewController.swift */,
 				E1A4E4781BA128CA00AA4F74 /* GressSettingsViewController.swift */,
 				E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */,
+				E19F13301B7C35BE002A3D35 /* Utilities.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -212,6 +218,9 @@
 				E177A1671B7F344800B7507A /* BodyInformation.swift */,
 				E177A1951B82C8EE00B7507A /* PickerViewConstants.swift */,
 				E1C758891BA6477D0059587C /* Constants.swift */,
+				E1C7588B1BA77F820059587C /* CoreDataStackManager.swift */,
+				E1C7588D1BA77FCA0059587C /* Gress.xcdatamodeld */,
+				E1C758901BA781790059587C /* Body.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -325,6 +334,7 @@
 				E1C7588A1BA6477D0059587C /* Constants.swift in Sources */,
 				E1A4E46F1B9AB08400AA4F74 /* GressGoalsViewController.swift in Sources */,
 				E177A14A1B7D7E4A00B7507A /* NewGressProfileViewController.swift in Sources */,
+				E1C7588F1BA77FCA0059587C /* Gress.xcdatamodeld in Sources */,
 				E177A1A01B84499C00B7507A /* NewGressProfileActivityViewController.swift in Sources */,
 				E19F12811B7587C9002A3D35 /* LoginViewController.swift in Sources */,
 				E19F12821B7587C9002A3D35 /* ParseClient.swift in Sources */,
@@ -332,12 +342,14 @@
 				E19F125F1B75875C002A3D35 /* AppDelegate.swift in Sources */,
 				E177A1681B7F344800B7507A /* BodyInformation.swift in Sources */,
 				E177A1961B82C8EE00B7507A /* PickerViewConstants.swift in Sources */,
+				E1C7588C1BA77F820059587C /* CoreDataStackManager.swift in Sources */,
 				E19F13311B7C35BE002A3D35 /* Utilities.swift in Sources */,
 				E1A4E4771B9C01A800AA4F74 /* GressTabBarController.swift in Sources */,
 				E177A1661B7EF83800B7507A /* NewGressProfileBodyViewController.swift in Sources */,
 				E1A4E47D1BA3BBF600AA4F74 /* GoalCalorieView.swift in Sources */,
 				E19F12831B7587C9002A3D35 /* SignUpViewController.swift in Sources */,
 				E177A1B01B881AA700B7507A /* NewGressProfileGoalsViewController.swift in Sources */,
+				E1C758911BA781790059587C /* Body.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +446,19 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E1C7588D1BA77FCA0059587C /* Gress.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E1C7588E1BA77FCA0059587C /* Gress.xcdatamodel */,
+			);
+			currentVersion = E1C7588E1BA77FCA0059587C /* Gress.xcdatamodel */;
+			path = Gress.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E19F12511B75875C002A3D35 /* Project object */;
 }

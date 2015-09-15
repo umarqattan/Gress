@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 import Parse
 
 enum Time:Int {
@@ -55,9 +56,33 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     
     var activeTextField:UITextField?
     var pickerView:UIPickerView!
-    var body:BodyInformation!
+    var body:Body!
     
     
+    lazy var sharedContext : NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        }()
+    
+    func fetchBodies() -> [Body] {
+        let error: NSErrorPointer = nil
+        let fetchRequest = NSFetchRequest(entityName: "Body")
+        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        if error != nil {
+            println("Could not execute fetch request due to: \(error)")
+        }
+        return result as! [Body]
+    }
+    
+    func findBodyWithCurrentUserName(username : String) -> Body? {
+        let bodies = fetchBodies()
+        for body in bodies {
+            if body.userName == username {
+                return body
+            }
+        }
+        return nil
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,11 +101,11 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     }
     
     func updateSharedBodyObjectWithActivity() {
-        body = getSharedBodyObject()
+        
         body.exerciseDuration = exerciseDurationField.text
         body.trainingDays = trainingDaysField.text
         body.activityLevel = activitySlider.value
-        updateSharedBodyObject(body)
+        CoreDataStackManager.sharedInstance().saveContext()
     }
     
     func setDelegates() {
@@ -217,6 +242,8 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         updateSharedBodyObjectWithActivity()
         
         let newGressProfileGoalsViewController = storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileGoalsViewController") as! NewGressProfileGoalsViewController
+        
+        newGressProfileGoalsViewController.body = body
         navigationController?.pushViewController(newGressProfileGoalsViewController, animated: true)
     }
     
@@ -227,7 +254,24 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     
     func cancel(sender: UIBarButtonItem) {
         var user:PFUser = PFUser.currentUser()!
+        
+        /**
+        Delete from CoreData first so that we can use Parse
+        to get the currentUser.
+        **/
+        let username = user.valueForKey(Body.Keys.USER_NAME) as! String
+        let currentBody = findBodyWithCurrentUserName(username)!
+        sharedContext.deleteObject(currentBody)
+        
+        
+        /**
+        Delete user from Parse
+        **/
         user.delete()
+        
+        /**
+        Go back to the home screen
+        **/
         dismissViewControllerAnimated(true, completion: nil)
     }
 

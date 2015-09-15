@@ -4,9 +4,12 @@
 //  Copyright 2011-present Parse Inc. All rights reserved.
 //
 
+import Foundation
 
 import UIKit
+import CoreData
 import Parse
+
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -27,6 +30,29 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         configureUserInputView()
     }
     
+    lazy var sharedContext : NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        }()
+    
+    func fetchBodies() -> [Body] {
+        let error: NSErrorPointer = nil
+        let fetchRequest = NSFetchRequest(entityName: "Body")
+        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        if error != nil {
+            println("Could not execute fetch request due to: \(error)")
+        }
+        return result as! [Body]
+    }
+    
+    func findBodyWithCurrentUserName(username : String) -> Body? {
+        let bodies = fetchBodies()
+        for body in bodies {
+            if body.userName == username {
+                return body
+            }
+        }
+        return nil
+    }
     
     @IBAction func createAnAccount(sender: AnyObject) {
         let signUpViewController = storyboard?.instantiateViewControllerWithIdentifier("SignUpViewController") as! SignUpViewController
@@ -60,8 +86,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         let user:PFUser = PFUser.currentUser()!
                         if let alreadyCompletedProfile = user.valueForKey("complete_profile") as? Bool {
                             if alreadyCompletedProfile {
-                               
+                                
+                                let username = user["username"] as! String
+                                let body = self.findBodyWithCurrentUserName(username)
+                                
+                                
                                 let gressTabBarController = self.storyboard?.instantiateViewControllerWithIdentifier("GressTabBarController") as! GressTabBarController
+                                gressTabBarController.body = body
                                 let gressNavigationController = UINavigationController(rootViewController: gressTabBarController)
                                 self.presentViewController(gressNavigationController, animated: true, completion: nil)
                             } else {
@@ -71,16 +102,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                                 self.presentViewController(newGressProfileNavigationController, animated: true, completion: nil)
                             }
                         }
-                        
-                        
                     }
                 }
             }
         }
-        
-        
-        
-        
     }
     
     func configureUserInputView() {
@@ -116,6 +141,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    
     
 }
 

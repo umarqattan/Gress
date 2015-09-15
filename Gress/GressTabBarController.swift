@@ -12,7 +12,8 @@ import Parse
 
 class GressTabBarController : UITabBarController, UINavigationControllerDelegate {
     
-    
+    var body:Body!
    
+    
     
 }

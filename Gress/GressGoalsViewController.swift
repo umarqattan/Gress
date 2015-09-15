@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 import Parse
 
 
@@ -20,15 +21,10 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     **/
 
     @IBOutlet weak var calorieGoalView: UIView!
-
-    
     @IBOutlet weak var calorieGoalSlider: UISlider!
     @IBOutlet weak var deficitCaloriesLabel: UILabel!
     @IBOutlet weak var maintenanceCaloriesLabel: UILabel!
-    
-    
     @IBOutlet weak var goalCaloriesLabel: UILabel!
-    
     @IBOutlet weak var surplusCaloriesLabel: UILabel!
     @IBOutlet weak var fatLossButton: UIButton!
     @IBOutlet weak var maintainButton: UIButton!
@@ -76,7 +72,34 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
         MARK: Gress User
     **/
     
-    var body:BodyInformation!
+    
+    var body:Body!
+    
+    
+    lazy var sharedContext : NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        }()
+    
+    func fetchBodies() -> [Body] {
+        let error: NSErrorPointer = nil
+        let fetchRequest = NSFetchRequest(entityName: "Body")
+        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        if error != nil {
+            println("Could not execute fetch request due to: \(error)")
+        }
+        return result as! [Body]
+    }
+    
+    func findBodyWithCurrentUserName(username : String) -> Body? {
+        let bodies = fetchBodies()
+        for body in bodies {
+            if body.userName == username {
+                return body
+            }
+        }
+        return nil
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,9 +113,14 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        setCalorieVariablesAndLabels()
-        setMacroPieChart()
-        configureNavigationItem()
+        if let gressTabBarController = parentViewController as? GressTabBarController {
+            body = gressTabBarController.body
+            setCalorieVariablesAndLabels()
+            setMacroPieChart()
+            configureNavigationItem()
+        }
+        
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -129,51 +157,47 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     **/
     func setCalorieVariablesAndLabels() {
         
-        var user:PFUser = PFUser.currentUser()!
-        body = BodyInformation(firstName: user.valueForKey("first_name") as! String, lastName: user.valueForKey("last_name") as! String, email: user.valueForKey("email") as! String, profilePicture: nil)
-        
-        body.setBodyInformationFromDictionary(user)
+        /**
+            TODO: unexpected behavior when user logs in from
+                  the home screen. It goes through the first
+                  if block rather than the second.
+        **/
         
         setCalorieLabels()
-        
         setMacronutrientLabels(calorieGoalSlider.value)
         setSliderThumbImage(ON)
+
     }
     
     
     
     func setCalorieLabels() {
         
-        goal = body.goalLevel
-        
         var calorieGoalArray = body.getCalorieRange()
+        var defCal:Float!
+        var surCal:Float!
         
         deficitCalories = calorieGoalArray[CalorieGoal.Deficit.rawValue]
         maintenanceCalories = calorieGoalArray[CalorieGoal.Maintenance.rawValue]
         surplusCalories = calorieGoalArray[CalorieGoal.Surplus.rawValue]
-        
-        var defCal:Float = Float(deficitCalories)
-        var surCal:Float = Float(surplusCalories)
+
+        defCal = Float(deficitCalories)
+        surCal = Float(surplusCalories)
         
         calorieGoalSlider.minimumValue = defCal
         calorieGoalSlider.maximumValue = surCal
         calorieGoalSlider.enabled = false
-        calorieGoalSlider.value = goal * (calorieGoalSlider.maximumValue - calorieGoalSlider.minimumValue) + calorieGoalSlider.minimumValue
+        calorieGoalSlider.value = body.goalLevel * (calorieGoalSlider.maximumValue - calorieGoalSlider.minimumValue) + calorieGoalSlider.minimumValue
         goalCalories = Int(calorieGoalSlider.value)
-        
-        
-        
+
         deficitCaloriesLabel.text = "\(deficitCalories)"
         maintenanceCaloriesLabel.text = "\(maintenanceCalories)"
         surplusCaloriesLabel.text = "\(surplusCalories)"
         goalCaloriesLabel.text = "Goal: \(goalCalories)"
     }
-    
-    
-    
+
     func setMacronutrientLabels(calories : Float) {
         var macronutrientGoalArray = body.getMacronutrientsFromCalories(calories)
-        
         
         fatGrams = macronutrientGoalArray[MacronutrientGoal.Fat.rawValue]
         carbohydrateGrams = macronutrientGoalArray[MacronutrientGoal.Carbohydrate.rawValue]
@@ -195,8 +219,6 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
             MARK: *Draw Macro Pie Chart with the user's macronutrient
                    percentages
         **/
-        
-        
         
         dispatch_async(dispatch_get_main_queue()) {
             
@@ -299,7 +321,8 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     
     func saveGoalCaloriesToParse() {
         var user:PFUser = PFUser.currentUser()!
-        user = body.savePFUserBodyInformation(user)
+        user = body.getUpdatedUser(user)
+        
         user.saveInBackgroundWithBlock() { (success:Bool, downloadError:NSError?) in
             if let error = downloadError {
                 dispatch_async(dispatch_get_main_queue()) {
@@ -313,6 +336,7 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
                 }
             }
         }
+        CoreDataStackManager.sharedInstance().saveContext()
     }
     
     /**

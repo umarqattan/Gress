@@ -27,6 +27,9 @@ extension UIViewController {
         MARK: displays a UIAlertController with the following parameters.
     **/
     
+    
+    
+    
     func showAlertView(success: Bool, buttonTitle: String, message: String?, completionHandler: ((UIAlertAction!) -> Void)!)
     {
         var alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
@@ -101,14 +104,6 @@ extension UIViewController {
         }
     }
     
-    func updateSharedBodyObject(updatedBody: BodyInformation) {
-        (UIApplication.sharedApplication().delegate as! AppDelegate).gressUser = updatedBody
-    }
-    
-    func getSharedBodyObject() -> BodyInformation {
-        return (UIApplication.sharedApplication().delegate as! AppDelegate).gressUser
-    }
-    
     func drawText(text : NSString, point : CGPoint) -> UIImage {
         
         var size = CGSizeMake(31, 31);
@@ -135,6 +130,8 @@ extension UIViewController {
         
     }
 
+    
+    
     
 }
     

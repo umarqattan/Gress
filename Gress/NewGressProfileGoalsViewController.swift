@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 import Parse
 
 enum Macronutrients: Int {
@@ -56,8 +57,34 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
     var macroPieChartProteinLabel:UILabel!
     
     
-    var body:BodyInformation!
+    var body:Body!
 
+    
+    lazy var sharedContext : NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        }()
+    
+    func fetchBodies() -> [Body] {
+        let error: NSErrorPointer = nil
+        let fetchRequest = NSFetchRequest(entityName: "Body")
+        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        if error != nil {
+            println("Could not execute fetch request due to: \(error)")
+        }
+        return result as! [Body]
+    }
+    
+    func findBodyWithCurrentUserName(username : String) -> Body? {
+        let bodies = fetchBodies()
+        for body in bodies {
+            if body.userName == username {
+                return body
+            }
+        }
+        return nil
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -82,22 +109,17 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
     
     **/
     
-    var filePath : String {
-        let urlPath = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
-        return urlPath.URLByAppendingPathComponent("GressUsers").path!
-    }
-    
     
     
     func updateSharedBodyObjectWithGoals() {
-        body = getSharedBodyObject()
+        
         body.nutrition = fatField.text + " " + carbohydrateField.text + " " + proteinField.text
         body.fatPercent = Float(macroPieChart.fatPercent)
         body.carbohydratePercent = Float(macroPieChart.carbohydratePercent)
         body.proteinPercent = Float(macroPieChart.proteinPercent)
         body.goalLevel = goalSlider.value
         body.didCompleteNewProfile = true
-        updateSharedBodyObject(body)
+        CoreDataStackManager.sharedInstance().saveContext()
     }
     
     func setDelegates() {
@@ -152,7 +174,10 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         updateSharedBodyObjectWithGoals()
         saveNewGressUserToParse() { UIAlertAction in
             let gressTabBarController = self.storyboard?.instantiateViewControllerWithIdentifier("GressTabBarController") as! GressTabBarController
-            self.navigationController?.pushViewController(gressTabBarController, animated: true)
+            gressTabBarController.body = self.body
+   
+            
+            self.navigationController?.pushViewController(gressTabBarController , animated: true)
         }
     }
     
@@ -163,7 +188,24 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
     
     func cancel(sender: UIBarButtonItem) {
         var user:PFUser = PFUser.currentUser()!
+        
+        /**
+        Delete from CoreData first so that we can use Parse
+        to get the currentUser.
+        **/
+        let username = user.valueForKey(Body.Keys.USER_NAME) as! String
+        let currentBody = findBodyWithCurrentUserName(username)!
+        sharedContext.deleteObject(currentBody)
+        
+        
+        /**
+        Delete user from Parse
+        **/
         user.delete()
+        
+        /**
+        Go back to the home screen
+        **/
         dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -173,7 +215,7 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
         
         var user:PFUser = PFUser.currentUser()!
         
-        user = body.savePFUserBodyInformation(user)
+        user = body.getUpdatedUser(user)
         user.saveInBackgroundWithBlock() { (success: Bool, downloadError: NSError?) -> Void in
             if let error = downloadError {
                 dispatch_async(dispatch_get_main_queue()) {

@@ -8,7 +8,9 @@
 
 import Foundation
 import UIKit
+import CoreData
 import Parse
+
 
 
 class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIScrollViewDelegate, UITextFieldDelegate {
@@ -29,7 +31,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     var forwardButton:UIBarButtonItem!
     var cancelButton:UIBarButtonItem!
     
-    var body:BodyInformation!
+    var body:Body!
     var email:String!
     var firstName:String!
     var lastName:String!
@@ -39,6 +41,31 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
               pushed to the navigationController stack.
     
     **/
+    
+    lazy var sharedContext : NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        }()
+    
+    func fetchBodies() -> [Body] {
+        let error: NSErrorPointer = nil
+        let fetchRequest = NSFetchRequest(entityName: "Body")
+        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        if error != nil {
+            println("Could not execute fetch request due to: \(error)")
+        }
+        return result as! [Body]
+    }
+    
+    func findBodyWithCurrentUserName(username : String) -> Body? {
+        let bodies = fetchBodies()
+        for body in bodies {
+            if body.userName == username {
+                return body
+            }
+        }
+        return nil
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,15 +77,6 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         unitSegmentedControl.enabled = false
     }
     
-    func updateSharedBodyObjectWithBody() {
-        
-        body = getSharedBodyObject()
-        body.setAgeFromText(ageField.text)
-        body.setHeightFromText(heightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
-        body.setWeightFromText(weightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
-        updateSharedBodyObject(body)
-        
-    }
     
     func configureUserInputView() {
         userInputView.layer.cornerRadius = 12
@@ -109,14 +127,23 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
                 pickerView.selectRow(0, inComponent: 1, animated: true)
             default: return
         }
+    }
+    
+    func updateSharedBodyObjectWithBody() {
+        body.sex = sexSegmentedControl.selectedSegmentIndex
+        body.setAgeFromText(ageField.text)
+        body.setHeightFromText(heightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
+        body.setWeightFromText(weightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
         
-        
+        CoreDataStackManager.sharedInstance().saveContext()
+
     }
     
     func goForward(sender: UIBarButtonItem) {
         
         updateSharedBodyObjectWithBody()
         let newGressProfileActivityViewController = storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileActivityViewController") as! NewGressProfileActivityViewController
+        newGressProfileActivityViewController.body = body
         navigationController?.pushViewController(newGressProfileActivityViewController, animated: true)
     }
     
@@ -126,7 +153,24 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     
     func cancel(sender: UIBarButtonItem) {
         var user:PFUser = PFUser.currentUser()!
+        
+        /**
+        Delete from CoreData first so that we can use Parse
+        to get the currentUser.
+        **/
+        let username = user.valueForKey(Body.Keys.USER_NAME) as! String
+        let currentBody = findBodyWithCurrentUserName(username)!
+        sharedContext.deleteObject(currentBody)
+        
+        
+        /**
+        Delete user from Parse
+        **/
         user.delete()
+        
+        /**
+        Go back to the home screen
+        **/
         dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -157,14 +201,14 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
                 case SI :
                     
                     println("switched from METRIC TO SI")
-                    heightField.text = getSharedBodyObject().heightSI
-                    weightField.text = getSharedBodyObject().weightSI
+                    heightField.text = body.heightSI
+                    weightField.text = body.weightSI
                 
                 case METRIC:
                     
                     println("switched from SI TO METRIC")
-                    heightField.text = getSharedBodyObject().heightMetric
-                    weightField.text = getSharedBodyObject().weightMetric
+                    heightField.text = body.heightMetric
+                    weightField.text = body.weightMetric
 
                 default : return
             }

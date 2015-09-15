@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 import Parse
 
 
@@ -26,16 +27,19 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
     @IBOutlet weak var proteinField: UITextField!
     @IBOutlet weak var carbohydrateField: UITextField!
     @IBOutlet weak var fatField: UITextField!
-    
     @IBOutlet weak var unitSegmentedControl: UISegmentedControl!
+
     
-    
-    
+    @IBOutlet weak var calorieGoalLabel: UILabel!
+    @IBOutlet weak var calorieGoalSlider: UISlider!
+    @IBOutlet weak var surplusCaloriesLabel: UILabel!
+    @IBOutlet weak var maintenanceCaloriesLabel: UILabel!
+    @IBOutlet weak var deficitCaloriesLabel: UILabel!
     
     
     var activeTextField:UITextField?
     var pickerView = UIPickerView()
-    var body:BodyInformation!
+    
     
     var calorieGoalCustomView : UIView!
     var customView:UIView!
@@ -48,17 +52,39 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
     var checkmarkButton:UIButton!
     var cancelPickerButton:UIButton!
     
-    @IBOutlet weak var calorieGoalLabel: UILabel!
-    @IBOutlet weak var calorieGoalSlider: UISlider!
-    @IBOutlet weak var surplusCaloriesLabel: UILabel!
-    @IBOutlet weak var maintenanceCaloriesLabel: UILabel!
-    @IBOutlet weak var deficitCaloriesLabel: UILabel!
+    var body:Body!
+    
+    
+    
+    lazy var sharedContext : NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        }()
+    
+    func fetchBodies() -> [Body] {
+        let error: NSErrorPointer = nil
+        let fetchRequest = NSFetchRequest(entityName: "Body")
+        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        if error != nil {
+            println("Could not execute fetch request due to: \(error)")
+        }
+        return result as! [Body]
+    }
+    
+    func findBodyWithCurrentUserName(username : String) -> Body? {
+        let bodies = fetchBodies()
+        for body in bodies {
+            if body.userName == username {
+                return body
+            }
+        }
+        return nil
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setDelegates()
-        
         
         configureTableView()
         configureNavigationItem()
@@ -68,11 +94,15 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        setCalorieVariablesAndLabels()
         
-        configureSettings(body.unit)
-        configureNavigationItem()
-        configureSliders()
+        if let gressTabBarController = parentViewController as? GressTabBarController {
+            body = gressTabBarController.body
+            setCalorieVariablesAndLabels()
+            configureSettings(body.unit)
+            configureNavigationItem()
+            configureSliders()
+        }
+        
         
     }
     
@@ -84,14 +114,16 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
     
     func setCalorieVariablesAndLabels() {
         
-        var user:PFUser = PFUser.currentUser()!
-        body = BodyInformation(firstName: user.valueForKey("first_name") as! String, lastName: user.valueForKey("last_name") as! String, email: user.valueForKey("email") as! String, profilePicture: nil)
-        
-        body.setBodyInformationFromDictionary(user)
-        
-        setCalorieLabels()
-        
-        setSliderThumbImage(ON)
+        if (presentingViewController?.isKindOfClass(NewGressProfileGoalsViewController.self) != nil) {
+            setCalorieLabels()
+            setSliderThumbImage(ON)
+        }
+        if (presentingViewController?.isKindOfClass(LoginViewController.self) != nil) {
+            var user:PFUser = PFUser.currentUser()!
+            let dictionary = Body.getDictionaryFromUser(user)
+            body.setBodyInformationFromDictionary(dictionary)
+            
+        }
     }
 
     
@@ -745,7 +777,7 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
     
     func saveGoalCaloriesToParse() {
         var user:PFUser = PFUser.currentUser()!
-        user = body.savePFUserBodyInformation(user)
+        user = body.getUpdatedUser(user)
         
         user.saveInBackgroundWithBlock() { (success:Bool, downloadError:NSError?) in
             if let error = downloadError {
@@ -756,10 +788,12 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
                 }
             } else {
                 dispatch_async(dispatch_get_main_queue()) {
-                    println("Goals have been updated")
+                    println("Goal Calories have been updated")
                 }
             }
         }
+        
+        CoreDataStackManager.sharedInstance().saveContext()
     }
     
     func logout(sender : UIBarButtonItem) {

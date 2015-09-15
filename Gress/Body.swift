@@ -1,120 +1,183 @@
 //
-//  BodyInformation.swift
+//  Body.swift
 //  Gress
 //
-//  Created by Umar Qattan on 8/15/15.
+//  Created by Umar Qattan on 9/14/15.
 //  Copyright (c) 2015 Umar Qattan. All rights reserved.
 //
 
 import Foundation
-import UIKit
+import CoreData
 import Parse
-/**
-    MARK: methods that convert from SI to Metric
-          and vice versa
-**/
 
-let CENTIMETERS_TO_INCHES = 0.393701 as Float
-let INCHES_TO_CENTIMETERS = 2.54 as Float
-let FEET_TO_INCHES = 12 as Float
-let POUNDS_TO_KILOGRAMS = 0.453592 as Float
-let KILOGRAMS_TO_POUNDS = 2.20462 as Float
-let SI = 0
-let METRIC = 1
-let MALE = 0
-let FEMALE = 1
+@objc(Body)
 
-let MALE_BMR_CONSTANT = 88.362 as Float
-let FEMALE_BMR_CONSTANT = 447.593 as Float
+class Body: NSManagedObject {
 
-let MALE_BMR_WEIGHT_MULTIPLIER = 13.397 as Float
-let FEMALE_BMR_WEIGHT_MULTIPLIER = 9.247 as Float
-
-let MALE_BMR_HEIGHT_MULTIPLIER = 4.799 as Float
-let FEMALE_BMR_HEIGHT_MULTIPLIER = 3.098 as Float
-
-let MALE_BMR_AGE_MULTIPLIER = 5.677 as Float
-let FEMALE_BMR_AGE_MULTIPLIER = 4.330 as Float
-
-class BodyInformation {
-    
-    // Personal
-    var firstName = "First"
-    var lastName = "Last"
-    var fullName = "First Last"
-    var email = "username@email.com"
-    var profilePicture = UIImage(named: "Profile Male-100")
-    
-    // Body
-    var sex = MALE
-    var age:String = ""
-    var heightMetric = ""
-    var heightSI:String! = ""
-    var weightMetric:String! = ""
-    var weightSI:String! = ""
-    var rawCentimeters:String! = ""
-    var rawFeet:String! = ""
-    var rawInches:String! = ""
-    var rawPounds:String! = ""
-    var rawKilograms:String! = ""
-    
-    // Activity
-    var activityLevel:Float! = 0.00
-    var exerciseDuration:String! = ""
-    var trainingDays:String! = ""
-    
-    // Goals and Nutrition
-    var nutrition:String! = ""
-    var fatPercent:Float! = 0.00
-    var carbohydratePercent:Float! = 0.00
-    var proteinPercent:Float! = 0.00
-    
-    var goalLevel:Float! = 0.00
-    var goalCalories:Int! = 0
-    
-    // Completed New Profile
-    var didCompleteNewProfile:Bool = false
-    var unit:Int = SI
-    
-    
-    // init method
-    
-    init(firstName: String, lastName: String, email: String, profilePicture: UIImage?) {
-        self.firstName = firstName
-        self.lastName = lastName
-        self.fullName = firstName + " " + lastName
-        self.email = email
-        self.profilePicture = profilePicture
+    struct Keys {
         
+        static let USER_NAME = "username"
+        static let FIRST_NAME = "first_name"
+        static let LAST_NAME = "last_name"
+        static let FULL_NAME = "full_name"
+        static let EMAIL = "email"
+        static let SEX = "sex"
+        static let AGE = "age"
+        static let HEIGHT_METRIC = "height_metric"
+        static let HEIGHT_SI = "height_SI"
+        static let WEIGHT_METRIC = "weight_metric"
+        static let WEIGHT_SI = "weight_SI"
+        static let RAW_CENTIMETERS = "raw_centimeters"
+        static let RAW_POUNDS = "raw_pounds"
+        static let RAW_KILOGRAMS = "raw_kilograms"
+        static let RAW_INCHES = "raw_inches"
+        static let RAW_FEET = "raw_feet"
+        static let ACTIVITY_LEVEL = "activity_level"
+        static let GOAL_LEVEL = "goal_level"
+        static let EXERCISE_DURATION = "exercise_duration"
+        static let TRAINING_DAYS = "training_days"
+        static let NUTRITION = "nutrition"
+        static let FAT_PERCENT = "fat_percent"
+        static let CARBOHYDRATE_PERCENT = "carbohydrate_percent"
+        static let PROTEIN_PERCENT = "protein_percent"
+        static let GOAL_CALORIES = "goal_calories"
+        static let COMPLETE_PROFILE = "complete_profile"
+        static let UNIT = "unit"
+    }
+    
+    @NSManaged var userName: String
+    @NSManaged var goalLevel: Float
+    @NSManaged var unit: Int
+    @NSManaged var didCompleteNewProfile: Bool
+    @NSManaged var goalCalories: Int
+    @NSManaged var proteinPercent: Float
+    @NSManaged var carbohydratePercent: Float
+    @NSManaged var fatPercent: Float
+    @NSManaged var nutrition: String
+    @NSManaged var trainingDays: String
+    @NSManaged var exerciseDuration: String
+    @NSManaged var activityLevel: Float
+    @NSManaged var weightSI: String
+    @NSManaged var weightMetric: String
+    @NSManaged var heightSI: String
+    @NSManaged var heightMetric: String
+    @NSManaged var age: String
+    @NSManaged var sex: Int
+    @NSManaged var email: String
+    @NSManaged var fullName: String
+    @NSManaged var firstName: String
+    @NSManaged var lastName: String
+    
+    var rawCentimeters:String!
+    var rawFeet:String!
+    var rawInches:String!
+    var rawPounds:String!
+    var rawKilograms:String!
+
+    
+    lazy var sharedContext : NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+    }()
+    
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init(dictionary : [String : AnyObject], context : NSManagedObjectContext) {
+        let entity = NSEntityDescription.entityForName("Body", inManagedObjectContext: context)
+        super.init(entity: entity!, insertIntoManagedObjectContext: context)
+        
+        /**
+            TODO: insert code from dictionary with keys
+        **/
+        userName = dictionary[Keys.USER_NAME] as! String
+        //firstName = dictionary[Keys.FIRST_NAME] as! String
+        //lastName = dictionary[Keys.LAST_NAME] as! String
+        //fullName = dictionary[Keys.FULL_NAME] as! String
+        //email = dictionary[Keys.EMAIL] as! String
+        //sex = dictionary[Keys.SEX] as! Int
+        //age = dictionary[Keys.AGE] as! String
+        //heightMetric = dictionary[Keys.HEIGHT_METRIC] as! String
+        //heightSI = dictionary[Keys.HEIGHT_SI] as! String
+        //weightMetric = dictionary[Keys.WEIGHT_METRIC] as! String
+        //weightSI = dictionary[Keys.WEIGHT_SI] as! String
+        //activityLevel = dictionary[Keys.ACTIVITY_LEVEL] as! Float
+        //exerciseDuration = dictionary[Keys.EXERCISE_DURATION] as! String
+        //trainingDays = dictionary[Keys.TRAINING_DAYS] as! String
+        //nutrition = dictionary[Keys.NUTRITION] as! String
+        //fatPercent = dictionary[Keys.FAT_PERCENT] as! Float
+        //carbohydratePercent = dictionary[Keys.CARBOHYDRATE_PERCENT] as! Float
+        //proteinPercent = dictionary[Keys.PROTEIN_PERCENT] as! Float
+        //goalLevel = dictionary[Keys.GOAL_LEVEL] as! Float
+        //goalCalories = dictionary[Keys.GOAL_CALORIES] as! Int
+        //didCompleteNewProfile = dictionary[Keys.COMPLETE_PROFILE] as! Bool
+        //unit = dictionary[Keys.UNIT] as! Int
+    
     }
     
     
-    func setBodyInformationFromDictionary(dictionary : PFUser) {
-        firstName = dictionary["first_name"] as! String
-        lastName = dictionary["last_name"] as! String
-        fullName = dictionary["full_name"] as! String
-        email = dictionary["email"] as! String
-        sex = dictionary["sex"] as! Int
-        age = dictionary["age"] as! String
-        heightMetric = dictionary["height_metric"] as! String
-        heightSI = dictionary["height_SI"] as! String
-        weightMetric = dictionary["weight_metric"] as! String
-        weightSI = dictionary["weight_SI"] as! String
-        activityLevel = dictionary["activity_level"] as! Float
-        exerciseDuration = dictionary["exercise_duration"] as! String
-        trainingDays = dictionary["training_days"] as! String
-        nutrition = dictionary["nutrition"] as! String
-        fatPercent = dictionary["fat_percent"] as! Float
-        carbohydratePercent = dictionary["carbohydrate_percent"] as! Float
-        proteinPercent = dictionary["protein_percent"] as! Float
-        goalLevel = dictionary["goal_level"] as! Float
-        goalCalories = dictionary["goal_calories"] as! Int
-        didCompleteNewProfile = dictionary["complete_profile"] as! Bool
-        unit = dictionary["unit"] as! Int
+    func setBodyInformationFromDictionary(dictionary : [String : AnyObject])  {
+        userName = dictionary[Keys.USER_NAME] as! String
+        firstName = dictionary[Keys.FIRST_NAME] as! String
+        lastName = dictionary[Keys.LAST_NAME] as! String
+        fullName = dictionary[Keys.FULL_NAME] as! String
+        email = dictionary[Keys.EMAIL] as! String
+        sex = dictionary[Keys.SEX] as! Int
+        age = dictionary[Keys.AGE] as! String
+        heightMetric = dictionary[Keys.HEIGHT_METRIC] as! String
+        heightSI = dictionary[Keys.HEIGHT_SI] as! String
+        weightMetric = dictionary[Keys.WEIGHT_METRIC] as! String
+        weightSI = dictionary[Keys.WEIGHT_SI] as! String
+        activityLevel = dictionary[Keys.ACTIVITY_LEVEL] as! Float
+        exerciseDuration = dictionary[Keys.EXERCISE_DURATION] as! String
+        trainingDays = dictionary[Keys.TRAINING_DAYS] as! String
+        nutrition = dictionary[Keys.NUTRITION] as! String
+        fatPercent = dictionary[Keys.FAT_PERCENT] as! Float
+        carbohydratePercent = dictionary[Keys.CARBOHYDRATE_PERCENT] as! Float
+        proteinPercent = dictionary[Keys.PROTEIN_PERCENT] as! Float
+        goalLevel = dictionary[Keys.GOAL_LEVEL] as! Float
+        goalCalories = dictionary[Keys.GOAL_CALORIES] as! Int
+        didCompleteNewProfile = dictionary[Keys.COMPLETE_PROFILE] as! Bool
+        unit = dictionary[Keys.UNIT] as! Int
         
     }
     
-    func savePFUserBodyInformation(user : PFUser) -> PFUser {
+    class func getDictionaryFromUser(user : PFUser) -> [String : AnyObject] {
+        var dictionary = [
+            Keys.USER_NAME : user.valueForKey(Keys.USER_NAME),
+            Keys.FIRST_NAME : user.valueForKey(Keys.FIRST_NAME),
+            Keys.LAST_NAME : user.valueForKey(Keys.LAST_NAME),
+            Keys.FULL_NAME : user.valueForKey(Keys.FULL_NAME),
+            Keys.EMAIL : user.valueForKey(Keys.EMAIL),
+            Keys.SEX : user.valueForKey(Keys.SEX),
+            Keys.AGE : user.valueForKey(Keys.AGE),
+            Keys.HEIGHT_METRIC : user.valueForKey(Keys.HEIGHT_METRIC),
+            Keys.HEIGHT_SI : user.valueForKey(Keys.HEIGHT_SI),
+            Keys.WEIGHT_METRIC : user.valueForKey(Keys.WEIGHT_METRIC),
+            Keys.WEIGHT_SI : user.valueForKey(Keys.WEIGHT_SI),
+            Keys.ACTIVITY_LEVEL : user.valueForKey(Keys.ACTIVITY_LEVEL),
+            Keys.EXERCISE_DURATION : user.valueForKey(Keys.EXERCISE_DURATION),
+            Keys.TRAINING_DAYS : user.valueForKey(Keys.TRAINING_DAYS),
+            Keys.NUTRITION : user.valueForKey(Keys.NUTRITION),
+            Keys.FAT_PERCENT : user.valueForKey(Keys.FAT_PERCENT),
+            Keys.CARBOHYDRATE_PERCENT : user.valueForKey(Keys.CARBOHYDRATE_PERCENT),
+            Keys.PROTEIN_PERCENT : user.valueForKey(Keys.PROTEIN_PERCENT),
+            Keys.GOAL_LEVEL : user.valueForKey(Keys.GOAL_LEVEL),
+            Keys.GOAL_CALORIES : user.valueForKey(Keys.GOAL_CALORIES),
+            Keys.COMPLETE_PROFILE : user.valueForKey(Keys.COMPLETE_PROFILE),
+            Keys.UNIT : user.valueForKey(Keys.UNIT)
+        ]
+        
+        return dictionary as! [String : AnyObject]
+        
+    }
+
+    
+    func getUpdatedUser(user : PFUser) -> PFUser {
+        
+        if !userName.isEmpty {
+            user["username"] = userName
+        }
         
         if !firstName.isEmpty {
             user["first_name"] = firstName
@@ -167,7 +230,7 @@ class BodyInformation {
             user["carbohydrate_percent"] = carbohydratePercent
         }
         if proteinPercent >= 0.00 {
-             user["protein_percent"] = proteinPercent
+            user["protein_percent"] = proteinPercent
         }
         if goalLevel >= 0.00 {
             user["goal_level"] = goalLevel
@@ -185,28 +248,12 @@ class BodyInformation {
     }
     
     /**
-        MARK: Nutrition Information
+        MARK: Body Information Calculations
     **/
-    
-    struct Nutrition {
-        
-        struct Macronutrients {
-            
-            static let Fat = "Fat"
-            static let Carbohydrate = "Carbohydrate"
-            static let Protein = "Protein"
-        }
-    }
-    
-    
-    /**
-        MARK: method to print out contents of a BodyInformation 
-              object
-    **/
-    
+
     func printBodyInformation() {
         
-        println("Name\n First Name: \(firstName)\n Last Name: \(lastName)\n Email: \(email)\n Profile Picture: \(profilePicture)")
+        println("Name\n First Name: \(firstName)\n Last Name: \(lastName)\n Email: \(email)\n")
         
         println("Body\n Sex: \(sexString(sex))\n Age: \(age)\n Height Metric: \(heightMetric)\n Height SI: \(heightSI)\n Weight Metric: \(weightMetric)\n Weight SI: \(weightSI)")
         
@@ -218,9 +265,9 @@ class BodyInformation {
     
     func sexString(sex: Int) -> String {
         switch sex {
-            case MALE: return "Male"
-            case FEMALE: return "Female"
-            default: return ""
+        case MALE: return "Male"
+        case FEMALE: return "Female"
+        default: return ""
         }
     }
     
@@ -233,8 +280,8 @@ class BodyInformation {
     }
     
     /**
-        MARK: string formatting methods to convert from Metric
-              to SI and from SI to Metric
+    MARK: string formatting methods to convert from Metric
+    to SI and from SI to Metric
     **/
     
     func metricToSIHeight(centimeters: String) -> [String] {
@@ -256,7 +303,7 @@ class BodyInformation {
     func metricToSIWeight(kilograms:String) -> String {
         var pounds = ((kilograms as NSString).floatValue) * KILOGRAMS_TO_POUNDS
         var formattedPounds = floor(pounds * 10)/10
-
+        
         return "\(formattedPounds)"
     }
     
@@ -266,7 +313,7 @@ class BodyInformation {
         var formattedKilograms = floor(kilograms * 10)/10
         
         return "\(formattedKilograms)"
-    
+        
     }
     
     class func getCentimetersFromText(text : String) -> String {
@@ -280,7 +327,7 @@ class BodyInformation {
         var startIndex = text.startIndex
         var endIndex = advance(startIndex, 1)
         var range = Range<String.Index>(start: startIndex, end: endIndex)
-
+        
         return text.substringWithRange(range)
     }
     
@@ -304,7 +351,7 @@ class BodyInformation {
         var startIndex = text.startIndex
         var endIndex:String.Index
         var length = text.length
-
+        
         
         if length == 7 {
             endIndex = advance(text.startIndex,4)
@@ -331,15 +378,15 @@ class BodyInformation {
             endIndex = advance(text.startIndex,4)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
             
-
+            
             return text.substringWithRange(range)
         }
-        
+            
         else if length == 8 {
             endIndex = advance(startIndex,5)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
             
-
+            
             return text.substringWithRange(range)
         } else {
             return ""
@@ -347,7 +394,7 @@ class BodyInformation {
     }
     
     /**
-        MARK: formatting body information for textField
+    MARK: formatting body information for textField
     **/
     
     func formatHeightMetricString(centimeters : String) -> String {
@@ -392,19 +439,18 @@ class BodyInformation {
     func setWeightFromText(text : String, unit: Int) {
         
         switch unit {
-            case SI :
-                rawPounds = "\((text as NSString).floatValue)"
-                weightSI = formatWeightSIString(rawPounds)
-                rawKilograms = SIToMetricWeight(rawPounds)
-                weightMetric = formatWeightMetricString(rawKilograms)
-            case METRIC:
-                rawKilograms = "\((text as NSString).floatValue)"
-                weightMetric = formatWeightMetricString(rawKilograms)
-                rawPounds = metricToSIWeight(rawKilograms)
-                weightSI = formatWeightSIString(rawPounds)
-            default: return
+        case SI :
+            rawPounds = "\((text as NSString).floatValue)"
+            weightSI = formatWeightSIString(rawPounds)
+            rawKilograms = SIToMetricWeight(rawPounds)
+            weightMetric = formatWeightMetricString(rawKilograms)
+        case METRIC:
+            rawKilograms = "\((text as NSString).floatValue)"
+            weightMetric = formatWeightMetricString(rawKilograms)
+            rawPounds = metricToSIWeight(rawKilograms)
+            weightSI = formatWeightSIString(rawPounds)
+        default: return
         }
-        
     }
     
     func getWeightFromText(text : String, unit: Int) -> [String] {
@@ -425,31 +471,30 @@ class BodyInformation {
         
         return [weightSI, weightMetric]
         
-        
     }
     
     func setHeightFromText(text : String, unit: Int) {
         
         switch unit {
-            case SI :
-                var feet = BodyInformation.getFeetFromText(text)
-                var inches = BodyInformation.getInchesFromText(text)
-                var metricHeightArray = SIToMetricHeight(feet, inches: inches)
-                rawCentimeters = metricHeightArray[1]
-                rawFeet = feet
-                rawInches = inches
-                heightSI = formatHeightSIString(rawFeet, inches: rawInches)
-                heightMetric = formatHeightMetricString(rawCentimeters)
-
-            case METRIC:
-                var centimeters = BodyInformation.getCentimetersFromText(text)
-                var SIHeightArray = metricToSIHeight(centimeters)
-                rawFeet = SIHeightArray[2]
-                rawInches = SIHeightArray[3]
-                rawCentimeters = centimeters
-                heightMetric = formatHeightMetricString(centimeters)
-                heightSI = formatHeightSIString(rawFeet, inches: rawInches)
-            default: return
+        case SI :
+            var feet = BodyInformation.getFeetFromText(text)
+            var inches = BodyInformation.getInchesFromText(text)
+            var metricHeightArray = SIToMetricHeight(feet, inches: inches)
+            rawCentimeters = metricHeightArray[1]
+            rawFeet = feet
+            rawInches = inches
+            heightSI = formatHeightSIString(rawFeet, inches: rawInches)
+            heightMetric = formatHeightMetricString(rawCentimeters)
+            
+        case METRIC:
+            var centimeters = BodyInformation.getCentimetersFromText(text)
+            var SIHeightArray = metricToSIHeight(centimeters)
+            rawFeet = SIHeightArray[2]
+            rawInches = SIHeightArray[3]
+            rawCentimeters = centimeters
+            heightMetric = formatHeightMetricString(centimeters)
+            heightSI = formatHeightSIString(rawFeet, inches: rawInches)
+        default: return
         }
     }
     
@@ -487,17 +532,15 @@ class BodyInformation {
     }
     
     /**
-        MARK: Use the Revised Harris-Benedict Equation to calculate BMR (Basal Metabolic Rate) ->
-              
-                Men: BMR = 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) - (5.677 x age in years)
+        MARK:Use the Revised Harris-Benedict Equation to calculate BMR (Basal Metabolic Rate) ->
     
-                Women: BMR = 447.593 + (9.247 x weight in kg) + (3.098 x height in cm) - (4.330 x age in years)
-    
-                TDEE: 1.2*BMR <= TDEE <= 2.1*BMR or body.activityLevel*BMR
-                Deficit = TDEE - 300
-                Maintenance = TDEE
-                Surplus = TDEE + 300
-                return [Deficit, Maintenance, Surplus]:[Calories]
+            Men: BMR = 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) - (5.677 x age in years)
+            Women: BMR = 447.593 + (9.247 x weight in kg) + (3.098 x height in cm) - (4.330 x age in years)
+            TDEE: 1.2*BMR <= TDEE <= 2.1*BMR or body.activityLevel*BMR
+            Deficit = 90% * TDEE
+            Maintenance = 100% * TDEE
+            Surplus = 110% * TDEE
+            return [Deficit, Maintenance, Surplus]:[Calories]
     **/
     
     func getBMR() -> Float {
@@ -511,18 +554,18 @@ class BodyInformation {
         var weightPart:Float!, heightPart:Float!, agePart:Float!
         
         switch sex {
-            case MALE:
-                weightPart = MALE_BMR_WEIGHT_MULTIPLIER * weightKg
-                heightPart = MALE_BMR_HEIGHT_MULTIPLIER * heightCm
-                agePart = MALE_BMR_AGE_MULTIPLIER * Float(age)
-                BMR = MALE_BMR_CONSTANT + weightPart + heightPart - agePart
+        case MALE:
+            weightPart = MALE_BMR_WEIGHT_MULTIPLIER * weightKg
+            heightPart = MALE_BMR_HEIGHT_MULTIPLIER * heightCm
+            agePart = MALE_BMR_AGE_MULTIPLIER * Float(age)
+            BMR = MALE_BMR_CONSTANT + weightPart + heightPart - agePart
             
-            case FEMALE:
-                weightPart = FEMALE_BMR_WEIGHT_MULTIPLIER * weightKg
-                heightPart = FEMALE_BMR_HEIGHT_MULTIPLIER * heightCm
-                agePart = FEMALE_BMR_AGE_MULTIPLIER * Float(age)
-                BMR = FEMALE_BMR_CONSTANT + weightPart + heightPart - agePart
-            default : BMR = 0
+        case FEMALE:
+            weightPart = FEMALE_BMR_WEIGHT_MULTIPLIER * weightKg
+            heightPart = FEMALE_BMR_HEIGHT_MULTIPLIER * heightCm
+            agePart = FEMALE_BMR_AGE_MULTIPLIER * Float(age)
+            BMR = FEMALE_BMR_CONSTANT + weightPart + heightPart - agePart
+        default : BMR = 0
         }
         return BMR
     }
@@ -532,7 +575,7 @@ class BodyInformation {
         var activityLevelMult = self.activityLevel
         
         return activityLevelMult * BMR
-
+        
     }
     
     func getCalorieRange() -> [Int] {
@@ -554,6 +597,4 @@ class BodyInformation {
     }
     
     
-    
-
 }
