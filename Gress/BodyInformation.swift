@@ -231,6 +231,7 @@ class BodyInformation {
         default: return 0
         }
     }
+    
     /**
         MARK: string formatting methods to convert from Metric
               to SI and from SI to Metric
@@ -450,7 +451,6 @@ class BodyInformation {
                 heightSI = formatHeightSIString(rawFeet, inches: rawInches)
             default: return
         }
-
     }
     
     func getHeightFromText(text : String, unit: Int) -> [String] {
@@ -487,7 +487,7 @@ class BodyInformation {
     }
     
     /**
-        MARK: Use the Revised Harris-Benedict Equation to calculate BMR ->
+        MARK: Use the Revised Harris-Benedict Equation to calculate BMR (Basal Metabolic Rate) ->
               
                 Men: BMR = 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) - (5.677 x age in years)
     
@@ -497,7 +497,7 @@ class BodyInformation {
                 Deficit = TDEE - 300
                 Maintenance = TDEE
                 Surplus = TDEE + 300
-                return [Deficit, Maintenance, Surplus]
+                return [Deficit, Maintenance, Surplus]:[Calories]
     **/
     
     func getBMR() -> Float {

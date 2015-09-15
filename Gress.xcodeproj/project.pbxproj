@@ -186,7 +186,6 @@
 			children = (
 				E19F127E1B7587C9002A3D35 /* LoginViewController.swift */,
 				E19F12801B7587C9002A3D35 /* SignUpViewController.swift */,
-				E19F13301B7C35BE002A3D35 /* Utilities.swift */,
 				E177A1491B7D7E4A00B7507A /* NewGressProfileViewController.swift */,
 				E177A1651B7EF83800B7507A /* NewGressProfileBodyViewController.swift */,
 				E177A19F1B84499C00B7507A /* NewGressProfileActivityViewController.swift */,
@@ -194,6 +193,7 @@
 				E1A4E46E1B9AB08400AA4F74 /* GressGoalsViewController.swift */,
 				E1A4E4781BA128CA00AA4F74 /* GressSettingsViewController.swift */,
 				E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */,
+				E19F13301B7C35BE002A3D35 /* Utilities.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";

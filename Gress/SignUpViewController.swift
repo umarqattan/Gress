@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 import Parse
 
 class SignUpViewController : UIViewController, UITextFieldDelegate {
@@ -33,6 +34,11 @@ class SignUpViewController : UIViewController, UITextFieldDelegate {
         configureButtons()
         configureUserInputView()
     }
+    
+    lazy var sharedContext : NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        }()
+
     
     @IBAction func login(sender: UIButton) {
         dismissViewControllerAnimated(true, completion: nil)
@@ -66,7 +72,12 @@ class SignUpViewController : UIViewController, UITextFieldDelegate {
                     })
                     self.showAlertView(success, buttonTitle: "Get Started!", message: "Hooray, you are now apart of Gress!") { UIAlertAction in
                         
+                        let dictionary = [Body.Keys.USER_NAME : self.userNameField.text]
+                        let newUser = Body(dictionary: dictionary, context: self.sharedContext)
+                        CoreDataStackManager.sharedInstance().saveContext()
+                        
                         let rootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileViewController") as! NewGressProfileViewController
+                            rootViewController.body = newUser
                         let newGressProfileNavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("NewGressProfileNavigationController") as! UINavigationController
                         newGressProfileNavigationController.setViewControllers([rootViewController], animated: true)
                         self.presentViewController(newGressProfileNavigationController, animated: true, completion: nil)
