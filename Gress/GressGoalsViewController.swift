@@ -119,8 +119,6 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
             setMacroPieChart()
             configureNavigationItem()
         }
-        
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
