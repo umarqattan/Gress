@@ -182,15 +182,15 @@ class PickerViewConstants {
     class func getRowFromHeight(text : String, unit: Int) -> [Int] {
         
         switch unit {
-            case SI:
-                var feet = (BodyInformation.getFeetFromText(text) as NSString).integerValue
-                var inches = (BodyInformation.getInchesFromText(text) as NSString).integerValue
+            case Body.Constants.SI:
+                var feet = (Body.getFeetFromText(text) as NSString).integerValue
+                var inches = (Body.getInchesFromText(text) as NSString).integerValue
                 var feetRow = feet - 4
                 var inchesRow = inches
                 println("\(feetRow), \(inchesRow)")
                 return [feetRow, inchesRow]
-            case METRIC:
-                var centimeters = (BodyInformation.getCentimetersFromText(text) as NSString).integerValue
+            case Body.Constants.METRIC:
+                var centimeters = (Body.getCentimetersFromText(text) as NSString).integerValue
                 println("\(text.length)")
                 var centimetersRow = centimeters - 122
                 return [centimetersRow, 0]
@@ -203,7 +203,7 @@ class PickerViewConstants {
     class func getRowFromWeight(text : String, unit : Int) -> [Int] {
         
         switch unit {
-        case SI:
+        case Body.Constants.SI:
         
             var pounds = (text as NSString).floatValue
             var poundsRow = Int(floor(pounds))
@@ -212,7 +212,7 @@ class PickerViewConstants {
             poundsRow = poundsRow - 60
             println("poundsRow : \(poundsRow) \ndecPounds : \(decPoundsRow)")
             return [poundsRow, decPoundsRow]
-        case METRIC:
+        case Body.Constants.METRIC:
             
             var kilograms = (text as NSString).floatValue
             var grams = Int((kilograms % 1) * 10)
@@ -305,10 +305,5 @@ class PickerViewConstants {
         return [hours, minutes]
         
     }
-    
-    
-    
-    
-    
 
 }

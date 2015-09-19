@@ -167,7 +167,7 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
     func configureNavigationItem() {
         
         self.tabBarController?.navigationItem.title = "Goals"
-        self.tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editGoalLevel:")
+        self.tabBarController?.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editGoalLevel:")]
         self.tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logout:")
     }
     
@@ -264,15 +264,15 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         case sexField :
             return 1
         case heightField :
-            if unitSegmentedControl.selectedSegmentIndex == SI {
+            if unitSegmentedControl.selectedSegmentIndex == Body.Constants.SI {
                 return PickerViewConstants.Height.SI.numberOfComponents
-            } else if unitSegmentedControl.selectedSegmentIndex == METRIC {
+            } else if unitSegmentedControl.selectedSegmentIndex == Body.Constants.METRIC {
                 return PickerViewConstants.Height.Metric.numberOfComponents
             } else { return 0 }
         case weightField :
-            if unitSegmentedControl.selectedSegmentIndex == SI {
+            if unitSegmentedControl.selectedSegmentIndex == Body.Constants.SI {
                 return PickerViewConstants.Weight.SI.numberOfComponents
-            } else if unitSegmentedControl.selectedSegmentIndex == METRIC {
+            } else if unitSegmentedControl.selectedSegmentIndex == Body.Constants.METRIC {
                 return PickerViewConstants.Weight.Metric.numberOfComponents
                 
             } else {return 0 }
@@ -293,16 +293,16 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         case sexField :
             return 2
         case heightField :
-            if unitSegmentedControl.selectedSegmentIndex == SI {
+            if unitSegmentedControl.selectedSegmentIndex == Body.Constants.SI {
                 
                 return PickerViewConstants.Height.SI.heightSI[component].count
-            } else if unitSegmentedControl.selectedSegmentIndex == METRIC {
+            } else if unitSegmentedControl.selectedSegmentIndex == Body.Constants.METRIC {
                 return PickerViewConstants.Height.Metric.heightMetric[component].count
             } else { return 0 }
         case weightField :
-            if unitSegmentedControl.selectedSegmentIndex == SI {
+            if unitSegmentedControl.selectedSegmentIndex == Body.Constants.SI {
                 return PickerViewConstants.Weight.SI.weightSI[component].count
-            } else if unitSegmentedControl.selectedSegmentIndex == METRIC {
+            } else if unitSegmentedControl.selectedSegmentIndex == Body.Constants.METRIC {
                 return PickerViewConstants.Weight.Metric.weightMetric[component].count
             } else {return 0 }
         
@@ -337,15 +337,15 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         case sexField :
             return "\(body.sexString(row))"
         case heightField :
-            if unitSegmentedControl.selectedSegmentIndex == SI {
+            if unitSegmentedControl.selectedSegmentIndex == Body.Constants.SI {
                 return PickerViewConstants.Height.SI.heightSI[component][row]
-            } else if unitSegmentedControl.selectedSegmentIndex == METRIC {
+            } else if unitSegmentedControl.selectedSegmentIndex == Body.Constants.METRIC {
                 return PickerViewConstants.Height.Metric.heightMetric[component][row]
             } else { return "" }
         case weightField :
-            if unitSegmentedControl.selectedSegmentIndex == SI {
+            if unitSegmentedControl.selectedSegmentIndex == Body.Constants.SI {
                 return PickerViewConstants.Weight.SI.weightSI[component][row]
-            } else if unitSegmentedControl.selectedSegmentIndex == METRIC {
+            } else if unitSegmentedControl.selectedSegmentIndex == Body.Constants.METRIC {
                 return PickerViewConstants.Weight.Metric.weightMetric[component][row]
                 
             } else {return "" }
@@ -369,7 +369,7 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
             getSexFromPickerView(body.sexString(row))
         case heightField :
             
-            if unitSegmentedControl.selectedSegmentIndex == SI {
+            if unitSegmentedControl.selectedSegmentIndex == Body.Constants.SI {
                 var feet:String!
                 var inches:String!
                 feet = PickerViewConstants.Height.SI.heightSI[0][pickerView.selectedRowInComponent(0)]
@@ -377,7 +377,7 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
                 getHeightFromPickerView(feet, inches: inches)
                 
                 
-            } else if unitSegmentedControl.selectedSegmentIndex == METRIC {
+            } else if unitSegmentedControl.selectedSegmentIndex == Body.Constants.METRIC {
                 var centimeters:String!
                 centimeters = PickerViewConstants.Height.Metric.heightMetric[0][pickerView.selectedRowInComponent(0)]
                 getHeightFromPickerView(centimeters)
@@ -390,11 +390,11 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
             var decimalWeight:String!
             var unit:String!
             
-            if unitSegmentedControl.selectedSegmentIndex == SI {
+            if unitSegmentedControl.selectedSegmentIndex == Body.Constants.SI {
                 wholeWeight = PickerViewConstants.Weight.SI.weightSI[0][pickerView.selectedRowInComponent(0)]
                 decimalWeight = PickerViewConstants.Weight.SI.weightSI[1][pickerView.selectedRowInComponent(1)]
                 unit = PickerViewConstants.Weight.SI.weightSI[2][pickerView.selectedRowInComponent(2)]
-            } else if unitSegmentedControl.selectedSegmentIndex == METRIC {
+            } else if unitSegmentedControl.selectedSegmentIndex == Body.Constants.METRIC {
                 wholeWeight = PickerViewConstants.Weight.Metric.weightMetric[0][pickerView.selectedRowInComponent(0)]
                 decimalWeight = PickerViewConstants.Weight.Metric.weightMetric[1][pickerView.selectedRowInComponent(1)]
                 unit = PickerViewConstants.Weight.Metric.weightMetric[2][pickerView.selectedRowInComponent(2)]
@@ -491,10 +491,10 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         case heightField :
             var height = PickerViewConstants.getRowFromHeight(heightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
             switch unitSegmentedControl.selectedSegmentIndex {
-            case SI:
+            case Body.Constants.SI:
                 pickerView.selectRow(height[0], inComponent: 0, animated: true)
                 pickerView.selectRow(height[1], inComponent: 2, animated: true)
-            case METRIC:
+            case Body.Constants.METRIC:
                 pickerView.selectRow(height[0], inComponent: 0, animated: true)
                 pickerView.selectRow(height[1], inComponent: 1, animated: true)
             default: return
@@ -699,10 +699,10 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
     @IBAction func unitSegmentedControlChanged(sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex {
-            case SI:
+            case Body.Constants.SI:
                 heightField.text = body.heightSI
                 weightField.text = body.weightSI
-            case METRIC:
+            case Body.Constants.METRIC:
                 heightField.text = body.heightMetric
                 weightField.text = body.weightMetric
             default : return
@@ -753,10 +753,10 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         
         
         switch unit {
-            case SI:
+            case Body.Constants.SI:
                 heightField.text = body.heightSI
                 weightField.text = body.weightSI
-            case METRIC:
+            case Body.Constants.METRIC:
                 heightField.text = body.heightMetric
                 weightField.text = body.weightMetric
             default : return

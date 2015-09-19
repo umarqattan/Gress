@@ -26,6 +26,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        
+        NutritionixClient.buildSearchURL("tofu", results: 10)
+        NutritionixClient.getFields()
         setTextFieldDelegates()
         configureUserInputView()
     }

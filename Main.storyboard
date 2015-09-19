@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ecZ-9v-55D">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -1456,11 +1456,177 @@
                     <connections>
                         <segue destination="j3C-LP-bKE" kind="relationship" relationship="viewControllers" id="cki-zx-918"/>
                         <segue destination="Vd3-S9-twB" kind="relationship" relationship="viewControllers" id="ttc-KW-IkN"/>
+                        <segue destination="Ia4-r3-71v" kind="relationship" relationship="viewControllers" id="3vC-26-SsA"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aZ8-Lx-eb0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1363.5" y="-845"/>
+        </scene>
+        <!--Food-->
+        <scene sceneID="w5j-ri-BWi">
+            <objects>
+                <tableViewController storyboardIdentifier="GressFoodLogViewController" id="Ia4-r3-71v" customClass="GressFoodLogViewController" customModule="Gress" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p0I-kG-1cZ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ZOC-KP-SKt">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZOC-KP-SKt" id="x6d-vc-3h4">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="Ia4-r3-71v" id="w9x-wC-Pee"/>
+                            <outlet property="delegate" destination="Ia4-r3-71v" id="mT0-d8-hTd"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Food" image="Vegan Food-32" id="eNk-2i-VWC"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EXB-si-TvK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2209.5" y="-2043"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="e7V-m0-w2U">
+            <objects>
+                <navigationController id="ecZ-9v-55D" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jHg-yj-Wo8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="2QI-o3-nxK" kind="relationship" relationship="rootViewController" id="KId-ma-Yn2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zwd-7P-lBV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3028.5" y="-1981"/>
+        </scene>
+        <!--Gress Food Log Entry Search View Controller-->
+        <scene sceneID="6Ek-qH-Sqc">
+            <objects>
+                <viewController id="2QI-o3-nxK" customClass="GressFoodLogEntrySearchViewController" customModule="Gress" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HRK-9K-Frd"/>
+                        <viewControllerLayoutGuide type="bottom" id="ndd-oU-otn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wfJ-nK-xHL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="kMG-K3-Lr6">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kui-65-YdN">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="7NQ-Ug-c4k">
+                                <rect key="frame" x="-10" y="-10" width="20" height="20"/>
+                                <color key="color" red="0.20000000000000001" green="0.57565789469999995" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="190" y="76" width="20" height="20"/>
+                                </variation>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kui-65-YdN" firstAttribute="trailing" secondItem="kMG-K3-Lr6" secondAttribute="trailing" id="4J1-z8-nAl"/>
+                            <constraint firstItem="kui-65-YdN" firstAttribute="top" secondItem="kMG-K3-Lr6" secondAttribute="bottom" id="B5B-PR-91n"/>
+                            <constraint firstItem="kui-65-YdN" firstAttribute="bottom" secondItem="ndd-oU-otn" secondAttribute="top" id="CLP-cU-Lrc"/>
+                            <constraint firstItem="kMG-K3-Lr6" firstAttribute="top" secondItem="HRK-9K-Frd" secondAttribute="bottom" id="Ukd-OP-YH0"/>
+                            <constraint firstItem="kui-65-YdN" firstAttribute="leading" secondItem="kMG-K3-Lr6" secondAttribute="leading" id="cv4-IF-btj"/>
+                            <constraint firstItem="kMG-K3-Lr6" firstAttribute="leading" secondItem="wfJ-nK-xHL" secondAttribute="leadingMargin" constant="-16" id="lhx-0B-xyd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kMG-K3-Lr6" secondAttribute="trailing" constant="-16" id="wKy-Ps-3fn"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="kMG-K3-Lr6"/>
+                                <exclude reference="kui-65-YdN"/>
+                                <exclude reference="7NQ-Ug-c4k"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="Ukd-OP-YH0"/>
+                                <exclude reference="lhx-0B-xyd"/>
+                                <exclude reference="wKy-Ps-3fn"/>
+                                <exclude reference="4J1-z8-nAl"/>
+                                <exclude reference="B5B-PR-91n"/>
+                                <exclude reference="CLP-cU-Lrc"/>
+                                <exclude reference="cv4-IF-btj"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="kMG-K3-Lr6"/>
+                                <include reference="kui-65-YdN"/>
+                                <include reference="7NQ-Ug-c4k"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="Ukd-OP-YH0"/>
+                                <include reference="lhx-0B-xyd"/>
+                                <include reference="wKy-Ps-3fn"/>
+                                <include reference="4J1-z8-nAl"/>
+                                <include reference="B5B-PR-91n"/>
+                                <include reference="CLP-cU-Lrc"/>
+                                <include reference="cv4-IF-btj"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="H3b-CJ-Z8A"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="7NQ-Ug-c4k" id="8Ut-jb-GSL"/>
+                        <outlet property="nutritionixSearchBar" destination="kMG-K3-Lr6" id="EBz-Sb-QzM"/>
+                        <outlet property="tableView" destination="kui-65-YdN" id="fyn-ij-Pdh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fDg-Op-UoS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3832.5" y="-1981"/>
+        </scene>
+        <!--Gress Food Log Entry View Controller-->
+        <scene sceneID="rKy-Dy-e2w">
+            <objects>
+                <viewController storyboardIdentifier="GressFoodLogEntryViewController" id="vor-KI-SN1" customClass="GressFoodLogEntryViewController" customModule="Gress" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iz3-be-dgh"/>
+                        <viewControllerLayoutGuide type="bottom" id="6mF-mn-qM5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fmW-q9-Gc4">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="gtQ-IA-COY">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="28" width="400" height="572"/>
+                                </variation>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="gtQ-IA-COY"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="gtQ-IA-COY"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="gtQ-IA-COY" id="wjx-uq-zrj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PZp-PE-3TS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4692" y="-1982"/>
         </scene>
         <!--Gress Goals View Controller-->
         <scene sceneID="LxN-ci-iEi">
@@ -3239,5 +3405,6 @@
         <image name="Ok Filled-32" width="32" height="32"/>
         <image name="Profile Male-100" width="100" height="100"/>
         <image name="Settings Filled-32" width="32" height="32"/>
+        <image name="Vegan Food-32" width="32" height="32"/>
     </resources>
 </document>

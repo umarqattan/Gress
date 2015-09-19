@@ -2,18 +2,13 @@
 //  Constants.swift
 //  Gress
 //
-//  Created by Umar Qattan on 9/13/15.
+//  Created by Umar Qattan on 9/16/15.
 //  Copyright (c) 2015 Umar Qattan. All rights reserved.
 //
 
 import Foundation
-import UIKit
-import Parse
 
 
-
-
-    
 let CALORIE_GOAL:Int = 0
 let MACRONUTRIENT_GOAL:Int = 1
 let ON:Int = 1
@@ -49,6 +44,9 @@ enum MacronutrientGoal: Int {
     case Protein = 2
 }
 
-
-
-
+enum Section : Int {
+    case FoodLogEntry = 0
+    case Total = 1
+    case Remaining = 2
+}
+    

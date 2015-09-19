@@ -16,10 +16,11 @@
 		E101A6421B97ACEA0004AE55 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E101A6411B97ACEA0004AE55 /* PieChartView.swift */; };
 		E177A14A1B7D7E4A00B7507A /* NewGressProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A1491B7D7E4A00B7507A /* NewGressProfileViewController.swift */; };
 		E177A1661B7EF83800B7507A /* NewGressProfileBodyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A1651B7EF83800B7507A /* NewGressProfileBodyViewController.swift */; };
-		E177A1681B7F344800B7507A /* BodyInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A1671B7F344800B7507A /* BodyInformation.swift */; };
 		E177A1961B82C8EE00B7507A /* PickerViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A1951B82C8EE00B7507A /* PickerViewConstants.swift */; };
 		E177A1A01B84499C00B7507A /* NewGressProfileActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A19F1B84499C00B7507A /* NewGressProfileActivityViewController.swift */; };
 		E177A1B01B881AA700B7507A /* NewGressProfileGoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A1AF1B881AA700B7507A /* NewGressProfileGoalsViewController.swift */; };
+		E181218A1BAD28FA0081AD59 /* GressFoodLogEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18121891BAD28FA0081AD59 /* GressFoodLogEntryViewController.swift */; };
+		E181218C1BAD2D1B0081AD59 /* GressFoodLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E181218B1BAD2D1B0081AD59 /* GressFoodLogViewController.swift */; };
 		E19F125F1B75875C002A3D35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F125E1B75875C002A3D35 /* AppDelegate.swift */; };
 		E19F12661B75875C002A3D35 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E19F12651B75875C002A3D35 /* Images.xcassets */; };
 		E19F12691B75875C002A3D35 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E19F12671B75875C002A3D35 /* LaunchScreen.xib */; };
@@ -40,12 +41,18 @@
 		E1A4E46F1B9AB08400AA4F74 /* GressGoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4E46E1B9AB08400AA4F74 /* GressGoalsViewController.swift */; };
 		E1A4E4771B9C01A800AA4F74 /* GressTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */; };
 		E1A4E4791BA128CA00AA4F74 /* GressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4E4781BA128CA00AA4F74 /* GressSettingsViewController.swift */; };
-		E1A4E47B1BA3BA5100AA4F74 /* GoalCaloriesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A4E47A1BA3BA5100AA4F74 /* GoalCaloriesView.xib */; };
-		E1A4E47D1BA3BBF600AA4F74 /* GoalCalorieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4E47C1BA3BBF600AA4F74 /* GoalCalorieView.swift */; };
-		E1C7588A1BA6477D0059587C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C758891BA6477D0059587C /* Constants.swift */; };
 		E1C7588C1BA77F820059587C /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7588B1BA77F820059587C /* CoreDataStackManager.swift */; };
 		E1C7588F1BA77FCA0059587C /* Gress.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1C7588D1BA77FCA0059587C /* Gress.xcdatamodeld */; };
 		E1C758911BA781790059587C /* Body.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C758901BA781790059587C /* Body.swift */; };
+		E1C758931BAA5C9B0059587C /* FoodLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C758921BAA5C9B0059587C /* FoodLog.swift */; };
+		E1C758951BAA5D570059587C /* FoodLogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C758941BAA5D570059587C /* FoodLogEntry.swift */; };
+		E1C758971BAA63170059587C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C758961BAA63170059587C /* Constants.swift */; };
+		E1C7589B1BAB34D10059587C /* NutritionixClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7589A1BAB34D10059587C /* NutritionixClient.swift */; };
+		E1C7589D1BAB7A3B0059587C /* FoodLogEntryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C7589C1BAB7A3B0059587C /* FoodLogEntryTableViewCell.xib */; };
+		E1C7589F1BAB7CA70059587C /* FoodLogEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7589E1BAB7CA70059587C /* FoodLogEntryTableViewCell.swift */; };
+		E1D250581BACA146003CAA32 /* FoodLogEntrySectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D250571BACA146003CAA32 /* FoodLogEntrySectionHeader.xib */; };
+		E1D2505C1BACA531003CAA32 /* FoodLogEntrySectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D2505B1BACA531003CAA32 /* FoodLogEntrySectionHeader.swift */; };
+		E1D2505E1BACB995003CAA32 /* GressFoodLogEntrySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D2505D1BACB995003CAA32 /* GressFoodLogEntrySearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,7 +65,6 @@
 		E101A6411B97ACEA0004AE55 /* PieChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		E177A1491B7D7E4A00B7507A /* NewGressProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGressProfileViewController.swift; sourceTree = "<group>"; };
 		E177A1651B7EF83800B7507A /* NewGressProfileBodyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGressProfileBodyViewController.swift; sourceTree = "<group>"; };
-		E177A1671B7F344800B7507A /* BodyInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BodyInformation.swift; sourceTree = "<group>"; };
 		E177A1871B7FFF5200B7507A /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../Libraries/Parse Library/Bolts.framework"; sourceTree = "<group>"; };
 		E177A1881B7FFF5200B7507A /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "../Libraries/Parse Library/Parse.framework"; sourceTree = "<group>"; };
 		E177A1891B7FFF5200B7507A /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseCrashReporting.framework; path = "../Libraries/Parse Library/ParseCrashReporting.framework"; sourceTree = "<group>"; };
@@ -68,6 +74,8 @@
 		E177A1951B82C8EE00B7507A /* PickerViewConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerViewConstants.swift; sourceTree = "<group>"; };
 		E177A19F1B84499C00B7507A /* NewGressProfileActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGressProfileActivityViewController.swift; sourceTree = "<group>"; };
 		E177A1AF1B881AA700B7507A /* NewGressProfileGoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGressProfileGoalsViewController.swift; sourceTree = "<group>"; };
+		E18121891BAD28FA0081AD59 /* GressFoodLogEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressFoodLogEntryViewController.swift; sourceTree = "<group>"; };
+		E181218B1BAD2D1B0081AD59 /* GressFoodLogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressFoodLogViewController.swift; sourceTree = "<group>"; };
 		E19F12591B75875C002A3D35 /* Gress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19F125D1B75875C002A3D35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E19F125E1B75875C002A3D35 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,12 +100,18 @@
 		E1A4E46E1B9AB08400AA4F74 /* GressGoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressGoalsViewController.swift; sourceTree = "<group>"; };
 		E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressTabBarController.swift; sourceTree = "<group>"; };
 		E1A4E4781BA128CA00AA4F74 /* GressSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressSettingsViewController.swift; sourceTree = "<group>"; };
-		E1A4E47A1BA3BA5100AA4F74 /* GoalCaloriesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoalCaloriesView.xib; sourceTree = "<group>"; };
-		E1A4E47C1BA3BBF600AA4F74 /* GoalCalorieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalCalorieView.swift; sourceTree = "<group>"; };
-		E1C758891BA6477D0059587C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E1C7588B1BA77F820059587C /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		E1C7588E1BA77FCA0059587C /* Gress.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gress.xcdatamodel; sourceTree = "<group>"; };
 		E1C758901BA781790059587C /* Body.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Body.swift; sourceTree = "<group>"; };
+		E1C758921BAA5C9B0059587C /* FoodLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodLog.swift; sourceTree = "<group>"; };
+		E1C758941BAA5D570059587C /* FoodLogEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodLogEntry.swift; sourceTree = "<group>"; };
+		E1C758961BAA63170059587C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E1C7589A1BAB34D10059587C /* NutritionixClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NutritionixClient.swift; sourceTree = "<group>"; };
+		E1C7589C1BAB7A3B0059587C /* FoodLogEntryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoodLogEntryTableViewCell.xib; sourceTree = "<group>"; };
+		E1C7589E1BAB7CA70059587C /* FoodLogEntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodLogEntryTableViewCell.swift; sourceTree = "<group>"; };
+		E1D250571BACA146003CAA32 /* FoodLogEntrySectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoodLogEntrySectionHeader.xib; sourceTree = "<group>"; };
+		E1D2505B1BACA531003CAA32 /* FoodLogEntrySectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodLogEntrySectionHeader.swift; sourceTree = "<group>"; };
+		E1D2505D1BACB995003CAA32 /* GressFoodLogEntrySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressFoodLogEntrySearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +172,13 @@
 		E19F125C1B75875C002A3D35 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E19F125E1B75875C002A3D35 /* AppDelegate.swift */,
+				E1C7588B1BA77F820059587C /* CoreDataStackManager.swift */,
+				E19F127F1B7587C9002A3D35 /* ParseClient.swift */,
+				E177A1951B82C8EE00B7507A /* PickerViewConstants.swift */,
+				E19F13301B7C35BE002A3D35 /* Utilities.swift */,
+				E1C758961BAA63170059587C /* Constants.swift */,
+				E1C7589A1BAB34D10059587C /* NutritionixClient.swift */,
 				E19F12651B75875C002A3D35 /* Images.xcassets */,
 				E19F125D1B75875C002A3D35 /* Info.plist */,
 			);
@@ -193,7 +214,9 @@
 				E1A4E46E1B9AB08400AA4F74 /* GressGoalsViewController.swift */,
 				E1A4E4781BA128CA00AA4F74 /* GressSettingsViewController.swift */,
 				E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */,
-				E19F13301B7C35BE002A3D35 /* Utilities.swift */,
+				E1D2505D1BACB995003CAA32 /* GressFoodLogEntrySearchViewController.swift */,
+				E18121891BAD28FA0081AD59 /* GressFoodLogEntryViewController.swift */,
+				E181218B1BAD2D1B0081AD59 /* GressFoodLogViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -204,8 +227,10 @@
 				E101A6411B97ACEA0004AE55 /* PieChartView.swift */,
 				E19F12B11B758980002A3D35 /* Main.storyboard */,
 				E19F12671B75875C002A3D35 /* LaunchScreen.xib */,
-				E1A4E47A1BA3BA5100AA4F74 /* GoalCaloriesView.xib */,
-				E1A4E47C1BA3BBF600AA4F74 /* GoalCalorieView.swift */,
+				E1C7589C1BAB7A3B0059587C /* FoodLogEntryTableViewCell.xib */,
+				E1D250571BACA146003CAA32 /* FoodLogEntrySectionHeader.xib */,
+				E1C7589E1BAB7CA70059587C /* FoodLogEntryTableViewCell.swift */,
+				E1D2505B1BACA531003CAA32 /* FoodLogEntrySectionHeader.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -213,14 +238,10 @@
 		E19F12B51B7589B8002A3D35 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E19F127F1B7587C9002A3D35 /* ParseClient.swift */,
-				E19F125E1B75875C002A3D35 /* AppDelegate.swift */,
-				E177A1671B7F344800B7507A /* BodyInformation.swift */,
-				E177A1951B82C8EE00B7507A /* PickerViewConstants.swift */,
-				E1C758891BA6477D0059587C /* Constants.swift */,
-				E1C7588B1BA77F820059587C /* CoreDataStackManager.swift */,
 				E1C7588D1BA77FCA0059587C /* Gress.xcdatamodeld */,
 				E1C758901BA781790059587C /* Body.swift */,
+				E1C758921BAA5C9B0059587C /* FoodLog.swift */,
+				E1C758941BAA5D570059587C /* FoodLogEntry.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -317,7 +338,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E19F12691B75875C002A3D35 /* LaunchScreen.xib in Resources */,
-				E1A4E47B1BA3BA5100AA4F74 /* GoalCaloriesView.xib in Resources */,
+				E1D250581BACA146003CAA32 /* FoodLogEntrySectionHeader.xib in Resources */,
+				E1C7589D1BAB7A3B0059587C /* FoodLogEntryTableViewCell.xib in Resources */,
 				E19F12661B75875C002A3D35 /* Images.xcassets in Resources */,
 				E19F12B21B758980002A3D35 /* Main.storyboard in Resources */,
 			);
@@ -330,25 +352,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1C758931BAA5C9B0059587C /* FoodLog.swift in Sources */,
 				E101A6421B97ACEA0004AE55 /* PieChartView.swift in Sources */,
-				E1C7588A1BA6477D0059587C /* Constants.swift in Sources */,
+				E1C7589F1BAB7CA70059587C /* FoodLogEntryTableViewCell.swift in Sources */,
+				E1D2505E1BACB995003CAA32 /* GressFoodLogEntrySearchViewController.swift in Sources */,
 				E1A4E46F1B9AB08400AA4F74 /* GressGoalsViewController.swift in Sources */,
+				E1D2505C1BACA531003CAA32 /* FoodLogEntrySectionHeader.swift in Sources */,
 				E177A14A1B7D7E4A00B7507A /* NewGressProfileViewController.swift in Sources */,
 				E1C7588F1BA77FCA0059587C /* Gress.xcdatamodeld in Sources */,
 				E177A1A01B84499C00B7507A /* NewGressProfileActivityViewController.swift in Sources */,
 				E19F12811B7587C9002A3D35 /* LoginViewController.swift in Sources */,
 				E19F12821B7587C9002A3D35 /* ParseClient.swift in Sources */,
 				E1A4E4791BA128CA00AA4F74 /* GressSettingsViewController.swift in Sources */,
+				E1C758951BAA5D570059587C /* FoodLogEntry.swift in Sources */,
 				E19F125F1B75875C002A3D35 /* AppDelegate.swift in Sources */,
-				E177A1681B7F344800B7507A /* BodyInformation.swift in Sources */,
 				E177A1961B82C8EE00B7507A /* PickerViewConstants.swift in Sources */,
 				E1C7588C1BA77F820059587C /* CoreDataStackManager.swift in Sources */,
 				E19F13311B7C35BE002A3D35 /* Utilities.swift in Sources */,
 				E1A4E4771B9C01A800AA4F74 /* GressTabBarController.swift in Sources */,
+				E181218C1BAD2D1B0081AD59 /* GressFoodLogViewController.swift in Sources */,
+				E1C758971BAA63170059587C /* Constants.swift in Sources */,
+				E181218A1BAD28FA0081AD59 /* GressFoodLogEntryViewController.swift in Sources */,
 				E177A1661B7EF83800B7507A /* NewGressProfileBodyViewController.swift in Sources */,
-				E1A4E47D1BA3BBF600AA4F74 /* GoalCalorieView.swift in Sources */,
 				E19F12831B7587C9002A3D35 /* SignUpViewController.swift in Sources */,
 				E177A1B01B881AA700B7507A /* NewGressProfileGoalsViewController.swift in Sources */,
+				E1C7589B1BAB34D10059587C /* NutritionixClient.swift in Sources */,
 				E1C758911BA781790059587C /* Body.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

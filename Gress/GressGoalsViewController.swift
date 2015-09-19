@@ -141,7 +141,7 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     func configureNavigationItem() {
         
         self.tabBarController?.navigationItem.title = "Goals"
-        self.tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editGoalLevel:")
+        self.tabBarController?.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editGoalLevel:")]
         self.tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logout:")
     }
 

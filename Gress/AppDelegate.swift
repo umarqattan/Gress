@@ -19,7 +19,7 @@ import Parse
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    var gressUser: BodyInformation!
+    //var gressUser: BodyInformation!
     //--------------------------------------
     // MARK: - UIApplicationDelegate
     //--------------------------------------
