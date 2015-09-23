@@ -105,8 +105,6 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
             configureNavigationItem()
             configureSliders()
         }
-        
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -564,9 +562,6 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         calorieGoalLabel.text = "Goal: \(Int(sender.value))"
         saveSettings()
         
-        
-        
-        
     }
 
     @IBAction func changeActivityLevel(sender: UISlider) {
@@ -600,7 +595,8 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
             tabBarController?.navigationItem.rightBarButtonItem?.title = DONE
             setSliderThumbImage(OFF)
             calorieGoalSlider.enabled = true
-            
+            activityLevelSlider.enabled = true
+            toggleTextFields(true)
         case DONE:
             tabBarController?.navigationItem.rightBarButtonItem?.title = EDIT
             setSliderThumbImage(ON)
@@ -609,6 +605,9 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
             body.goalLevel = (calorieGoalSlider.value - calorieGoalSlider.minimumValue)/(calorieGoalSlider.maximumValue - calorieGoalSlider.minimumValue)
             body.goalCalories = Int(calorieGoalSlider.value)
             calorieGoalSlider.enabled = false
+            activityLevelSlider.enabled = false
+            toggleTextFields(false)
+            
             body.printBodyInformation()
             saveGoalCaloriesToParse()
             
@@ -616,6 +615,20 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         }
     }
 
+    func toggleTextFields(enabled : Bool) {
+        emailField.enabled = enabled
+        ageField.enabled = enabled
+        sexField.enabled = enabled
+        heightField.enabled = enabled
+        weightField.enabled = enabled
+        exerciseDurationField.enabled = enabled
+        trainingDaysField.enabled = enabled
+        fatField.enabled = enabled
+        carbohydrateField.enabled = enabled
+        proteinField.enabled = enabled
+        
+    }
+    
     
     func setCalorieLabels() {
         var goal = body.goalLevel
@@ -631,7 +644,6 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         
         calorieGoalSlider.minimumValue = defCal
         calorieGoalSlider.maximumValue = surCal
-        calorieGoalSlider.enabled = false
         calorieGoalSlider.value = goal * (calorieGoalSlider.maximumValue - calorieGoalSlider.minimumValue) + calorieGoalSlider.minimumValue
         var goalCalories = Int(calorieGoalSlider.value)
         
@@ -681,7 +693,6 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         if textField == emailField {
             emailField.keyboardType = UIKeyboardType.EmailAddress
         }
-        
         
         pickerView = UIPickerView()
         
@@ -741,8 +752,7 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         body.goalLevel = (calorieGoalSlider.value - calorieGoalSlider.minimumValue)/(calorieGoalSlider.maximumValue - calorieGoalSlider.minimumValue)
         body.unit = unitSegmentedControl.selectedSegmentIndex
         
-        
-        
+    
     }
     
     func configureSettings(unit: Int) {
@@ -769,8 +779,6 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         fatField.text = "\(body.fatPercent) %"
         carbohydrateField.text = "\(body.carbohydratePercent) %"
         proteinField.text = "\(body.proteinPercent) %"
-        
-        
         
     }
     

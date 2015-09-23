@@ -2929,7 +2929,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8F6-oZ-gf0">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                                     <subviews>
-                                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1.6499999999999999" minValue="1.2" maxValue="2.1000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="wen-Gu-gEf">
+                                                        <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1.6499999999999999" minValue="1.2" maxValue="2.1000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="wen-Gu-gEf">
                                                             <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
                                                             <color key="tintColor" red="0.20000000000000001" green="0.57565789469999995" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                                             <variation key="widthClass=compact" fixedFrame="YES">
@@ -3266,16 +3266,6 @@
                                                                 <rect key="frame" x="273" y="79" width="60" height="21"/>
                                                             </variation>
                                                         </label>
-                                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Wuy-1y-kOC">
-                                                            <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                                            <color key="tintColor" red="0.20000000000000001" green="0.57565789469999995" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <variation key="widthClass=compact" fixedFrame="YES">
-                                                                <rect key="frame" x="12" y="41" width="323" height="31"/>
-                                                            </variation>
-                                                            <connections>
-                                                                <action selector="changeCalorieGoal:" destination="Vd3-S9-twB" eventType="valueChanged" id="XT0-0T-eVM"/>
-                                                            </connections>
-                                                        </slider>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Goal: 2600" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r7l-PQ-83K">
                                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -3304,6 +3294,16 @@
                                                                 <rect key="frame" x="270" y="91" width="70" height="30"/>
                                                             </variation>
                                                         </button>
+                                                        <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Wuy-1y-kOC">
+                                                            <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
+                                                            <color key="tintColor" red="0.20000000000000001" green="0.57565789469999995" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <variation key="widthClass=compact" fixedFrame="YES">
+                                                                <rect key="frame" x="12" y="41" width="323" height="31"/>
+                                                            </variation>
+                                                            <connections>
+                                                                <action selector="changeCalorieGoal:" destination="Vd3-S9-twB" eventType="valueChanged" id="XT0-0T-eVM"/>
+                                                            </connections>
+                                                        </slider>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -3318,10 +3318,10 @@
                                                             <exclude reference="DKr-5h-uES"/>
                                                             <exclude reference="QQZ-3w-LME"/>
                                                             <exclude reference="Sj3-iN-Ks8"/>
-                                                            <exclude reference="Wuy-1y-kOC"/>
                                                             <exclude reference="r7l-PQ-83K"/>
                                                             <exclude reference="dkp-Cq-L5s"/>
                                                             <exclude reference="fzR-JY-5yK"/>
+                                                            <exclude reference="Wuy-1y-kOC"/>
                                                         </mask>
                                                         <mask key="constraints">
                                                             <exclude reference="50U-eN-G7K"/>
@@ -3334,10 +3334,10 @@
                                                             <include reference="DKr-5h-uES"/>
                                                             <include reference="QQZ-3w-LME"/>
                                                             <include reference="Sj3-iN-Ks8"/>
-                                                            <include reference="Wuy-1y-kOC"/>
                                                             <include reference="r7l-PQ-83K"/>
                                                             <include reference="dkp-Cq-L5s"/>
                                                             <include reference="fzR-JY-5yK"/>
+                                                            <include reference="Wuy-1y-kOC"/>
                                                         </mask>
                                                         <mask key="constraints">
                                                             <include reference="50U-eN-G7K"/>
