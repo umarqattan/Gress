@@ -198,13 +198,13 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     
     @IBAction func unitSegmentedControlChanged(sender: UISegmentedControl) {
             switch sender.selectedSegmentIndex {
-                case SI :
+                case Body.Constants.SI :
                     
                     println("switched from METRIC TO SI")
                     heightField.text = body.heightSI
                     weightField.text = body.weightSI
                 
-                case METRIC:
+                case Body.Constants.METRIC:
                     
                     println("switched from SI TO METRIC")
                     heightField.text = body.heightMetric
@@ -288,7 +288,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
             
         case heightField :
             
-            if unitSegmentedControl.selectedSegmentIndex == SI {
+            if unitSegmentedControl.selectedSegmentIndex == Body.Constants.SI {
                 var feet:String!
                 var inches:String!
                 feet = PickerViewConstants.Height.SI.heightSI[0][pickerView.selectedRowInComponent(0)]
@@ -296,7 +296,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
                 getHeightFromPickerView(feet, inches: inches)
                 
                 
-            } else if unitSegmentedControl.selectedSegmentIndex == METRIC {
+            } else if unitSegmentedControl.selectedSegmentIndex == Body.Constants.METRIC {
                 var centimeters:String!
                 centimeters = PickerViewConstants.Height.Metric.heightMetric[0][pickerView.selectedRowInComponent(0)]
                 getHeightFromPickerView(centimeters)
@@ -308,11 +308,11 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
             var decimalWeight:String!
             var unit:String!
             
-            if unitSegmentedControl.selectedSegmentIndex == 0 {
+            if unitSegmentedControl.selectedSegmentIndex == Body.Constants.SI {
                 wholeWeight = PickerViewConstants.Weight.SI.weightSI[0][pickerView.selectedRowInComponent(0)]
                 decimalWeight = PickerViewConstants.Weight.SI.weightSI[1][pickerView.selectedRowInComponent(1)]
                 unit = PickerViewConstants.Weight.SI.weightSI[2][pickerView.selectedRowInComponent(2)]
-            } else if unitSegmentedControl.selectedSegmentIndex == 1 {
+            } else if unitSegmentedControl.selectedSegmentIndex == Body.Constants.METRIC {
                 wholeWeight = PickerViewConstants.Weight.Metric.weightMetric[0][pickerView.selectedRowInComponent(0)]
                 decimalWeight = PickerViewConstants.Weight.Metric.weightMetric[1][pickerView.selectedRowInComponent(1)]
                 unit = PickerViewConstants.Weight.Metric.weightMetric[2][pickerView.selectedRowInComponent(2)]

@@ -23,8 +23,22 @@
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="weightMetric" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="weightSI" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="foodLogEntries" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="FoodLogEntry" inverseName="body" inverseEntity="FoodLogEntry" syncable="YES"/>
+    </entity>
+    <entity name="FoodLogEntry" representedClassName="FoodLogEntry" syncable="YES">
+        <attribute name="calories" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="carbohydrateGrams" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="fatGrams" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="foodItemName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="proteinGrams" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="servingSizeQuantity" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="servingSizeUnit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="servingsPerContainer" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="servingWeightGrams" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="body" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Body" inverseName="foodLogEntries" inverseEntity="Body" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Body" positionX="-63" positionY="-18" width="128" height="375"/>
+        <element name="Body" positionX="-416" positionY="-37" width="128" height="390"/>
+        <element name="FoodLogEntry" positionX="376" positionY="171" width="128" height="195"/>
     </elements>
 </model>

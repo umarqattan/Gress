@@ -12,7 +12,30 @@ import Parse
 
 @objc(Body)
 
+
+
+
 class Body: NSManagedObject {
+
+    struct Constants {
+        static let CENTIMETERS_TO_INCHES = 0.393701 as Float
+        static let INCHES_TO_CENTIMETERS = 2.54 as Float
+        static let FEET_TO_INCHES = 12 as Float
+        static let POUNDS_TO_KILOGRAMS = 0.453592 as Float
+        static let KILOGRAMS_TO_POUNDS = 2.20462 as Float
+        static let SI = 0
+        static let METRIC = 1
+        static let MALE = 0
+        static let FEMALE = 1
+        static let MALE_BMR_CONSTANT = 88.362 as Float
+        static let FEMALE_BMR_CONSTANT = 447.593 as Float
+        static let MALE_BMR_WEIGHT_MULTIPLIER = 13.397 as Float
+        static let FEMALE_BMR_WEIGHT_MULTIPLIER = 9.247 as Float
+        static let MALE_BMR_HEIGHT_MULTIPLIER = 4.799 as Float
+        static let FEMALE_BMR_HEIGHT_MULTIPLIER = 3.098 as Float
+        static let MALE_BMR_AGE_MULTIPLIER = 5.677 as Float
+        static let FEMALE_BMR_AGE_MULTIPLIER = 4.330 as Float
+    }
 
     struct Keys {
         
@@ -43,6 +66,16 @@ class Body: NSManagedObject {
         static let GOAL_CALORIES = "goal_calories"
         static let COMPLETE_PROFILE = "complete_profile"
         static let UNIT = "unit"
+        
+        static let DAY = "day"
+        static let TOTAL_CALORIES = "total_calories"
+        static let REMAINING_CALORIES = "remaining_calories"
+        static let TOTAL_FAT = "total_fat"
+        static let TOTAL_CARBOHYDRATE = "total_carbohydrate"
+        static let TOTAL_PROTEIN = "total_protein"
+        static let REMAINING_FAT = "remaining_fat"
+        static let REMAINING_CARBOHYDRATE = "remaining_carbohydrate"
+        static let REMAINING_PROTEIN = "remaining_protein"
     }
     
     @NSManaged var userName: String
@@ -67,6 +100,7 @@ class Body: NSManagedObject {
     @NSManaged var fullName: String
     @NSManaged var firstName: String
     @NSManaged var lastName: String
+    @NSManaged var foodLogEntries:[FoodLogEntry]
     
     var rawCentimeters:String!
     var rawFeet:String!
@@ -87,31 +121,9 @@ class Body: NSManagedObject {
         let entity = NSEntityDescription.entityForName("Body", inManagedObjectContext: context)
         super.init(entity: entity!, insertIntoManagedObjectContext: context)
         
-        /**
-            TODO: insert code from dictionary with keys
-        **/
+    
+        
         userName = dictionary[Keys.USER_NAME] as! String
-        //firstName = dictionary[Keys.FIRST_NAME] as! String
-        //lastName = dictionary[Keys.LAST_NAME] as! String
-        //fullName = dictionary[Keys.FULL_NAME] as! String
-        //email = dictionary[Keys.EMAIL] as! String
-        //sex = dictionary[Keys.SEX] as! Int
-        //age = dictionary[Keys.AGE] as! String
-        //heightMetric = dictionary[Keys.HEIGHT_METRIC] as! String
-        //heightSI = dictionary[Keys.HEIGHT_SI] as! String
-        //weightMetric = dictionary[Keys.WEIGHT_METRIC] as! String
-        //weightSI = dictionary[Keys.WEIGHT_SI] as! String
-        //activityLevel = dictionary[Keys.ACTIVITY_LEVEL] as! Float
-        //exerciseDuration = dictionary[Keys.EXERCISE_DURATION] as! String
-        //trainingDays = dictionary[Keys.TRAINING_DAYS] as! String
-        //nutrition = dictionary[Keys.NUTRITION] as! String
-        //fatPercent = dictionary[Keys.FAT_PERCENT] as! Float
-        //carbohydratePercent = dictionary[Keys.CARBOHYDRATE_PERCENT] as! Float
-        //proteinPercent = dictionary[Keys.PROTEIN_PERCENT] as! Float
-        //goalLevel = dictionary[Keys.GOAL_LEVEL] as! Float
-        //goalCalories = dictionary[Keys.GOAL_CALORIES] as! Int
-        //didCompleteNewProfile = dictionary[Keys.COMPLETE_PROFILE] as! Bool
-        //unit = dictionary[Keys.UNIT] as! Int
     
     }
     
@@ -265,16 +277,16 @@ class Body: NSManagedObject {
     
     func sexString(sex: Int) -> String {
         switch sex {
-        case MALE: return "Male"
-        case FEMALE: return "Female"
+        case Body.Constants.MALE: return "Male"
+        case Body.Constants.FEMALE: return "Female"
         default: return ""
         }
     }
     
     func sexInt(sex : String) -> Int {
         switch sex {
-        case "Male" : return MALE
-        case "Female" : return FEMALE
+        case "Male" : return Body.Constants.MALE
+        case "Female" : return Body.Constants.FEMALE
         default: return 0
         }
     }
@@ -285,7 +297,7 @@ class Body: NSManagedObject {
     **/
     
     func metricToSIHeight(centimeters: String) -> [String] {
-        var centimetersToInches:Float = (centimeters as NSString).floatValue * CENTIMETERS_TO_INCHES
+        var centimetersToInches:Float = (centimeters as NSString).floatValue * Body.Constants.CENTIMETERS_TO_INCHES
         var ft = Int(floor((centimetersToInches/12.0)))
         var inches = Int(floor(centimetersToInches%12.0))
         
@@ -294,14 +306,14 @@ class Body: NSManagedObject {
     }
     
     func SIToMetricHeight(feet: String, inches: String) -> [String] {
-        var centimetersFromInches:Float = (inches as NSString).floatValue * INCHES_TO_CENTIMETERS
-        var centimetersFromFeet:Float =  (feet as NSString).floatValue * FEET_TO_INCHES * INCHES_TO_CENTIMETERS
+        var centimetersFromInches:Float = (inches as NSString).floatValue * Body.Constants.INCHES_TO_CENTIMETERS
+        var centimetersFromFeet:Float =  (feet as NSString).floatValue * Body.Constants.FEET_TO_INCHES * Body.Constants.INCHES_TO_CENTIMETERS
         var centimeters = Int(round((centimetersFromFeet + centimetersFromInches)))
         return ["\(centimeters)", "\(centimetersFromFeet+centimetersFromInches)"]
     }
     
     func metricToSIWeight(kilograms:String) -> String {
-        var pounds = ((kilograms as NSString).floatValue) * KILOGRAMS_TO_POUNDS
+        var pounds = ((kilograms as NSString).floatValue) * Body.Constants.KILOGRAMS_TO_POUNDS
         var formattedPounds = floor(pounds * 10)/10
         
         return "\(formattedPounds)"
@@ -309,7 +321,7 @@ class Body: NSManagedObject {
     
     func SIToMetricWeight(pounds: String) -> String {
         
-        var kilograms = ((pounds as NSString).floatValue) * POUNDS_TO_KILOGRAMS
+        var kilograms = ((pounds as NSString).floatValue) * Body.Constants.POUNDS_TO_KILOGRAMS
         var formattedKilograms = floor(kilograms * 10)/10
         
         return "\(formattedKilograms)"
@@ -426,10 +438,10 @@ class Body: NSManagedObject {
         var substring = text as NSString
         
         if substring.hasSuffix("cm") || substring.hasSuffix("kg") {
-            return METRIC
+            return Body.Constants.METRIC
         }
         else if substring.hasSuffix("in") || substring.hasSuffix("lb") {
-            return SI
+            return Body.Constants.SI
         } else {
             return -1
         }
@@ -439,12 +451,12 @@ class Body: NSManagedObject {
     func setWeightFromText(text : String, unit: Int) {
         
         switch unit {
-        case SI :
+        case Body.Constants.SI :
             rawPounds = "\((text as NSString).floatValue)"
             weightSI = formatWeightSIString(rawPounds)
             rawKilograms = SIToMetricWeight(rawPounds)
             weightMetric = formatWeightMetricString(rawKilograms)
-        case METRIC:
+        case Body.Constants.METRIC:
             rawKilograms = "\((text as NSString).floatValue)"
             weightMetric = formatWeightMetricString(rawKilograms)
             rawPounds = metricToSIWeight(rawKilograms)
@@ -456,12 +468,12 @@ class Body: NSManagedObject {
     func getWeightFromText(text : String, unit: Int) -> [String] {
         
         switch unit {
-        case SI :
+        case Body.Constants.SI :
             rawPounds = "\((text as NSString).floatValue)"
             weightSI = formatWeightSIString(rawPounds)
             rawKilograms = SIToMetricWeight(rawPounds)
             weightMetric = formatWeightMetricString(rawKilograms)
-        case METRIC:
+        case Body.Constants.METRIC:
             rawKilograms = "\((text as NSString).floatValue)"
             weightMetric = formatWeightMetricString(rawKilograms)
             rawPounds = metricToSIWeight(rawKilograms)
@@ -476,9 +488,9 @@ class Body: NSManagedObject {
     func setHeightFromText(text : String, unit: Int) {
         
         switch unit {
-        case SI :
-            var feet = BodyInformation.getFeetFromText(text)
-            var inches = BodyInformation.getInchesFromText(text)
+        case Body.Constants.SI :
+            var feet = Body.getFeetFromText(text)
+            var inches = Body.getInchesFromText(text)
             var metricHeightArray = SIToMetricHeight(feet, inches: inches)
             rawCentimeters = metricHeightArray[1]
             rawFeet = feet
@@ -486,8 +498,8 @@ class Body: NSManagedObject {
             heightSI = formatHeightSIString(rawFeet, inches: rawInches)
             heightMetric = formatHeightMetricString(rawCentimeters)
             
-        case METRIC:
-            var centimeters = BodyInformation.getCentimetersFromText(text)
+        case Body.Constants.METRIC:
+            var centimeters = Body.getCentimetersFromText(text)
             var SIHeightArray = metricToSIHeight(centimeters)
             rawFeet = SIHeightArray[2]
             rawInches = SIHeightArray[3]
@@ -501,9 +513,9 @@ class Body: NSManagedObject {
     func getHeightFromText(text : String, unit: Int) -> [String] {
         
         switch unit {
-        case SI :
-            var feet = BodyInformation.getFeetFromText(text)
-            var inches = BodyInformation.getInchesFromText(text)
+        case Body.Constants.SI :
+            var feet = Body.getFeetFromText(text)
+            var inches = Body.getInchesFromText(text)
             var metricHeightArray = SIToMetricHeight(feet, inches: inches)
             rawCentimeters = metricHeightArray[1]
             rawFeet = feet
@@ -511,9 +523,9 @@ class Body: NSManagedObject {
             heightSI = formatHeightSIString(rawFeet, inches: rawInches)
             heightMetric = formatHeightMetricString(rawCentimeters)
             
-        case METRIC:
+        case Body.Constants.METRIC:
             
-            var centimeters = BodyInformation.getCentimetersFromText(text)
+            var centimeters = Body.getCentimetersFromText(text)
             var SIHeightArray = metricToSIHeight(centimeters)
             rawFeet = SIHeightArray[2]
             rawInches = SIHeightArray[3]
@@ -554,17 +566,17 @@ class Body: NSManagedObject {
         var weightPart:Float!, heightPart:Float!, agePart:Float!
         
         switch sex {
-        case MALE:
-            weightPart = MALE_BMR_WEIGHT_MULTIPLIER * weightKg
-            heightPart = MALE_BMR_HEIGHT_MULTIPLIER * heightCm
-            agePart = MALE_BMR_AGE_MULTIPLIER * Float(age)
-            BMR = MALE_BMR_CONSTANT + weightPart + heightPart - agePart
+        case Body.Constants.MALE:
+            weightPart = Body.Constants.MALE_BMR_WEIGHT_MULTIPLIER * weightKg
+            heightPart = Body.Constants.MALE_BMR_HEIGHT_MULTIPLIER * heightCm
+            agePart = Body.Constants.MALE_BMR_AGE_MULTIPLIER * Float(age)
+            BMR = Body.Constants.MALE_BMR_CONSTANT + weightPart + heightPart - agePart
             
-        case FEMALE:
-            weightPart = FEMALE_BMR_WEIGHT_MULTIPLIER * weightKg
-            heightPart = FEMALE_BMR_HEIGHT_MULTIPLIER * heightCm
-            agePart = FEMALE_BMR_AGE_MULTIPLIER * Float(age)
-            BMR = FEMALE_BMR_CONSTANT + weightPart + heightPart - agePart
+        case Body.Constants.FEMALE:
+            weightPart = Body.Constants.FEMALE_BMR_WEIGHT_MULTIPLIER * weightKg
+            heightPart = Body.Constants.FEMALE_BMR_HEIGHT_MULTIPLIER * heightCm
+            agePart = Body.Constants.FEMALE_BMR_AGE_MULTIPLIER * Float(age)
+            BMR = Body.Constants.FEMALE_BMR_CONSTANT + weightPart + heightPart - agePart
         default : BMR = 0
         }
         return BMR
