@@ -17,7 +17,6 @@ import Parse
 
 class Body: NSManagedObject {
 
-    
     struct Constants {
         static let CENTIMETERS_TO_INCHES = 0.393701 as Float
         static let INCHES_TO_CENTIMETERS = 2.54 as Float
@@ -37,10 +36,7 @@ class Body: NSManagedObject {
         static let MALE_BMR_AGE_MULTIPLIER = 5.677 as Float
         static let FEMALE_BMR_AGE_MULTIPLIER = 4.330 as Float
     }
-    
-    
-    
-    
+
     struct Keys {
         
         static let USER_NAME = "username"
@@ -104,7 +100,7 @@ class Body: NSManagedObject {
     @NSManaged var fullName: String
     @NSManaged var firstName: String
     @NSManaged var lastName: String
-    @NSManaged var foodLog:[FoodLogEntry]
+    @NSManaged var foodLogEntries:[FoodLogEntry]
     
     var rawCentimeters:String!
     var rawFeet:String!

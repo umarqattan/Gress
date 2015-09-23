@@ -96,7 +96,7 @@
                 <outlet property="proteinLabel" destination="nWW-6W-ZxR" id="anT-PL-gSL"/>
                 <outlet property="quantityLabel" destination="eRG-gG-qRj" id="zRi-ui-6Oh"/>
             </connections>
-            <point key="canvasLocation" x="782" y="351.5"/>
+            <point key="canvasLocation" x="782" y="347"/>
         </tableViewCell>
     </objects>
 </document>

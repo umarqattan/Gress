@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Umar Qattan. All rights reserved.
 //
 
+/**
 import Foundation
 import CoreData
 
@@ -37,7 +38,7 @@ class FoodLog: NSManagedObject {
     @NSManaged var remainingCarbohydrate: Int
     @NSManaged var remainingProtein: Int
     @NSManaged var body: Body
-    @NSManaged var foodLogEntries: [FoodLogEntry]
+    
 
     
     lazy var sharedContext : NSManagedObjectContext = {
@@ -49,7 +50,7 @@ class FoodLog: NSManagedObject {
     }
     
     init(dictionary : [String : AnyObject], context : NSManagedObjectContext) {
-        let entity = NSEntityDescription.entityForName("FoodLog", inManagedObjectContext: context)
+        let entity = NSEntityDescription.entityForName("FoodLogEntry", inManagedObjectContext: context)
         super.init(entity: entity!, insertIntoManagedObjectContext: context)
         
         
@@ -71,3 +72,4 @@ class FoodLog: NSManagedObject {
     
     
 }
+**/

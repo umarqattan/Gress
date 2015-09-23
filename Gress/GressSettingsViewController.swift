@@ -85,7 +85,6 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         super.viewDidLoad()
         
         setDelegates()
-        
         configureTableView()
         configureNavigationItem()
         
@@ -95,9 +94,13 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         super.viewWillAppear(animated)
         
         
+        configureTableView()
+        
+        
         if let gressTabBarController = parentViewController as? GressTabBarController {
             body = gressTabBarController.body
             setCalorieVariablesAndLabels()
+            
             configureSettings(body.unit)
             configureNavigationItem()
             configureSliders()
@@ -148,15 +151,11 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
     }
     
     func configureTableView() {
-        
-        
-        var inset = UIEdgeInsetsMake(66, 0, 66, 0)
-        tableView.contentInset = inset
-        tableView.scrollIndicatorInsets = inset
-        
+
         tableView.allowsSelection = false
-        tableView.tableFooterView = UIView(frame: CGRect.zeroRect)
-        self.edgesForExtendedLayout = UIRectEdge.None
+        self.navigationController!.navigationBar.translucent = false
+        self.tabBarController!.tabBar.translucent = false
+        
         
     }
     
@@ -169,6 +168,7 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         self.tabBarController?.navigationItem.title = "Goals"
         self.tabBarController?.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editGoalLevel:")]
         self.tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logout:")
+        
     }
     
 
@@ -206,7 +206,7 @@ class GressSettingsViewController : UITableViewController, UITableViewDelegate, 
         var checkmarkBarButton = UIBarButtonItem(customView: checkmarkButton)
         //var cancelBarButton = UIBarButtonItem(customView: cancelPickerButton)
         
-        keyboardToolbar.barTintColor = UIColor(red: 60.0/255.0, green: 208.0/255.0, blue: 255.0/255.0, alpha: 1.0)
+        keyboardToolbar.barTintColor = UIColor.whiteColor()
         keyboardToolbar.items = [flexBarButton, checkmarkBarButton]
         activeTextField!.inputAccessoryView = keyboardToolbar
     }

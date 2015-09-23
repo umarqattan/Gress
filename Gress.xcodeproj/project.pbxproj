@@ -21,6 +21,7 @@
 		E177A1B01B881AA700B7507A /* NewGressProfileGoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E177A1AF1B881AA700B7507A /* NewGressProfileGoalsViewController.swift */; };
 		E181218A1BAD28FA0081AD59 /* GressFoodLogEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18121891BAD28FA0081AD59 /* GressFoodLogEntryViewController.swift */; };
 		E181218C1BAD2D1B0081AD59 /* GressFoodLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E181218B1BAD2D1B0081AD59 /* GressFoodLogViewController.swift */; };
+		E181218E1BAF52AC0081AD59 /* NutritionixFoodEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E181218D1BAF52AC0081AD59 /* NutritionixFoodEntry.swift */; };
 		E19F125F1B75875C002A3D35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19F125E1B75875C002A3D35 /* AppDelegate.swift */; };
 		E19F12661B75875C002A3D35 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E19F12651B75875C002A3D35 /* Images.xcassets */; };
 		E19F12691B75875C002A3D35 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E19F12671B75875C002A3D35 /* LaunchScreen.xib */; };
@@ -76,6 +77,7 @@
 		E177A1AF1B881AA700B7507A /* NewGressProfileGoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGressProfileGoalsViewController.swift; sourceTree = "<group>"; };
 		E18121891BAD28FA0081AD59 /* GressFoodLogEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressFoodLogEntryViewController.swift; sourceTree = "<group>"; };
 		E181218B1BAD2D1B0081AD59 /* GressFoodLogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GressFoodLogViewController.swift; sourceTree = "<group>"; };
+		E181218D1BAF52AC0081AD59 /* NutritionixFoodEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NutritionixFoodEntry.swift; sourceTree = "<group>"; };
 		E19F12591B75875C002A3D35 /* Gress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E19F125D1B75875C002A3D35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E19F125E1B75875C002A3D35 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -211,12 +213,12 @@
 				E177A1651B7EF83800B7507A /* NewGressProfileBodyViewController.swift */,
 				E177A19F1B84499C00B7507A /* NewGressProfileActivityViewController.swift */,
 				E177A1AF1B881AA700B7507A /* NewGressProfileGoalsViewController.swift */,
+				E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */,
 				E1A4E46E1B9AB08400AA4F74 /* GressGoalsViewController.swift */,
 				E1A4E4781BA128CA00AA4F74 /* GressSettingsViewController.swift */,
-				E1A4E4761B9C01A800AA4F74 /* GressTabBarController.swift */,
+				E181218B1BAD2D1B0081AD59 /* GressFoodLogViewController.swift */,
 				E1D2505D1BACB995003CAA32 /* GressFoodLogEntrySearchViewController.swift */,
 				E18121891BAD28FA0081AD59 /* GressFoodLogEntryViewController.swift */,
-				E181218B1BAD2D1B0081AD59 /* GressFoodLogViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -240,8 +242,9 @@
 			children = (
 				E1C7588D1BA77FCA0059587C /* Gress.xcdatamodeld */,
 				E1C758901BA781790059587C /* Body.swift */,
-				E1C758921BAA5C9B0059587C /* FoodLog.swift */,
 				E1C758941BAA5D570059587C /* FoodLogEntry.swift */,
+				E1C758921BAA5C9B0059587C /* FoodLog.swift */,
+				E181218D1BAF52AC0081AD59 /* NutritionixFoodEntry.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				E19F12831B7587C9002A3D35 /* SignUpViewController.swift in Sources */,
 				E177A1B01B881AA700B7507A /* NewGressProfileGoalsViewController.swift in Sources */,
 				E1C7589B1BAB34D10059587C /* NutritionixClient.swift in Sources */,
+				E181218E1BAF52AC0081AD59 /* NutritionixFoodEntry.swift in Sources */,
 				E1C758911BA781790059587C /* Body.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

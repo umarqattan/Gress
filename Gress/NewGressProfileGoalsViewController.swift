@@ -34,6 +34,7 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
     @IBOutlet weak var proteinField: UITextField!
     
     @IBOutlet weak var macroPieChart: PieChartView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var backButton:UIBarButtonItem!
     var forwardButton:UIBarButtonItem!
@@ -171,6 +172,8 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
             TODO: Make sure email hasn't already been taken
         **/
         
+        activityIndicator.startAnimating()
+        
         updateSharedBodyObjectWithGoals()
         saveNewGressUserToParse() { UIAlertAction in
             let gressTabBarController = self.storyboard?.instantiateViewControllerWithIdentifier("GressTabBarController") as! GressTabBarController
@@ -220,10 +223,12 @@ class NewGressProfileGoalsViewController : UIViewController, UITextFieldDelegate
             if let error = downloadError {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.showAlertView(success, buttonTitle: "Dismiss", message: error.localizedDescription, completionHandler: nil)
+                    self.activityIndicator.stopAnimating()
                 }
             } else {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.showAlertView(success, buttonTitle: "Dismiss", message: "Your profile has been saved!", completionHandler: completionHandler)
+                    self.activityIndicator.stopAnimating()
                 }
             }
         }

@@ -105,9 +105,9 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
         super.viewDidLoad()
         
         setDelegates()
-        configureTableView()
-        configureNavigationItem()
         
+        configureNavigationItem()
+        tabBarController?.navigationController?.navigationBar.translucent = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -119,6 +119,9 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
             setMacroPieChart()
             configureNavigationItem()
         }
+        
+        configureTableView()
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -134,8 +137,13 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     }
     
     func configureTableView() {
+        
         tableView.allowsSelection = false
+        
+        
         tableView.tableFooterView = UIView(frame: CGRect.zeroRect)
+        
+        
     }
     
     func configureNavigationItem() {
@@ -143,6 +151,7 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
         self.tabBarController?.navigationItem.title = "Goals"
         self.tabBarController?.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editGoalLevel:")]
         self.tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logout:")
+        
     }
 
     

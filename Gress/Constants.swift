@@ -49,4 +49,21 @@ enum Section : Int {
     case Total = 1
     case Remaining = 2
 }
+
+enum FoodLogEntrySection : Int {
+    case Quantity = 0
+    case NutritionFacts = 1
+}
+
+enum QuantityRow : Int {
+    case ServingSize = 0
+    case NumberOfServings = 1
     
+}
+
+enum NutritionFactsRow : Int {
+    case Calories = 0
+    case Fat = 1
+    case Carbohydrate = 2
+    case Protein = 3
+}

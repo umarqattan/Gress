@@ -1,19 +1,16 @@
 //
-//  FoodLogEntry.swift
+//  NutritionixFoodEntry.swift
 //  Gress
 //
-//  Created by Umar Qattan on 9/16/15.
+//  Created by Umar Qattan on 9/20/15.
 //  Copyright (c) 2015 Umar Qattan. All rights reserved.
 //
 
 import Foundation
-import CoreData
-
-@objc(FoodLogEntry)
+import UIKit
 
 
-class FoodLogEntry: NSManagedObject {
-
+struct NutritionixFoodEntry {
     
     struct Keys {
         static let FOOD_ITEM_NAME = "item_name"
@@ -25,33 +22,24 @@ class FoodLogEntry: NSManagedObject {
         static let FAT_GRAMS = "nf_total_fat"
         static let CARBOHYDRATE_GRAMS = "nf_total_carbohydrate"
         static let PROTEIN_GRAMS = "nf_protein"
-    }
-
-    @NSManaged var foodItemName: String
-    @NSManaged var calories: Int
-    @NSManaged var servingSizeUnit: String
-    @NSManaged var servingWeightGrams: Int
-    @NSManaged var servingsPerContainer: Int
-    @NSManaged var servingSizeQuantity: Int
-    @NSManaged var fatGrams: Int
-    @NSManaged var carbohydrateGrams: Int
-    @NSManaged var proteinGrams: Int
-    @NSManaged var body: Body
-    
-    lazy var sharedContext : NSManagedObjectContext = {
-        return CoreDataStackManager.sharedInstance().managedObjectContext!
-        }()
-    
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        static let NUMBER_OF_SERVINGS = "number_of_servings"
     }
     
     
+    var foodItemName: String
+    var calories: Int
+    var servingSizeUnit: String
+    var servingWeightGrams: Int
+    var servingsPerContainer: Int
+    var servingSizeQuantity: Int
+    var fatGrams: Int
+    var carbohydrateGrams: Int
+    var proteinGrams: Int
+        
     
-    init(dictionary : [String : AnyObject], context : NSManagedObjectContext) {
-        let entity = NSEntityDescription.entityForName("FoodLogEntry", inManagedObjectContext: context)
-        super.init(entity: entity!, insertIntoManagedObjectContext: context)
-
+    
+    init (dictionary : [String : AnyObject]) {
+        
         if let someFoodItemName = dictionary[Keys.FOOD_ITEM_NAME] as? String {
             foodItemName = someFoodItemName
         } else {
@@ -98,9 +86,11 @@ class FoodLogEntry: NSManagedObject {
             proteinGrams = 0
         }
         
+        
     }
-
+    
     func dictionary() -> [String : AnyObject] {
+        
         return [
             Keys.FOOD_ITEM_NAME : foodItemName,
             Keys.CALORIES : calories,
@@ -112,17 +102,11 @@ class FoodLogEntry: NSManagedObject {
             Keys.CARBOHYDRATE_GRAMS : carbohydrateGrams,
             Keys.PROTEIN_GRAMS : proteinGrams
         ]
-    }
-    
-    func isEqualToNutritionixEntry(entry : NutritionixFoodEntry) -> Bool {
         
-        if entry.foodItemName == foodItemName && entry.calories == calories && entry.servingSizeUnit == servingSizeUnit && entry.servingWeightGrams == servingWeightGrams && entry.servingSizeQuantity == servingSizeQuantity && entry.fatGrams == fatGrams && entry.carbohydrateGrams == carbohydrateGrams && entry.proteinGrams == proteinGrams {
-            return true
-        } else {
-            return false
-        }
         
     }
+
+
     
     
 }

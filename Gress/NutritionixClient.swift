@@ -71,17 +71,30 @@ class NutritionixClient  {
     }
     
     class func buildSearchURL(phrase:String, results:Int) -> NSURL {
-        let baseSearchURL = baseURL + Methods.Search + phrase + "?"
+       
+        var modifiedBaseURL = removeSpaceBarCharactersInString(phrase)
+        let baseSearchURL = baseURL + Methods.Search + modifiedBaseURL + "?"
         let tailSearchURL = "&".join(["\(Search.RESULTS)=\(getResults(results))",
                              "\(Search.FIELDS)=\(getFields())",
                              "\(API.Keys.APP_ID)=\(API.Values.APP_ID)",
                              "\(API.Keys.API_KEY)=\(API.Values.API_KEY)"
                         ])
         let searchURLString = baseSearchURL + tailSearchURL
-        println(searchURLString)
+        
         let searchURL = NSURL(string: searchURLString)!
         return searchURL
     }
+    
+    class func removeSpaceBarCharactersInString(urlString : String) -> String {
+        
+        var mutableURLString = urlString
+        if let idx = find(mutableURLString, " ") {
+            mutableURLString.removeAtIndex(idx)
+        }
+        
+        return mutableURLString
+    }
+    
     
     class func buildSearchURLSessionDataTask(phrase:String, results:Int, completionHandler: (data: NSData?, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
@@ -100,12 +113,12 @@ class NutritionixClient  {
         return task
     }
     
-    func getFoodLogEntries(phrase: String, results: Int, completionHandler: (foodLogEntries : [FoodLogEntry]?, success : Bool, error : String?) -> Void) {
+    func getFoodLogEntries(phrase: String, results: Int, completionHandler: (foodLogEntries : [NutritionixFoodEntry]?, success : Bool, error : String?) -> Void) {
         var task = NutritionixClient.buildSearchURLSessionDataTask(phrase, results: results) { data, downloadError in
             if let error = downloadError {
                 completionHandler(foodLogEntries: nil, success: false, error: "\(error.localizedDescription)")
             } else {
-                var foodLogEntries:[FoodLogEntry] = []
+                var foodLogEntries:[NutritionixFoodEntry] = []
                 if let response = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: nil) as? [String : AnyObject] {
                     if let results = response[JSON.Keys.HITS] as? [[String : AnyObject]] {
                         for result in results {
@@ -125,8 +138,8 @@ class NutritionixClient  {
         }
     }
     
-    func buildFoodLogEntry(result : [String : AnyObject]?) -> FoodLogEntry {
-        return FoodLogEntry(dictionary: result!, context: self.sharedContext)
+    func buildFoodLogEntry(result : [String : AnyObject]?) -> NutritionixFoodEntry {
+        return NutritionixFoodEntry(dictionary: result!)
     }
     
     
