@@ -187,11 +187,9 @@ class PickerViewConstants {
                 var inches = (Body.getInchesFromText(text) as NSString).integerValue
                 var feetRow = feet - 4
                 var inchesRow = inches
-                println("\(feetRow), \(inchesRow)")
                 return [feetRow, inchesRow]
             case Body.Constants.METRIC:
                 var centimeters = (Body.getCentimetersFromText(text) as NSString).integerValue
-                println("\(text.length)")
                 var centimetersRow = centimeters - 122
                 return [centimetersRow, 0]
             default: return []
@@ -208,9 +206,7 @@ class PickerViewConstants {
             var pounds = (text as NSString).floatValue
             var poundsRow = Int(floor(pounds))
             var decPoundsRow = Int((pounds % 1) * 10)
-            
             poundsRow = poundsRow - 60
-            println("poundsRow : \(poundsRow) \ndecPounds : \(decPoundsRow)")
             return [poundsRow, decPoundsRow]
         case Body.Constants.METRIC:
             
@@ -230,7 +226,6 @@ class PickerViewConstants {
         var range = Range<String.Index>(start: startIndex, end: endIndex)
         var trainingDaysString = text.substringWithRange(range)
         var trainingDaysRow = (trainingDaysString as NSString).integerValue
-        println(trainingDaysRow)
         return trainingDaysRow
     }
     

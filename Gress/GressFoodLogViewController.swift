@@ -54,16 +54,8 @@ class GressFoodLogViewController: UITableViewController, UITableViewDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        temporaryContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
-        temporaryContext.persistentStoreCoordinator = sharedContext.persistentStoreCoordinator
-        
-        
         let gressTabBarController = tabBarController as! GressTabBarController
         body = gressTabBarController.body
-        
-        
-        
-
         setDelegates()
         configureTableView()
         configureNavigationItem()

@@ -102,10 +102,10 @@ class NutritionixClient  {
         let request = NSURLRequest(URL: url)
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, downloadError in
             if let error = downloadError {
-                println("Could not complete request due to the following: \(error.localizedDescription)")
+                println("\(Request.Error.Message) \(error.localizedDescription)")
                 completionHandler(data: nil, error: downloadError)
             } else {
-                println("Successfully completed request!")
+                println(Request.Success.Message)
                 completionHandler(data: data, error: nil)
             }
         }
@@ -129,10 +129,10 @@ class NutritionixClient  {
                         }
                         completionHandler(foodLogEntries: foodLogEntries, success: true, error: nil)
                     } else {
-                        completionHandler(foodLogEntries: nil, success: false, error: "Could not complete food entry download request.")
+                        completionHandler(foodLogEntries: nil, success: false, error: Format.JSON.Parse.Error.Message)
                     }
                 } else {
-                    completionHandler(foodLogEntries: nil, success: false, error: "Could not format JSON response.")
+                    completionHandler(foodLogEntries: nil, success: false, error: Format.JSON.Error.Message)
                 }
             }
         }

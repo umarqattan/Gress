@@ -44,9 +44,7 @@ class PieChartView : UIView {
     var proteinPercent:CGFloat = 20.0
     
     override func drawRect(rect: CGRect) {
-    
-        
-        
+
         var centerPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect))
         var radius:CGFloat = {
             var width = CGRectGetWidth(rect)
@@ -99,7 +97,6 @@ class PieChartView : UIView {
         CGContextAddArc(context, centerPoint.x, centerPoint.y, radius, carbohydrateStart, carbohydrateEnd, 0)
         CGContextFillPath(context)
     
-        
         /**
             Protein Sector
         **/
