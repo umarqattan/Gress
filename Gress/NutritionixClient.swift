@@ -72,13 +72,13 @@ class NutritionixClient  {
     
     class func buildSearchURL(phrase:String, results:Int) -> NSURL {
        
-        var modifiedBaseURL = removeSpaceBarCharactersInString(phrase)
+        let modifiedBaseURL = removeSpaceBarCharactersInString(phrase)
         let baseSearchURL = baseURL + Methods.Search + modifiedBaseURL + "?"
-        let tailSearchURL = "&".join(["\(Search.RESULTS)=\(getResults(results))",
+        let tailSearchURL = ["\(Search.RESULTS)=\(getResults(results))",
                              "\(Search.FIELDS)=\(getFields())",
                              "\(API.Keys.APP_ID)=\(API.Values.APP_ID)",
                              "\(API.Keys.API_KEY)=\(API.Values.API_KEY)"
-                        ])
+                        ].joinWithSeparator("&")
         let searchURLString = baseSearchURL + tailSearchURL
         
         let searchURL = NSURL(string: searchURLString)!
@@ -88,7 +88,7 @@ class NutritionixClient  {
     class func removeSpaceBarCharactersInString(urlString : String) -> String {
         
         var mutableURLString = urlString
-        if let idx = find(mutableURLString, " ") {
+        if let idx = mutableURLString.characters.indexOf(" ") {
             mutableURLString.removeAtIndex(idx)
         }
         
@@ -102,10 +102,10 @@ class NutritionixClient  {
         let request = NSURLRequest(URL: url)
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, downloadError in
             if let error = downloadError {
-                println("Could not complete request due to the following: \(error.localizedDescription)")
+                print("Could not complete request due to the following: \(error.localizedDescription)")
                 completionHandler(data: nil, error: downloadError)
             } else {
-                println("Successfully completed request!")
+                print("Successfully completed request!")
                 completionHandler(data: data, error: nil)
             }
         }
@@ -119,11 +119,11 @@ class NutritionixClient  {
                 completionHandler(foodLogEntries: nil, success: false, error: "\(error.localizedDescription)")
             } else {
                 var foodLogEntries:[NutritionixFoodEntry] = []
-                if let response = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: nil) as? [String : AnyObject] {
+                if let response = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as? [String : AnyObject] {
                     if let results = response[JSON.Keys.HITS] as? [[String : AnyObject]] {
                         for result in results {
                             if let foodEntry = result[JSON.Keys.FIELDS] as? [String : AnyObject] {
-                                var entry = self.buildFoodLogEntry(foodEntry)
+                                let entry = self.buildFoodLogEntry(foodEntry)
                                 foodLogEntries.append(entry)
                             }
                         }
@@ -136,6 +136,7 @@ class NutritionixClient  {
                 }
             }
         }
+        
     }
     
     func buildFoodLogEntry(result : [String : AnyObject]?) -> NutritionixFoodEntry {
@@ -148,7 +149,7 @@ class NutritionixClient  {
     }
     
     class func getFields() -> String {
-        var fields = [
+        let fields = [
             Search.Fields.ITEM_NAME,
             Search.Fields.ITEM_ID,
             Search.Fields.SERVING_WEIGHT_GRAMS,
@@ -160,7 +161,7 @@ class NutritionixClient  {
             Search.Fields.TOTAL_CARBOHYDRATE,
             Search.Fields.TOTAL_PROTEIN
         ]
-        let fieldsString = ",".join(fields)
+        let fieldsString = fields.joinWithSeparator(",")
         return fieldsString
     }
     

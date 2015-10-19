@@ -45,9 +45,15 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
     func fetchBodies() -> [Body] {
         let error: NSErrorPointer = nil
         let fetchRequest = NSFetchRequest(entityName: "Body")
-        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        let result: [AnyObject]?
+        do {
+            result = try sharedContext.executeFetchRequest(fetchRequest)
+        } catch let error1 as NSError {
+            error.memory = error1
+            result = nil
+        }
         if error != nil {
-            println("Could not execute fetch request due to: \(error)")
+            print("Could not execute fetch request due to: \(error)")
         }
         return result as! [Body]
     }
@@ -85,10 +91,10 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
     }
     
     func updateSharedBodyWithPersonal() {
-        body.firstName = firstNameField.text
-        body.lastName = lastNameField.text
-        body.fullName = firstNameField.text + " " + lastNameField.text
-        body.email = emailAddressField.text
+        body.firstName = firstNameField.text!
+        body.lastName = lastNameField.text!
+        body.fullName = firstNameField.text! + " " + lastNameField.text!
+        body.email = emailAddressField.text!
         CoreDataStackManager.sharedInstance().saveContext()
     }
     
@@ -108,7 +114,7 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
               Core Data.
     **/
     func cancel(sender: UIBarButtonItem) {
-        var user:PFUser = PFUser.currentUser()!
+        let user:PFUser = PFUser.currentUser()!
         
         /**
             Delete from CoreData first so that we can use Parse
@@ -170,7 +176,7 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
     
     @IBAction func editProfilePicture(sender: UIButton) {
         
-        var alertActionSheet = UIAlertController(title: "Change Profile Picture", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alertActionSheet = UIAlertController(title: "Change Profile Picture", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
         alertActionSheet.addAction(UIAlertAction(title: "Take Photo", style: UIAlertActionStyle.Default) { UIAlertAction in
                 alertActionSheet.dismissViewControllerAnimated(true, completion: nil)
                 let imagePicker = UIImagePickerController()
@@ -179,7 +185,7 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
                 if UIImagePickerController.isSourceTypeAvailable(.Camera) {
                     self.presentViewController(imagePicker, animated: true, completion: nil)
                 } else {
-                    println("Camera not available")
+                    print("Camera not available")
             }
             })
         alertActionSheet.addAction(UIAlertAction(title: "Choose from Library", style: UIAlertActionStyle.Default) { UIAlertAction in
@@ -233,7 +239,7 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
         let contentInsets = UIEdgeInsetsMake(0.0, 0.0, getKeyboardHeight(notification), 0.0)
         scrollView.contentInset = contentInsets
         
-        var aRect = userInputView.frame
+        let aRect = userInputView.frame
         if CGRectContainsPoint(aRect, activeTextField!.frame.origin) {
             scrollView.scrollRectToVisible(activeTextField!.frame, animated: true)
         }
@@ -293,7 +299,7 @@ class NewGressProfileViewController : UIViewController, UITextFieldDelegate, UIG
     func textFieldDidEndEditing(textField: UITextField) {
         activeTextField = nil
         
-        if !firstNameField.text.isEmpty && !lastNameField.text.isEmpty && !emailAddressField.text.isEmpty {
+        if !firstNameField.text!.isEmpty && !lastNameField.text!.isEmpty && !emailAddressField.text!.isEmpty {
             configureNewProfileProgressBar(FINISHED)
         } else {
             configureNewProfileProgressBar(NOT_FINISHED)

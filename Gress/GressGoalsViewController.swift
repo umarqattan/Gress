@@ -14,7 +14,7 @@ import Parse
 
 
 
-class GressGoalsViewController : UITableViewController, UITableViewDelegate, UINavigationControllerDelegate {
+class GressGoalsViewController : UITableViewController, UINavigationControllerDelegate {
     
     /**
         MARK: Calories Section
@@ -83,9 +83,15 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     func fetchBodies() -> [Body] {
         let error: NSErrorPointer = nil
         let fetchRequest = NSFetchRequest(entityName: "Body")
-        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        let result: [AnyObject]?
+        do {
+            result = try sharedContext.executeFetchRequest(fetchRequest)
+        } catch let error1 as NSError {
+            error.memory = error1
+            result = nil
+        }
         if error != nil {
-            println("Could not execute fetch request due to: \(error)")
+            print("Could not execute fetch request due to: \(error)")
         }
         return result as! [Body]
     }
@@ -141,7 +147,7 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
         tableView.allowsSelection = false
         
         
-        tableView.tableFooterView = UIView(frame: CGRect.zeroRect)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         
     }
@@ -242,11 +248,11 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     func addMacroLabelsToPieChart() {
         
         dispatch_async(dispatch_get_main_queue()) {
-            var macroPieChartRect = self.macroPieChart.bounds
-            var centerPoint = CGPointMake(CGRectGetMidX(macroPieChartRect), CGRectGetMidY(macroPieChartRect))
-            var radius:CGFloat = {
-                var width = CGRectGetWidth(macroPieChartRect)
-                var height = CGRectGetHeight(macroPieChartRect)
+            let macroPieChartRect = self.macroPieChart.bounds
+            let centerPoint = CGPointMake(CGRectGetMidX(macroPieChartRect), CGRectGetMidY(macroPieChartRect))
+            let radius:CGFloat = {
+                let width = CGRectGetWidth(macroPieChartRect)
+                let height = CGRectGetHeight(macroPieChartRect)
                 if width > height {
                     return height/2.0
                 } else {
@@ -255,14 +261,14 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
             }()
             
             
-            var fatHalfAngle:CGFloat = (self.macroPieChart.fatEnd-self.macroPieChart.fatStart)/2.0 + self.macroPieChart.fatStart
-            var fatX:CGFloat = centerPoint.x + radius * cos(fatHalfAngle  ) / 2.0
-            var fatY:CGFloat = centerPoint.y + radius * sin(fatHalfAngle ) / 2.0
-            var fatCenterPoint:CGPoint = CGPointMake(fatX-15, fatY)
+            let fatHalfAngle:CGFloat = (self.macroPieChart.fatEnd-self.macroPieChart.fatStart)/2.0 + self.macroPieChart.fatStart
+            let fatX:CGFloat = centerPoint.x + radius * cos(fatHalfAngle  ) / 2.0
+            let fatY:CGFloat = centerPoint.y + radius * sin(fatHalfAngle ) / 2.0
+            let fatCenterPoint:CGPoint = CGPointMake(fatX-15, fatY)
             
-            var fatPercent = CGFloat((self.fatPercentLabel.text! as NSString).floatValue)
-            var fatString = NSString(format: "Fat\n %.2f \\%", fatPercent)
-            var fatStringSize = fatString.sizeWithAttributes([NSFontAttributeName : font])
+            let fatPercent = CGFloat((self.fatPercentLabel.text! as NSString).floatValue)
+            let fatString = NSString(format: "Fat\n %.2f \\%", fatPercent)
+            let fatStringSize = fatString.sizeWithAttributes([NSFontAttributeName : font])
             
             self.macroPieChartFatLabel = UILabel(frame: CGRectMake(fatCenterPoint.x, fatCenterPoint.y, fatStringSize.width, fatStringSize.height))
             self.macroPieChartFatLabel.lineBreakMode = .ByWordWrapping
@@ -272,15 +278,15 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
             self.macroPieChartFatLabel.font = font
             
             
-            var carbohydrateHalfAngle:CGFloat = (self.macroPieChart.carbohydrateEnd-self.macroPieChart.carbohydrateStart)/2.0 + self.macroPieChart.carbohydrateStart
-            var carbohydrateX:CGFloat = centerPoint.x + radius * cos(carbohydrateHalfAngle ) / 2.0
-            var carbohydrateY:CGFloat = centerPoint.y + radius * sin(carbohydrateHalfAngle ) / 2.0
-            var carbohydrateCenterPoint:CGPoint = CGPointMake(carbohydrateX-15.0, carbohydrateY-10.0)
+            let carbohydrateHalfAngle:CGFloat = (self.macroPieChart.carbohydrateEnd-self.macroPieChart.carbohydrateStart)/2.0 + self.macroPieChart.carbohydrateStart
+            let carbohydrateX:CGFloat = centerPoint.x + radius * cos(carbohydrateHalfAngle ) / 2.0
+            let carbohydrateY:CGFloat = centerPoint.y + radius * sin(carbohydrateHalfAngle ) / 2.0
+            let carbohydrateCenterPoint:CGPoint = CGPointMake(carbohydrateX-15.0, carbohydrateY-10.0)
             
             
-            var carbohydratePercent = CGFloat((self.carbohydratePercentLabel.text! as NSString).floatValue)
-            var carbohydrateString = NSString(format: "Carbohydrate\n %.2f \\%", carbohydratePercent)
-            var carbohydrateStringSize = carbohydrateString.sizeWithAttributes([NSFontAttributeName : font])
+            let carbohydratePercent = CGFloat((self.carbohydratePercentLabel.text! as NSString).floatValue)
+            let carbohydrateString = NSString(format: "Carbohydrate\n %.2f \\%", carbohydratePercent)
+            let carbohydrateStringSize = carbohydrateString.sizeWithAttributes([NSFontAttributeName : font])
             
             self.macroPieChartCarbohydrateLabel = UILabel(frame: CGRectMake(carbohydrateCenterPoint.x, carbohydrateCenterPoint.y, carbohydrateStringSize.width, carbohydrateStringSize.height))
             self.macroPieChartCarbohydrateLabel.lineBreakMode = .ByWordWrapping
@@ -290,15 +296,15 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
             self.macroPieChartCarbohydrateLabel.font = font
             
             
-            var proteinHalfAngle:CGFloat = (self.macroPieChart.proteinEnd-self.macroPieChart.proteinStart)/2.0 + self.macroPieChart.proteinStart
-            var proteinX:CGFloat = centerPoint.x + radius * cos(proteinHalfAngle ) / 2.0
-            var proteinY:CGFloat = centerPoint.y + radius * sin(proteinHalfAngle ) / 2.0
-            var proteinCenterPoint:CGPoint = CGPointMake(proteinX-10, proteinY)
+            let proteinHalfAngle:CGFloat = (self.macroPieChart.proteinEnd-self.macroPieChart.proteinStart)/2.0 + self.macroPieChart.proteinStart
+            let proteinX:CGFloat = centerPoint.x + radius * cos(proteinHalfAngle ) / 2.0
+            let proteinY:CGFloat = centerPoint.y + radius * sin(proteinHalfAngle ) / 2.0
+            let proteinCenterPoint:CGPoint = CGPointMake(proteinX-10, proteinY)
             
             
-            var proteinPercent = CGFloat((self.proteinPercentLabel.text! as NSString).floatValue)
-            var proteinString = NSString(format: "Protein\n%.2f\\%", proteinPercent)
-            var proteinStringSize = proteinString.sizeWithAttributes([NSFontAttributeName : font])
+            let proteinPercent = CGFloat((self.proteinPercentLabel.text! as NSString).floatValue)
+            let proteinString = NSString(format: "Protein\n%.2f\\%", proteinPercent)
+            let proteinStringSize = proteinString.sizeWithAttributes([NSFontAttributeName : font])
             
             
             self.macroPieChartProteinLabel = UILabel(frame: CGRectMake(proteinCenterPoint.x, proteinCenterPoint.y, proteinStringSize.width, proteinStringSize.height))
@@ -339,7 +345,7 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
                 }
             } else {
                 dispatch_async(dispatch_get_main_queue()) {
-                    println("Goal Calories have been updated")
+                    print("Goal Calories have been updated")
                 }
             }
         }
@@ -356,13 +362,13 @@ class GressGoalsViewController : UITableViewController, UITableViewDelegate, UIN
     
     func setSliderThumbImage(toggle : Int) {
         switch toggle {
-        case ON:
-            var string = NSString(format: "%d", goalCalories)
-            var calorieGoalSliderThumbImage = drawText(string, point: CGPointMake(2, 8))
+        case ON: break
+            //let string = NSString(format: "%d", goalCalories)
+            //var calorieGoalSliderThumbImage = drawText(string, point: CGPointMake(2, 8))
             //calorieGoalSlider.setThumbImage(calorieGoalSliderThumbImage, forState: UIControlState.Normal)
         case OFF:
             //calorieGoalSlider.setThumbImage(nil, forState: UIControlState.Normal)
-            println()
+            print("")
         default : return
         }
     }

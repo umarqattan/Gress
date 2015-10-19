@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class GressFoodLogViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource {
+class GressFoodLogViewController: UITableViewController {
 
     
     
@@ -32,9 +32,15 @@ class GressFoodLogViewController: UITableViewController, UITableViewDelegate, UI
     func fetchFoodLogEntries() -> [FoodLogEntry] {
         let error: NSErrorPointer = nil
         let fetchRequest = NSFetchRequest(entityName: "FoodLogEntry")
-        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        let result: [AnyObject]?
+        do {
+            result = try sharedContext.executeFetchRequest(fetchRequest)
+        } catch let error1 as NSError {
+            error.memory = error1
+            result = nil
+        }
         if error != nil {
-            println("Could not execute fetch request due to: \(error)")
+            print("Could not execute fetch request due to: \(error)")
         }
         return result as! [FoodLogEntry]
     }
@@ -42,9 +48,15 @@ class GressFoodLogViewController: UITableViewController, UITableViewDelegate, UI
     func fetchFBodies() -> [Body] {
         let error: NSErrorPointer = nil
         let fetchRequest = NSFetchRequest(entityName: "Body")
-        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        let result: [AnyObject]?
+        do {
+            result = try sharedContext.executeFetchRequest(fetchRequest)
+        } catch let error1 as NSError {
+            error.memory = error1
+            result = nil
+        }
         if error != nil {
-            println("Could not execute fetch request due to: \(error)")
+            print("Could not execute fetch request due to: \(error)")
         }
         return result as! [Body]
     }
@@ -74,7 +86,7 @@ class GressFoodLogViewController: UITableViewController, UITableViewDelegate, UI
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        var parentTabBarController = tabBarController as! GressTabBarController
+        let parentTabBarController = tabBarController as! GressTabBarController
         body = parentTabBarController.body
         body.printBodyInformation()
         
@@ -151,7 +163,7 @@ class GressFoodLogViewController: UITableViewController, UITableViewDelegate, UI
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        var gressFoodLogEntryViewController = storyboard?.instantiateViewControllerWithIdentifier("GressFoodLogEntryViewController") as! GressFoodLogEntryViewController
+        let gressFoodLogEntryViewController = storyboard?.instantiateViewControllerWithIdentifier("GressFoodLogEntryViewController") as! GressFoodLogEntryViewController
     
         let editFoodLogEntry = coreFoodLogEntries[indexPath.row]
         

@@ -49,9 +49,15 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     func fetchBodies() -> [Body] {
         let error: NSErrorPointer = nil
         let fetchRequest = NSFetchRequest(entityName: "Body")
-        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        let result: [AnyObject]?
+        do {
+            result = try sharedContext.executeFetchRequest(fetchRequest)
+        } catch let error1 as NSError {
+            error.memory = error1
+            result = nil
+        }
         if error != nil {
-            println("Could not execute fetch request due to: \(error)")
+            print("Could not execute fetch request due to: \(error)")
         }
         return result as! [Body]
     }
@@ -114,15 +120,15 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         
         switch activeTextField! {
             case ageField :
-                var ageRow = PickerViewConstants.getRowFromAge(ageField.text)
+                let ageRow = PickerViewConstants.getRowFromAge(ageField.text!)
                 pickerView.selectRow(ageRow, inComponent: 0, animated: true)
             case heightField :
-                var height = PickerViewConstants.getRowFromHeight(heightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
+                var height = PickerViewConstants.getRowFromHeight(heightField.text!, unit: unitSegmentedControl.selectedSegmentIndex)
                 pickerView.selectRow(height[0], inComponent: 0, animated: true)
                 pickerView.selectRow(height[1], inComponent: 1, animated: true)
 
             case weightField :
-                var weight = PickerViewConstants.getRowFromWeight(weightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
+                var weight = PickerViewConstants.getRowFromWeight(weightField.text!, unit: unitSegmentedControl.selectedSegmentIndex)
                 pickerView.selectRow(weight[0], inComponent: 0, animated: true)
                 pickerView.selectRow(0, inComponent: 1, animated: true)
             default: return
@@ -131,9 +137,9 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     
     func updateSharedBodyObjectWithBody() {
         body.sex = sexSegmentedControl.selectedSegmentIndex
-        body.setAgeFromText(ageField.text)
-        body.setHeightFromText(heightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
-        body.setWeightFromText(weightField.text, unit: unitSegmentedControl.selectedSegmentIndex)
+        body.setAgeFromText(ageField.text!)
+        body.setHeightFromText(heightField.text!, unit: unitSegmentedControl.selectedSegmentIndex)
+        body.setWeightFromText(weightField.text!, unit: unitSegmentedControl.selectedSegmentIndex)
         
         CoreDataStackManager.sharedInstance().saveContext()
 
@@ -152,7 +158,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     }
     
     func cancel(sender: UIBarButtonItem) {
-        var user:PFUser = PFUser.currentUser()!
+        let user:PFUser = PFUser.currentUser()!
         
         /**
         Delete from CoreData first so that we can use Parse
@@ -200,13 +206,13 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
             switch sender.selectedSegmentIndex {
                 case Body.Constants.SI :
                     
-                    println("switched from METRIC TO SI")
+                    print("switched from METRIC TO SI")
                     heightField.text = body.heightSI
                     weightField.text = body.weightSI
                 
                 case Body.Constants.METRIC:
                     
-                    println("switched from SI TO METRIC")
+                    print("switched from SI TO METRIC")
                     heightField.text = body.heightMetric
                     weightField.text = body.weightMetric
 
@@ -260,7 +266,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         }
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch activeTextField! {
         case ageField :
             return "\(PickerViewConstants.Age.age[row])"
@@ -327,7 +333,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
     
     
     func addDoneButtonToActiveTextField() {
-        var keyboardToolbar = UIToolbar()
+        let keyboardToolbar = UIToolbar()
         keyboardToolbar.sizeToFit()
         let flexBarButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
             target: nil, action: nil)
@@ -358,7 +364,7 @@ class NewGressProfileBodyViewController : UIViewController, UIPickerViewDataSour
         activeTextField = nil
         pickerView = UIPickerView()
         
-        if !ageField.text.isEmpty && !heightField.text.isEmpty && !weightField.text.isEmpty {
+        if !ageField.text!.isEmpty && !heightField.text!.isEmpty && !weightField.text!.isEmpty {
             
             
             updateSharedBodyObjectWithBody()

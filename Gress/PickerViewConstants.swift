@@ -173,8 +173,8 @@ class PickerViewConstants {
     }
     
     class func getRowFromAge(text : String) -> Int {
-        var ageString = text as NSString
-        var age = ageString.integerValue - 18
+        let ageString = text as NSString
+        let age = ageString.integerValue - 18
         
         return age
     }
@@ -183,16 +183,16 @@ class PickerViewConstants {
         
         switch unit {
             case Body.Constants.SI:
-                var feet = (Body.getFeetFromText(text) as NSString).integerValue
-                var inches = (Body.getInchesFromText(text) as NSString).integerValue
-                var feetRow = feet - 4
-                var inchesRow = inches
-                println("\(feetRow), \(inchesRow)")
+                let feet = (Body.getFeetFromText(text) as NSString).integerValue
+                let inches = (Body.getInchesFromText(text) as NSString).integerValue
+                let feetRow = feet - 4
+                let inchesRow = inches
+                print("\(feetRow), \(inchesRow)")
                 return [feetRow, inchesRow]
             case Body.Constants.METRIC:
-                var centimeters = (Body.getCentimetersFromText(text) as NSString).integerValue
-                println("\(text.length)")
-                var centimetersRow = centimeters - 122
+                let centimeters = (Body.getCentimetersFromText(text) as NSString).integerValue
+                print("\(text.length)")
+                let centimetersRow = centimeters - 122
                 return [centimetersRow, 0]
             default: return []
         }
@@ -205,19 +205,19 @@ class PickerViewConstants {
         switch unit {
         case Body.Constants.SI:
         
-            var pounds = (text as NSString).floatValue
+            let pounds = (text as NSString).floatValue
             var poundsRow = Int(floor(pounds))
-            var decPoundsRow = Int((pounds % 1) * 10)
+            let decPoundsRow = Int((pounds % 1) * 10)
             
             poundsRow = poundsRow - 60
-            println("poundsRow : \(poundsRow) \ndecPounds : \(decPoundsRow)")
+            print("poundsRow : \(poundsRow) \ndecPounds : \(decPoundsRow)")
             return [poundsRow, decPoundsRow]
         case Body.Constants.METRIC:
             
-            var kilograms = (text as NSString).floatValue
-            var grams = Int((kilograms % 1) * 10)
-            var kilogramsRow = Int(floor(kilograms)) - 27
-            var gramsRow = grams
+            let kilograms = (text as NSString).floatValue
+            let grams = Int((kilograms % 1) * 10)
+            let kilogramsRow = Int(floor(kilograms)) - 27
+            let gramsRow = grams
             
             return [kilogramsRow, gramsRow]
         default: return []
@@ -225,20 +225,20 @@ class PickerViewConstants {
     }
     
     class func getRowFromTrainingDays(text : String) -> Int {
-        var startIndex = text.startIndex
-        var endIndex = advance(text.startIndex, 1)
-        var range = Range<String.Index>(start: startIndex, end: endIndex)
-        var trainingDaysString = text.substringWithRange(range)
-        var trainingDaysRow = (trainingDaysString as NSString).integerValue
-        println(trainingDaysRow)
+        let startIndex = text.startIndex
+        let endIndex = text.startIndex.advancedBy(1)
+        let range = Range<String.Index>(start: startIndex, end: endIndex)
+        let trainingDaysString = text.substringWithRange(range)
+        let trainingDaysRow = (trainingDaysString as NSString).integerValue
+        print(trainingDaysRow)
         return trainingDaysRow
     }
     
     class func getRowFromExerciseDuration(text: String) -> [Int] {
         
         var exerciseDurationArray = getHoursAndMinutesFromText(text)
-        var hours = (exerciseDurationArray[0] as NSString).integerValue
-        var minutes = (exerciseDurationArray[1] as NSString).integerValue
+        let hours = (exerciseDurationArray[0] as NSString).integerValue
+        let minutes = (exerciseDurationArray[1] as NSString).integerValue
         
         return [hours, minutes]
     }
@@ -247,57 +247,57 @@ class PickerViewConstants {
         
         var startIndex = text.startIndex
         var endIndex = startIndex
-        var length = text.length
-        var sublength:Int!
+        let length = text.length
+        //var sublength:Int!
         var hours:String!
         var minutes:String!
         
         
         if length == 10 {
-            endIndex = advance(text.startIndex, 1)
+            endIndex = text.startIndex.advancedBy(1)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
             hours = text.substringWithRange(range)
             
-            startIndex = advance(text.startIndex, 5)
-            endIndex = advance(text.startIndex, 6)
+            startIndex = text.startIndex.advancedBy(5)
+            endIndex = text.startIndex.advancedBy(6)
             range = Range<String.Index>(start: startIndex, end: endIndex)
             minutes = text.substringWithRange(range)
         }
         if length == 11 {
             
-            endIndex = advance(text.startIndex, 2)
+            endIndex = text.startIndex.advancedBy(2)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
-            var hoursInt = (text.substringWithRange(range) as NSString).integerValue
+            let hoursInt = (text.substringWithRange(range) as NSString).integerValue
             
             if hoursInt < 10 {
-                endIndex = advance(text.startIndex, 1)
+                endIndex = text.startIndex.advancedBy(1)
                 range = Range<String.Index>(start: startIndex, end: endIndex)
                 hours = text.substringWithRange(range)
                 
-                startIndex = advance(text.startIndex, 5)
-                endIndex = advance(text.startIndex, 7)
+                startIndex = text.startIndex.advancedBy(5)
+                endIndex = text.startIndex.advancedBy(7)
                 
                 range = Range<String.Index>(start: startIndex, end: endIndex)
                 minutes = text.substringWithRange(range)
             } else {
-                endIndex = advance(text.startIndex, 2)
+                endIndex = text.startIndex.advancedBy(2)
                 range = Range<String.Index>(start: startIndex, end: endIndex)
                 hours = text.substringWithRange(range)
                 
-                startIndex = advance(text.startIndex, 6)
-                endIndex = advance(text.startIndex, 7)
+                startIndex = text.startIndex.advancedBy(6)
+                endIndex = text.startIndex.advancedBy(7)
                 
                 range = Range<String.Index>(start: startIndex, end: endIndex)
                 minutes = text.substringWithRange(range)
             }
         }
         if length == 12 {
-            endIndex = advance(text.startIndex, 2)
+            endIndex = text.startIndex.advancedBy(2)
             var range = Range<String.Index>(start: startIndex, end: endIndex)
             hours = text.substringWithRange(range)
             
-            startIndex = advance(text.startIndex, 6)
-            endIndex = advance(text.startIndex, 8)
+            startIndex = text.startIndex.advancedBy(6)
+            endIndex = text.startIndex.advancedBy(8)
             range = Range<String.Index>(start: startIndex, end: endIndex)
             minutes = text.substringWithRange(range)
         }

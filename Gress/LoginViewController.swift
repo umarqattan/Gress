@@ -40,9 +40,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func fetchBodies() -> [Body] {
         let error: NSErrorPointer = nil
         let fetchRequest = NSFetchRequest(entityName: "Body")
-        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        let result: [AnyObject]?
+        do {
+            result = try sharedContext.executeFetchRequest(fetchRequest)
+        } catch let error1 as NSError {
+            error.memory = error1
+            result = nil
+        }
         if error != nil {
-            println("Could not execute fetch request due to: \(error)")
+            print("Could not execute fetch request due to: \(error)")
         }
         return result as! [Body]
     }
@@ -69,7 +75,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         })
         activityIndicator.startAnimating()
         
-        PFUser.logInWithUsernameInBackground(userNameField.text, password: passwordField.text) { user, downloadError in
+        PFUser.logInWithUsernameInBackground(userNameField.text!, password: passwordField.text!) { user, downloadError in
             if let error = downloadError {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.activityIndicator.stopAnimating()
@@ -132,7 +138,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        if !userNameField.text.isEmpty && !passwordField.text.isEmpty {
+        if !userNameField.text!.isEmpty && !passwordField.text!.isEmpty {
             loginButton.enabled = true
         } else {
             loginButton.enabled = false

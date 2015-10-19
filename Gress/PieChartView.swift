@@ -47,20 +47,20 @@ class PieChartView : UIView {
     
         
         
-        var centerPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect))
-        var radius:CGFloat = {
-            var width = CGRectGetWidth(rect)
-            var height = CGRectGetHeight(rect)
+        let centerPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect))
+        let radius:CGFloat = {
+            let width = CGRectGetWidth(rect)
+            let height = CGRectGetHeight(rect)
             if width > height {
                 return height/2.0
             } else {
                 return width/2.0
             }
         }()
-        var arcWidth:CGFloat = 10.0
-        var fatArcColor = UIColor.redColor()
-        var carbohydrateArcColor = UIColor(red: 0.0, green: 122.0/255.0, blue: 255.0/255.0, alpha: 1.0)
-        var proteinArcColor = UIColor.greenColor()
+        let arcWidth:CGFloat = 10.0
+        let fatArcColor = UIColor.redColor()
+        let carbohydrateArcColor = UIColor(red: 0.0, green: 122.0/255.0, blue: 255.0/255.0, alpha: 1.0)
+        let proteinArcColor = UIColor.greenColor()
         
         fatStart = 0.25 * fullCircle
         fatEnd = fatStart + fatEndArc
@@ -77,9 +77,9 @@ class PieChartView : UIView {
         **/
         
         let context = UIGraphicsGetCurrentContext()
-        let colorspace = CGColorSpaceCreateDeviceRGB()
+        //let colorspace = CGColorSpaceCreateDeviceRGB()
         CGContextSetLineWidth(context, arcWidth)
-        CGContextSetLineCap(context, kCGLineCapRound)
+        CGContextSetLineCap(context, CGLineCap.Round)
         
         /**
             Fat Sector

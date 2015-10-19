@@ -155,7 +155,7 @@ class Body: NSManagedObject {
     }
     
     class func getDictionaryFromUser(user : PFUser) -> [String : AnyObject] {
-        var dictionary = [
+        let dictionary = [
             Keys.USER_NAME : user.valueForKey(Keys.USER_NAME),
             Keys.FIRST_NAME : user.valueForKey(Keys.FIRST_NAME),
             Keys.LAST_NAME : user.valueForKey(Keys.LAST_NAME),
@@ -265,13 +265,13 @@ class Body: NSManagedObject {
 
     func printBodyInformation() {
         
-        println("Name\n First Name: \(firstName)\n Last Name: \(lastName)\n Email: \(email)\n")
+        print("Name\n First Name: \(firstName)\n Last Name: \(lastName)\n Email: \(email)\n")
         
-        println("Body\n Sex: \(sexString(sex))\n Age: \(age)\n Height Metric: \(heightMetric)\n Height SI: \(heightSI)\n Weight Metric: \(weightMetric)\n Weight SI: \(weightSI)")
+        print("Body\n Sex: \(sexString(sex))\n Age: \(age)\n Height Metric: \(heightMetric)\n Height SI: \(heightSI)\n Weight Metric: \(weightMetric)\n Weight SI: \(weightSI)")
         
-        println("Activity\n Activity Level: \(activityLevel)\n Exercise Duration: \(exerciseDuration)\n Number of Training Days: \(trainingDays)")
+        print("Activity\n Activity Level: \(activityLevel)\n Exercise Duration: \(exerciseDuration)\n Number of Training Days: \(trainingDays)")
         
-        println("Nutrition\n Macronutrient Ratio: \(nutrition)\n Goal Level: \(goalLevel)\n Goal Calories: \(goalCalories)")
+        print("Nutrition\n Macronutrient Ratio: \(nutrition)\n Goal Level: \(goalLevel)\n Goal Calories: \(goalCalories)")
         
     }
     
@@ -297,82 +297,82 @@ class Body: NSManagedObject {
     **/
     
     func metricToSIHeight(centimeters: String) -> [String] {
-        var centimetersToInches:Float = (centimeters as NSString).floatValue * Body.Constants.CENTIMETERS_TO_INCHES
-        var ft = Int(floor((centimetersToInches/12.0)))
-        var inches = Int(floor(centimetersToInches%12.0))
+        let centimetersToInches:Float = (centimeters as NSString).floatValue * Body.Constants.CENTIMETERS_TO_INCHES
+        let ft = Int(floor((centimetersToInches/12.0)))
+        let inches = Int(floor(centimetersToInches%12.0))
         
         
         return ["\(ft)", "\(inches)", "\(centimetersToInches/12.0-(centimetersToInches%12.0)/12)", "\(centimetersToInches%12.0)"]
     }
     
     func SIToMetricHeight(feet: String, inches: String) -> [String] {
-        var centimetersFromInches:Float = (inches as NSString).floatValue * Body.Constants.INCHES_TO_CENTIMETERS
-        var centimetersFromFeet:Float =  (feet as NSString).floatValue * Body.Constants.FEET_TO_INCHES * Body.Constants.INCHES_TO_CENTIMETERS
-        var centimeters = Int(round((centimetersFromFeet + centimetersFromInches)))
+        let centimetersFromInches:Float = (inches as NSString).floatValue * Body.Constants.INCHES_TO_CENTIMETERS
+        let centimetersFromFeet:Float =  (feet as NSString).floatValue * Body.Constants.FEET_TO_INCHES * Body.Constants.INCHES_TO_CENTIMETERS
+        let centimeters = Int(round((centimetersFromFeet + centimetersFromInches)))
         return ["\(centimeters)", "\(centimetersFromFeet+centimetersFromInches)"]
     }
     
     func metricToSIWeight(kilograms:String) -> String {
-        var pounds = ((kilograms as NSString).floatValue) * Body.Constants.KILOGRAMS_TO_POUNDS
-        var formattedPounds = floor(pounds * 10)/10
+        let pounds = ((kilograms as NSString).floatValue) * Body.Constants.KILOGRAMS_TO_POUNDS
+        let formattedPounds = floor(pounds * 10)/10
         
         return "\(formattedPounds)"
     }
     
     func SIToMetricWeight(pounds: String) -> String {
         
-        var kilograms = ((pounds as NSString).floatValue) * Body.Constants.POUNDS_TO_KILOGRAMS
-        var formattedKilograms = floor(kilograms * 10)/10
+        let kilograms = ((pounds as NSString).floatValue) * Body.Constants.POUNDS_TO_KILOGRAMS
+        let formattedKilograms = floor(kilograms * 10)/10
         
         return "\(formattedKilograms)"
         
     }
     
     class func getCentimetersFromText(text : String) -> String {
-        var startIndex = text.startIndex
-        var endIndex = advance(startIndex, 3)
-        var range = Range<String.Index>(start: startIndex, end: endIndex)
+        let startIndex = text.startIndex
+        let endIndex = startIndex.advancedBy(3)
+        let range = Range<String.Index>(start: startIndex, end: endIndex)
         return text.substringWithRange(range)
     }
     
     class func getFeetFromText(text : String) -> String {
-        var startIndex = text.startIndex
-        var endIndex = advance(startIndex, 1)
-        var range = Range<String.Index>(start: startIndex, end: endIndex)
+        let startIndex = text.startIndex
+        let endIndex = startIndex.advancedBy(1)
+        let range = Range<String.Index>(start: startIndex, end: endIndex)
         
         return text.substringWithRange(range)
     }
     
     class func getInchesFromText(text : String) -> String {
-        var startIndex = advance(text.startIndex, 6)
+        let startIndex = text.startIndex.advancedBy(6)
         var endIndex = startIndex
-        var length = text.length
+        let length = text.length
         
         if length == 10 { // if there is there is one digit in inches
-            endIndex = advance(text.startIndex, 8)
+            endIndex = text.startIndex.advancedBy(8)
         }
         if length == 11 { // if there is there are two digits in inches
-            endIndex = advance(text.startIndex, 9)
+            endIndex = text.startIndex.advancedBy(9)
         }
-        var range = Range<String.Index>(start: startIndex, end: endIndex)
+        let range = Range<String.Index>(start: startIndex, end: endIndex)
         
         return text.substringWithRange(range)
     }
     
     class func getPoundsFromText(text: String) -> String {
-        var startIndex = text.startIndex
+        let startIndex = text.startIndex
         var endIndex:String.Index
-        var length = text.length
+        let length = text.length
         
         
         if length == 7 {
-            endIndex = advance(text.startIndex,4)
-            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            endIndex = text.startIndex.advancedBy(4)
+            let range = Range<String.Index>(start: startIndex, end: endIndex)
             
             return text.substringWithRange(range)
         } else if length == 8 {
-            endIndex = advance(text.startIndex,5)
-            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            endIndex = text.startIndex.advancedBy(5)
+            let range = Range<String.Index>(start: startIndex, end: endIndex)
             
             return text.substringWithRange(range)
         } else {
@@ -382,21 +382,21 @@ class Body: NSManagedObject {
     
     
     class func getKilogramsFromText(text: String) -> String {
-        var startIndex = text.startIndex
+        let startIndex = text.startIndex
         var endIndex:String.Index
-        var length = text.length
+        let length = text.length
         
         if length == 7 {
-            endIndex = advance(text.startIndex,4)
-            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            endIndex = text.startIndex.advancedBy(4)
+            let range = Range<String.Index>(start: startIndex, end: endIndex)
             
             
             return text.substringWithRange(range)
         }
             
         else if length == 8 {
-            endIndex = advance(startIndex,5)
-            var range = Range<String.Index>(start: startIndex, end: endIndex)
+            endIndex = startIndex.advancedBy(5)
+            let range = Range<String.Index>(start: startIndex, end: endIndex)
             
             
             return text.substringWithRange(range)
@@ -410,18 +410,18 @@ class Body: NSManagedObject {
     **/
     
     func formatHeightMetricString(centimeters : String) -> String {
-        var rawCentimeters = (centimeters as NSString).floatValue
-        var centimeters = Int(roundf(rawCentimeters))
+        let rawCentimeters = (centimeters as NSString).floatValue
+        let centimeters = Int(roundf(rawCentimeters))
         
         return "\(centimeters) cm"
     }
     
     func formatHeightSIString(feet: String, inches: String) -> String {
-        var feetRawValue = (feet as NSString).floatValue
-        var inchesRawValue = (inches as NSString).floatValue
+        let feetRawValue = (feet as NSString).floatValue
+        let inchesRawValue = (inches as NSString).floatValue
         
-        var feet = Int(floor(feetRawValue))
-        var inches = Int(round(inchesRawValue))
+        let feet = Int(floor(feetRawValue))
+        let inches = Int(round(inchesRawValue))
         
         return "\(feet) ft, \(inches) in"
     }
@@ -435,7 +435,7 @@ class Body: NSManagedObject {
     }
     
     class func determineUnitFromString(text : String) -> Int {
-        var substring = text as NSString
+        let substring = text as NSString
         
         if substring.hasSuffix("cm") || substring.hasSuffix("kg") {
             return Body.Constants.METRIC
@@ -489,8 +489,8 @@ class Body: NSManagedObject {
         
         switch unit {
         case Body.Constants.SI :
-            var feet = Body.getFeetFromText(text)
-            var inches = Body.getInchesFromText(text)
+            let feet = Body.getFeetFromText(text)
+            let inches = Body.getInchesFromText(text)
             var metricHeightArray = SIToMetricHeight(feet, inches: inches)
             rawCentimeters = metricHeightArray[1]
             rawFeet = feet
@@ -499,7 +499,7 @@ class Body: NSManagedObject {
             heightMetric = formatHeightMetricString(rawCentimeters)
             
         case Body.Constants.METRIC:
-            var centimeters = Body.getCentimetersFromText(text)
+            let centimeters = Body.getCentimetersFromText(text)
             var SIHeightArray = metricToSIHeight(centimeters)
             rawFeet = SIHeightArray[2]
             rawInches = SIHeightArray[3]
@@ -514,8 +514,8 @@ class Body: NSManagedObject {
         
         switch unit {
         case Body.Constants.SI :
-            var feet = Body.getFeetFromText(text)
-            var inches = Body.getInchesFromText(text)
+            let feet = Body.getFeetFromText(text)
+            let inches = Body.getInchesFromText(text)
             var metricHeightArray = SIToMetricHeight(feet, inches: inches)
             rawCentimeters = metricHeightArray[1]
             rawFeet = feet
@@ -525,7 +525,7 @@ class Body: NSManagedObject {
             
         case Body.Constants.METRIC:
             
-            var centimeters = Body.getCentimetersFromText(text)
+            let centimeters = Body.getCentimetersFromText(text)
             var SIHeightArray = metricToSIHeight(centimeters)
             rawFeet = SIHeightArray[2]
             rawInches = SIHeightArray[3]
@@ -556,11 +556,11 @@ class Body: NSManagedObject {
     **/
     
     func getBMR() -> Float {
-        var sex = self.sex
-        var age = (self.age as NSString).integerValue
-        var weightKg = (self.weightMetric as NSString).floatValue
-        var heightCm = (self.heightMetric as NSString).floatValue
-        var activityLevel = self.activityLevel
+        let sex = self.sex
+        let age = (self.age as NSString).integerValue
+        let weightKg = (self.weightMetric as NSString).floatValue
+        let heightCm = (self.heightMetric as NSString).floatValue
+        //var activityLevel = self.activityLevel
         var BMR:Float!
         
         var weightPart:Float!, heightPart:Float!, agePart:Float!
@@ -583,27 +583,27 @@ class Body: NSManagedObject {
     }
     
     func getTDEE() -> Float {
-        var BMR = getBMR()
-        var activityLevelMult = self.activityLevel
+        let BMR = getBMR()
+        let activityLevelMult = self.activityLevel
         
         return activityLevelMult * BMR
         
     }
     
     func getCalorieRange() -> [Int] {
-        var TDEE = getTDEE()
-        var calorieDeficit = 0.9 * TDEE
-        var calorieMaintenance = TDEE
-        var calorieSurplus = 1.1 * TDEE
+        let TDEE = getTDEE()
+        let calorieDeficit = 0.9 * TDEE
+        let calorieMaintenance = TDEE
+        let calorieSurplus = 1.1 * TDEE
         
         return [Int(calorieDeficit), Int(calorieMaintenance), Int(calorieSurplus)]
     }
     
     func getMacronutrientsFromCalories(calories : Float) -> [Int] {
         
-        var fatGrams = Int(calories * fatPercent/100)/9
-        var carbohydrateGrams = Int(calories * carbohydratePercent/100)/4
-        var proteinGrams = Int(calories * proteinPercent/100)/4
+        let fatGrams = Int(calories * fatPercent/100)/9
+        let carbohydrateGrams = Int(calories * carbohydratePercent/100)/4
+        let proteinGrams = Int(calories * proteinPercent/100)/4
         
         return [fatGrams, carbohydrateGrams, proteinGrams]
     }

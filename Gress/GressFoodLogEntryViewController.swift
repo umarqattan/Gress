@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 
-class GressFoodLogEntryViewController: UITableViewController, UITableViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, NSFetchedResultsControllerDelegate {
+class GressFoodLogEntryViewController: UITableViewController, UITextFieldDelegate, UINavigationControllerDelegate, NSFetchedResultsControllerDelegate {
 
     
     var nutritionixFoodEntry:NutritionixFoodEntry!
@@ -89,7 +89,7 @@ class GressFoodLogEntryViewController: UITableViewController, UITableViewDelegat
     
     func configureTableView() {
         
-        tableView.tableFooterView = UIView(frame: CGRect.zeroRect)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         self.edgesForExtendedLayout = UIRectEdge.None
         
     }
@@ -147,7 +147,7 @@ class GressFoodLogEntryViewController: UITableViewController, UITableViewDelegat
     
     func updateFoodLogEntry() {
         
-        nutritionixFoodEntry.servingSizeQuantity = (Int((numberOfServingsField.text as NSString).floatValue * (servingSizeField.text as NSString).floatValue))
+        nutritionixFoodEntry.servingSizeQuantity = (Int((numberOfServingsField.text! as NSString).floatValue * (servingSizeField.text! as NSString).floatValue))
         nutritionixFoodEntry.calories = (caloriesLabel.text! as NSString).integerValue
         nutritionixFoodEntry.fatGrams = (fatLabel.text! as NSString).integerValue
         nutritionixFoodEntry.carbohydrateGrams = (carbohydrateLabel.text! as NSString).integerValue
@@ -157,7 +157,7 @@ class GressFoodLogEntryViewController: UITableViewController, UITableViewDelegat
     
     func updateNutritionFacts() {
         
-        var nutritionFactsMultiplier:Float = (numberOfServingsField.text as NSString).floatValue
+        let nutritionFactsMultiplier:Float = (numberOfServingsField.text! as NSString).floatValue
         caloriesLabel.text = "\(Int(Float(nutritionixFoodEntry.calories) * nutritionFactsMultiplier))"
         fatLabel.text = "\(Int(Float(nutritionixFoodEntry.fatGrams) * nutritionFactsMultiplier))"
         carbohydrateLabel.text = "\(Int(Float(nutritionixFoodEntry.carbohydrateGrams) * nutritionFactsMultiplier))"
@@ -170,7 +170,7 @@ class GressFoodLogEntryViewController: UITableViewController, UITableViewDelegat
     **/
     
     func addDoneButtonToActiveTextField() {
-        var keyboardToolbar = UIToolbar()
+        let keyboardToolbar = UIToolbar()
         keyboardToolbar.sizeToFit()
         let flexBarButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
             target: nil, action: nil)
@@ -200,7 +200,7 @@ class GressFoodLogEntryViewController: UITableViewController, UITableViewDelegat
         cancelPickerButton.addTarget(self, action: Selector("endEditing:"), forControlEvents: UIControlEvents.TouchUpInside)
         
         
-        var checkmarkBarButton = UIBarButtonItem(customView: checkmarkButton)
+        let checkmarkBarButton = UIBarButtonItem(customView: checkmarkButton)
         //var cancelBarButton = UIBarButtonItem(customView: cancelPickerButton)
         
         keyboardToolbar.barTintColor = UIColor.whiteColor()
@@ -242,28 +242,28 @@ class GressFoodLogEntryViewController: UITableViewController, UITableViewDelegat
         MARK: UITableViewDelegate Protocol Methods
     **/
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var section = indexPath.section
-        var row = indexPath.row
+        let section = indexPath.section
+        let row = indexPath.row
         
         switch section {
         case FoodLogEntrySection.Quantity.rawValue :
             switch row {
             case QuantityRow.ServingSize.rawValue :
-                println("Serving Size")
+                print("Serving Size")
             case QuantityRow.NumberOfServings.rawValue :
-                println("Number of Servings")
+                print("Number of Servings")
             default : return
             }
         case FoodLogEntrySection.NutritionFacts.rawValue :
             switch row {
             case NutritionFactsRow.Calories.rawValue :
-                println("Calories")
+                print("Calories")
             case NutritionFactsRow.Fat.rawValue :
-                println("Fat (g)")
+                print("Fat (g)")
             case NutritionFactsRow.Carbohydrate.rawValue :
-                println("Carbohydrate (g)")
+                print("Carbohydrate (g)")
             case NutritionFactsRow.Protein.rawValue :
-                println("Protein (g)")
+                print("Protein (g)")
             default : return
             }
         default : return

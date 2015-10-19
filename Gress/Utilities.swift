@@ -14,7 +14,7 @@ import UIKit
 extension String {
     
     var length : Int {
-        return count(self)
+        return self.characters.count
 
     }
     
@@ -41,7 +41,7 @@ extension UIViewController {
     
     func showAlertView(success: Bool, buttonTitle: String, message: String?, completionHandler: ((UIAlertAction!) -> Void)!)
     {
-        var alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         var alertAction = UIAlertAction()
         if success {
             alertAction = UIAlertAction(title: buttonTitle, style: UIAlertActionStyle.Default, handler: completionHandler)
@@ -73,12 +73,12 @@ extension UIViewController {
         let contentInsets = UIEdgeInsetsMake(0.0, 0.0, getKeyboardHeight(notification), 0.0)
         scrollView.contentInset = contentInsets
         
-        var aRect = aView.frame
+        let aRect = aView.frame
         if CGRectContainsPoint(aRect, activeTextField.frame.origin) {
             scrollView.scrollRectToVisible(activeTextField.frame, animated: true)
         }
         if gestureRecognizer == nil {
-            var aGestureRecognizer:UIGestureRecognizer? = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard:"))
+            let aGestureRecognizer:UIGestureRecognizer? = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard:"))
             view.addGestureRecognizer(aGestureRecognizer!)
         }
     }
@@ -115,23 +115,23 @@ extension UIViewController {
     
     func drawText(text : NSString, point : CGPoint) -> UIImage {
         
-        var size = CGSizeMake(31, 31);
+        let size = CGSizeMake(31, 31);
         UIGraphicsBeginImageContextWithOptions(size, true, 0);
         
         UIColor.whiteColor().setFill()
         UIRectFill(CGRectMake(0, 0, size.width, size.height));
-        var image:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
         
-        var font = UIFont(name: "HelveticaNeue", size: 12.0)!
+        let font = UIFont(name: "HelveticaNeue", size: 12.0)!
         UIGraphicsBeginImageContext(image.size)
         
         image.drawInRect(CGRectMake(0, 15, image.size.width, image.size.height))
-        var rect:CGRect = CGRectMake(point.x, point.y, image.size.width, image.size.height)
+        let rect:CGRect = CGRectMake(point.x, point.y, image.size.width, image.size.height)
         UIColor.whiteColor().set()
         text.drawInRect(CGRectIntegral(rect), withAttributes: [NSFontAttributeName : font, NSForegroundColorAttributeName : UIColor(red: 0.0, green: 122.0/255.0, blue: 255.0/255.0, alpha: 1.0)])
-        var newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         

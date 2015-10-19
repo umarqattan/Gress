@@ -21,27 +21,27 @@ class ParseClient {
               proceed to the application.
     **/
     class func doesUserExist(username : String, completionHandler:(exists:Bool) -> Void) {
-        var query = PFUser.query()
-        var doesUserExist = false
+        let query = PFUser.query()
+        //var doesUserExist = false
         query?.whereKey("username", equalTo: username)
         query!.getFirstObjectInBackgroundWithBlock { userObject, downloadError in
             if userObject != nil {
                 completionHandler(exists: true)
-                println("A user already exists with the name, \(username)")
+                print("A user already exists with the name, \(username)")
             } else {
                 completionHandler(exists: false)
-                println("\(username) is available!")
+                print("\(username) is available!")
             }
         }
     }
     
     class func isPasswordSecure(password: String) -> Bool {
         
-        var aPassword:NSString = password as NSString
-        var range:NSRange
-        var capitalCharacterSet = NSCharacterSet(charactersInString: "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-        var numberCharacterSet = NSCharacterSet.decimalDigitCharacterSet()
-        var specialCharacterSet = NSCharacterSet(charactersInString: "!@#$%^&*()_")
+        let aPassword:NSString = password as NSString
+        //var range:NSRange
+        let capitalCharacterSet = NSCharacterSet(charactersInString: "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        let numberCharacterSet = NSCharacterSet.decimalDigitCharacterSet()
+        let specialCharacterSet = NSCharacterSet(charactersInString: "!@#$%^&*()_")
         
         var hasCapitalLetter = false
         var hasNumber = false
@@ -60,13 +60,13 @@ class ParseClient {
         }
         
         if !hasCapitalLetter {
-            println("Could not find capital letter")
+            print("Could not find capital letter")
         }
         if !hasNumber {
-            println("Could not find number")
+            print("Could not find number")
         }
         if !hasSpecialCharacter {
-            println("Could not find special character")
+            print("Could not find special character")
         }
         
         return hasCapitalLetter && hasNumber && hasSpecialCharacter

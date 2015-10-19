@@ -66,9 +66,15 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     func fetchBodies() -> [Body] {
         let error: NSErrorPointer = nil
         let fetchRequest = NSFetchRequest(entityName: "Body")
-        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        let result: [AnyObject]?
+        do {
+            result = try sharedContext.executeFetchRequest(fetchRequest)
+        } catch let error1 as NSError {
+            error.memory = error1
+            result = nil
+        }
         if error != nil {
-            println("Could not execute fetch request due to: \(error)")
+            print("Could not execute fetch request due to: \(error)")
         }
         return result as! [Body]
     }
@@ -102,8 +108,8 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     
     func updateSharedBodyObjectWithActivity() {
         
-        body.exerciseDuration = exerciseDurationField.text
-        body.trainingDays = trainingDaysField.text
+        body.exerciseDuration = exerciseDurationField.text!
+        body.trainingDays = trainingDaysField.text!
         body.activityLevel = activitySlider.value
         CoreDataStackManager.sharedInstance().saveContext()
     }
@@ -143,14 +149,14 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         activityLevelTextView.layer.cornerRadius = 12
         
         
-        var paragraphStyle = NSMutableParagraphStyle()
+        let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = NSTextAlignment.Center
         
         let coordX = activityLevelTextView.frame.size.width/2.0 - 25
         let coordY = activityLevelTextView.frame.size.height - 55.0
         
         let OkImage = UIImage(named: "Ok-50")!
-        let OkImageFilled = UIImage(named: "Ok Filled-50")!
+        //let OkImageFilled = UIImage(named: "Ok Filled-50")!
         let clearButtonSize = OkImage.size
         let clearButton = UIButton(frame: CGRectMake(coordX, coordY, clearButtonSize.width, clearButtonSize.height))
         
@@ -161,23 +167,23 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         
         switch activityLevel {
             case NONE :
-                var attributedText = NSMutableAttributedString(string: noneString)
+                let attributedText = NSMutableAttributedString(string: noneString)
                 attributedText.addAttributes([NSForegroundColorAttributeName : UIColor(red: 60.0/255.0, green: 228.0/255.0, blue: 255.0/255.0, alpha: 1.0), NSParagraphStyleAttributeName: paragraphStyle], range: NSRange(location: 0, length: noneString.length))
                 activityLevelTextView.attributedText = attributedText
             case SEDENTARY :
-                var attributedText = NSMutableAttributedString(string: sedentaryString)
+                let attributedText = NSMutableAttributedString(string: sedentaryString)
                 attributedText.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(14)], range: NSRange(location: 2, length: 9))
                 attributedText.addAttributes([NSForegroundColorAttributeName : UIColor(red: 60.0/255.0, green: 228.0/255.0, blue: 255.0/255.0, alpha: 1.0)], range: NSRange(location: 0, length: sedentaryString.length))
                 activityLevelTextView.attributedText = attributedText
                 activityLevelTextView.addSubview(clearButton)
             case ACTIVE :
-                var attributedText = NSMutableAttributedString(string: activeString)
+                let attributedText = NSMutableAttributedString(string: activeString)
                 attributedText.addAttributes([NSFontAttributeName : UIFont.boldSystemFontOfSize(14)], range: NSRange(location: 3, length: 6))
                 attributedText.addAttributes([NSForegroundColorAttributeName : UIColor(red: 60.0/255.0, green: 228.0/255.0, blue: 255.0/255.0, alpha: 1.0)], range: NSRange(location: 0, length: activeString.length))
                 activityLevelTextView.attributedText = attributedText
                 activityLevelTextView.addSubview(clearButton)
             case ATHLETE :
-                var attributedText = NSMutableAttributedString(string: athleteString)
+                let attributedText = NSMutableAttributedString(string: athleteString)
                 attributedText.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(14)], range: NSRange(location: 3, length: 7))
                 attributedText.addAttributes([NSForegroundColorAttributeName : UIColor(red: 60.0/255.0, green: 228.0/255.0, blue: 255.0/255.0, alpha: 1.0)], range: NSRange(location: 0, length: athleteString.length))
                 activityLevelTextView.attributedText = attributedText
@@ -189,10 +195,10 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     func configureDefaultPickerViewValues() {
         switch activeTextField! {
             case trainingDaysField :
-                var trainingDays = PickerViewConstants.getRowFromTrainingDays(trainingDaysField.text)
+                let trainingDays = PickerViewConstants.getRowFromTrainingDays(trainingDaysField.text!)
                 pickerView.selectRow(trainingDays, inComponent: 0, animated: true)
             case exerciseDurationField :
-                var exerciseDurationArray = PickerViewConstants.getRowFromExerciseDuration(exerciseDurationField.text)
+                var exerciseDurationArray = PickerViewConstants.getRowFromExerciseDuration(exerciseDurationField.text!)
                 pickerView.selectRow(exerciseDurationArray[0], inComponent: 0, animated: true)
                 pickerView.selectRow(exerciseDurationArray[1], inComponent: 2, animated: true)
         default : return
@@ -253,7 +259,7 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     }
     
     func cancel(sender: UIBarButtonItem) {
-        var user:PFUser = PFUser.currentUser()!
+        let user:PFUser = PFUser.currentUser()!
         
         /**
         Delete from CoreData first so that we can use Parse
@@ -326,7 +332,7 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         }
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
     
         switch activeTextField! {
             case exerciseDurationField :
@@ -340,13 +346,13 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch activeTextField! {
             case exerciseDurationField :
-                var hours = exerciseDuration[Time.HOURS.rawValue][pickerView.selectedRowInComponent(Time.HOURS.rawValue)]
-                var hr = exerciseDuration[Time.HR.rawValue][pickerView.selectedRowInComponent(Time.HR.rawValue)]
-                var minutes = exerciseDuration[Time.MINUTES.rawValue][pickerView.selectedRowInComponent(Time.MINUTES.rawValue)]
-                var min = exerciseDuration[Time.MIN.rawValue][pickerView.selectedRowInComponent(Time.MIN.rawValue)]
+                let hours = exerciseDuration[Time.HOURS.rawValue][pickerView.selectedRowInComponent(Time.HOURS.rawValue)]
+                let hr = exerciseDuration[Time.HR.rawValue][pickerView.selectedRowInComponent(Time.HR.rawValue)]
+                let minutes = exerciseDuration[Time.MINUTES.rawValue][pickerView.selectedRowInComponent(Time.MINUTES.rawValue)]
+                let min = exerciseDuration[Time.MIN.rawValue][pickerView.selectedRowInComponent(Time.MIN.rawValue)]
                 getExerciseDurationFromPickerView(hours, hr: hr, minutes: minutes, min: min)
             case trainingDaysField :
-                var days = trainingDays[Day.DAY.rawValue][pickerView.selectedRowInComponent(Day.DAY.rawValue)]
+                let days = trainingDays[Day.DAY.rawValue][pickerView.selectedRowInComponent(Day.DAY.rawValue)]
                 getTrainingDaysFromPickerView(days)
             default : return
         }
@@ -372,7 +378,7 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
     }
     
     func addDoneButtonToActiveTextField() {
-        var keyboardToolbar = UIToolbar()
+        let keyboardToolbar = UIToolbar()
         keyboardToolbar.sizeToFit()
         let flexBarButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
             target: nil, action: nil)
@@ -415,8 +421,8 @@ class NewGressProfileActivityViewController : UIViewController, UINavigationCont
         activeTextField = nil
         pickerView = UIPickerView()
         
-        if !exerciseDurationField.text.isEmpty && !trainingDaysField.text.isEmpty {
-            configureNewProfileProgressBar(FINISHED)
+        if !exerciseDurationField.text!.isEmpty && !trainingDaysField.text!.isEmpty {
+            self.configureNewProfileProgressBar(FINISHED)
         }
     }
     

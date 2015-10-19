@@ -72,7 +72,7 @@ class SignUpViewController : UIViewController, UITextFieldDelegate {
                     })
                     self.showAlertView(success, buttonTitle: "Get Started!", message: "Hooray, you are now apart of Gress!") { UIAlertAction in
                         
-                        let dictionary = [Body.Keys.USER_NAME : self.userNameField.text]
+                        let dictionary = [Body.Keys.USER_NAME : self.userNameField.text!]
                         let newUser = Body(dictionary: dictionary, context: self.sharedContext)
                         CoreDataStackManager.sharedInstance().saveContext()
                         
@@ -133,13 +133,13 @@ class SignUpViewController : UIViewController, UITextFieldDelegate {
     
     func textFieldDidEndEditing(textField: UITextField) {
         
-        if textField.text.isEmpty {
+        if textField.text!.isEmpty {
             textField.resignFirstResponder()
             return
         }
         if textField == userNameField {
             userNameValidActivityIndicator.startAnimating()
-            ParseClient.doesUserExist(userNameField.text) { exists in
+            ParseClient.doesUserExist(userNameField.text!) { exists in
                 if exists {
                     self.userNameExists = true
                     dispatch_async(dispatch_get_main_queue()) {
@@ -163,7 +163,7 @@ class SignUpViewController : UIViewController, UITextFieldDelegate {
         }
         if textField == passwordField {
             passwordValidActivityIndicator.startAnimating()
-            if !ParseClient.isPasswordSecure(passwordField.text) {
+            if !ParseClient.isPasswordSecure(passwordField.text!) {
                 self.passwordIsSecure = false
                 dispatch_async(dispatch_get_main_queue()) {
                     UIView.animateWithDuration(0.3, animations: {

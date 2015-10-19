@@ -65,7 +65,7 @@ class GressFoodLogEntrySearchViewController: UIViewController, UITableViewDelega
     
     func configureTableView() {
         
-        tableView.tableFooterView = UIView(frame: CGRect.zeroRect)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         self.edgesForExtendedLayout = UIRectEdge.None
         
     }
@@ -98,7 +98,7 @@ class GressFoodLogEntrySearchViewController: UIViewController, UITableViewDelega
             Request foodLogEntries from Nutritionix
         */
         
-        NutritionixClient().getFoodLogEntries(searchBar.text, results: 10) { foodLogEntries, success, error in
+        NutritionixClient().getFoodLogEntries(searchBar.text!, results: 10) { foodLogEntries, success, error in
             if success {
                 dispatch_async(dispatch_get_main_queue()) {
                     for foodLogEntry in foodLogEntries! {
@@ -151,7 +151,7 @@ class GressFoodLogEntrySearchViewController: UIViewController, UITableViewDelega
         
         let cell = tableView.dequeueReusableCellWithIdentifier("FoodLogEntryTableViewCell", forIndexPath: indexPath) as! FoodLogEntryTableViewCell
         
-        var foodLogEntry = foodLogEntries[indexPath.row]
+        let foodLogEntry = foodLogEntries[indexPath.row]
         configureFoodLogEntryCell(cell, foodLogEntry: foodLogEntry)
         return cell
     }
