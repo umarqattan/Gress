@@ -45,7 +45,7 @@ class GressFoodLogViewController: UITableViewController {
         return result as! [FoodLogEntry]
     }
     
-    func fetchFBodies() -> [Body] {
+    func fetchBodies() -> [Body] {
         let error: NSErrorPointer = nil
         let fetchRequest = NSFetchRequest(entityName: "Body")
         let result: [AnyObject]?
@@ -73,9 +73,6 @@ class GressFoodLogViewController: UITableViewController {
         let gressTabBarController = tabBarController as! GressTabBarController
         body = gressTabBarController.body
         
-        
-        
-
         setDelegates()
         configureTableView()
         configureNavigationItem()
@@ -90,7 +87,12 @@ class GressFoodLogViewController: UITableViewController {
         body = parentTabBarController.body
         body.printBodyInformation()
         
-        coreFoodLogEntries = fetchFoodLogEntries()
+        
+        /*
+            FIX: changed coreFoodLogEntries's source of foodLogEntries from
+                fetchFoodLogEntries to body's foodLogEntries.
+        */
+        coreFoodLogEntries = body.foodLogEntries
         
         
         configureNavigationItem()

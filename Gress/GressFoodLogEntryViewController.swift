@@ -136,12 +136,16 @@ class GressFoodLogEntryViewController: UITableViewController, UITextFieldDelegat
             foodLogEntry.fatGrams = nutritionixFoodEntry.fatGrams
             foodLogEntry.carbohydrateGrams = nutritionixFoodEntry.carbohydrateGrams
             foodLogEntry.proteinGrams = nutritionixFoodEntry.proteinGrams
-            CoreDataStackManager.sharedInstance().saveContext()
+            
         } else if cameFromFoodLogEntrySearchViewController {
             let dictionary = nutritionixFoodEntry.dictionary()
+            
             foodLogEntry = FoodLogEntry(dictionary: dictionary, context: sharedContext)
+            // inserted line below so that the body object gets a foodLogEntry
+            foodLogEntry.body = body
             sharedContext.insertObject(foodLogEntry)
-            CoreDataStackManager.sharedInstance().saveContext()
+            body.insertNewFoodLogEntry(foodLogEntry)
+            
         }
     }
     
@@ -184,7 +188,6 @@ class GressFoodLogEntryViewController: UITableViewController, UITextFieldDelegat
         let cancelFilledImage = UIImage(named: "Cancel Filled-25")!
         let cancelImageSize = cancelImage.size
         let cancelImageFrame = CGRectMake(0, 0, cancelImageSize.width, cancelImageSize.height)
-        
         
         checkmarkButton = UIButton(frame: checkmarkImageFrame)
         cancelPickerButton = UIButton(frame: cancelImageFrame)

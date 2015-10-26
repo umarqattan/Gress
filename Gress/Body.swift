@@ -12,9 +12,6 @@ import Parse
 
 @objc(Body)
 
-
-
-
 class Body: NSManagedObject {
 
     struct Constants {
@@ -66,7 +63,6 @@ class Body: NSManagedObject {
         static let GOAL_CALORIES = "goal_calories"
         static let COMPLETE_PROFILE = "complete_profile"
         static let UNIT = "unit"
-        
         static let DAY = "day"
         static let TOTAL_CALORIES = "total_calories"
         static let REMAINING_CALORIES = "remaining_calories"
@@ -76,6 +72,8 @@ class Body: NSManagedObject {
         static let REMAINING_FAT = "remaining_fat"
         static let REMAINING_CARBOHYDRATE = "remaining_carbohydrate"
         static let REMAINING_PROTEIN = "remaining_protein"
+        
+        static let FOOD_LOG_ENTRIES = "food_log_entries"
     }
     
     @NSManaged var userName: String
@@ -102,6 +100,7 @@ class Body: NSManagedObject {
     @NSManaged var lastName: String
     @NSManaged var foodLogEntries:[FoodLogEntry]
     
+    
     var rawCentimeters:String!
     var rawFeet:String!
     var rawInches:String!
@@ -120,10 +119,14 @@ class Body: NSManagedObject {
     init(dictionary : [String : AnyObject], context : NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("Body", inManagedObjectContext: context)
         super.init(entity: entity!, insertIntoManagedObjectContext: context)
-        
     
-        
         userName = dictionary[Keys.USER_NAME] as! String
+        
+        /**
+            PROBLEM: Each user shares foodLogEntries, when they shouldn't be
+            TODO: Each user gets a foodLogEntry array
+            FIX:
+        **/
     
     }
     
@@ -152,6 +155,18 @@ class Body: NSManagedObject {
         didCompleteNewProfile = dictionary[Keys.COMPLETE_PROFILE] as! Bool
         unit = dictionary[Keys.UNIT] as! Int
         
+        
+    }
+    
+    func insertNewFoodLogEntry(newFoodLogEntry : FoodLogEntry) {
+        self.foodLogEntries.append(newFoodLogEntry)
+        
+        /*
+            FIX: make sure that the foodLogEntry is related
+                 to the body and vice versa
+         */
+        
+        self.foodLogEntries.last!.body = self
     }
     
     class func getDictionaryFromUser(user : PFUser) -> [String : AnyObject] {
@@ -184,6 +199,8 @@ class Body: NSManagedObject {
         
     }
 
+    
+    
     
     func getUpdatedUser(user : PFUser) -> PFUser {
         
